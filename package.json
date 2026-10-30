@@ -1,0 +1,23 @@
+{
+  "name": "escape-game-dirigeants",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @escape/shared && concurrently -n shared,server,client -c gray,blue,green \"npm:dev:shared\" \"npm:dev:server\" \"npm:dev:client\"",
+    "dev:shared": "npm run dev -w @escape/shared",
+    "dev:server": "npm run dev -w @escape/server",
+    "dev:client": "npm run dev -w @escape/client",
+    "build": "npm run build -w @escape/shared && npm run build -w @escape/server && npm run build -w @escape/client",
+    "typecheck": "npm run typecheck -w @escape/client",
+    "start": "npm run start -w @escape/server"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}

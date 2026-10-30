@@ -1,0 +1,2 @@
+# Ce dossier est monté dans le conteneur (/app/data).
+# Il accueillera la base SQLite quand on en aura besoin.

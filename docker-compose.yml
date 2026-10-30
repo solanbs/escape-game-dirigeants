@@ -1,0 +1,13 @@
+services:
+  game:
+    build: .
+    image: escape-game:local
+    ports:
+      - "3000:3000"
+    environment:
+      NODE_ENV: production
+      PORT: 3000
+    volumes:
+      # Prêt pour la base SQLite et les fichiers persistants.
+      - ./data:/app/data
+    restart: unless-stopped

@@ -1,0 +1,143 @@
+:root {
+  --fond: #1b2430;
+  --fond-fenetre: #f4f1ea;
+  --barre: #2f3b4a;
+  --texte: #232b34;
+  --accent: #c9a227;
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--texte);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+.bureau {
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  background:
+    radial-gradient(circle at 30% 20%, #2c3a4d 0%, transparent 55%),
+    radial-gradient(circle at 75% 80%, #26313f 0%, transparent 50%),
+    var(--fond);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.fenetre {
+  width: min(560px, 100%);
+  background: var(--fond-fenetre);
+  border-radius: 10px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.fenetre__barre {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--barre);
+  color: #f4f1ea;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.fenetre__fermer {
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 0.35rem;
+  border-radius: 4px;
+}
+
+.fenetre__fermer:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.fenetre__contenu {
+  padding: 1.25rem;
+}
+
+.ligne {
+  margin: 0 0 0.75rem;
+}
+
+code {
+  background: rgba(0, 0, 0, 0.07);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+.etat--on {
+  color: #1e7d4f;
+}
+
+.etat--off {
+  color: #a33a2c;
+}
+
+.bouton {
+  margin: 0.5rem 0 0.75rem;
+  padding: 0.55rem 0.9rem;
+  border: 0;
+  border-radius: 6px;
+  background: var(--barre);
+  color: #f4f1ea;
+  font: inherit;
+  cursor: pointer;
+}
+
+.bouton:hover {
+  background: #3c4a5c;
+}
+
+.bouton--relance {
+  margin: 0;
+}
+
+.journal__titre {
+  margin: 1rem 0 0.5rem;
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5b6470;
+}
+
+.journal {
+  margin: 0;
+  padding: 0.75rem;
+  list-style: none;
+  max-height: 190px;
+  overflow-y: auto;
+  background: #fff;
+  border: 1px solid #dcd6c8;
+  border-radius: 6px;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.82rem;
+}
+
+.journal li {
+  padding: 0.15rem 0;
+  border-bottom: 1px solid #efeae0;
+}
+
+.journal li:last-child {
+  border-bottom: 0;
+}
+
+.journal__vide {
+  color: #8a8578;
+  font-style: italic;
+}

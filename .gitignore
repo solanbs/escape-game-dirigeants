@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Données locales (le dossier existe, son contenu non)
+data/*
+!data/.gitkeep
+
+.env
+.env.local
+*.log
+.DS_Store
+
+.idea
