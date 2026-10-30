@@ -1,0 +1,453 @@
+.browser-window {
+  position: absolute;
+  z-index: 100;
+  top: 5vh;
+  left: 5vw;
+  display: flex;
+  width: 90vw;
+  height: 90vh;
+  min-width: 520px;
+  min-height: 400px;
+  resize: both;
+  overflow: hidden;
+  flex-direction: column;
+  border: 1px solid #3c4043;
+  border-radius: 10px;
+  background: #202124;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.45);
+}
+
+.browser-window--maximized {
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  resize: none;
+  border: 0;
+  border-radius: 0;
+}
+
+.browser-tabs {
+  display: flex;
+  height: 40px;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px 0;
+  background: #202124;
+}
+
+.browser-tab,
+.browser-tab__new,
+.browser-window__controls button,
+.browser-toolbar button {
+  border: 0;
+  background: transparent;
+  color: #bdc1c6;
+  cursor: pointer;
+  font: inherit;
+}
+
+.browser-tab {
+  display: flex;
+  width: 190px;
+  height: 34px;
+  align-items: center;
+  gap: 8px;
+  padding: 0 10px;
+  border-radius: 8px 8px 0 0;
+  background: #303134;
+  font-size: 0.8rem;
+}
+
+.browser-tab__logo {
+  color: #4285f4;
+  font-weight: 700;
+}
+
+.browser-tab__close {
+  margin-left: auto;
+  font-size: 1rem;
+}
+
+.browser-tab__new {
+  padding: 4px 10px;
+  font-size: 1.25rem;
+}
+
+.browser-window__controls {
+  display: flex;
+  margin-left: auto;
+}
+
+.browser-window__controls button {
+  width: 38px;
+  height: 30px;
+  font-size: 1rem;
+}
+
+.browser-window__controls button:hover,
+.browser-toolbar button:hover,
+.browser-tab__new:hover {
+  border-radius: 4px;
+  background: #3c4043;
+  color: #fff;
+}
+
+.browser-toolbar {
+  display: flex;
+  height: 48px;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: #292a2d;
+}
+
+.browser-toolbar button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 1.2rem;
+}
+
+.browser-address {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  margin: 0 8px;
+  padding: 0 14px;
+  border-radius: 18px;
+  background: #202124;
+  color: #e8eaed;
+  font-size: 0.82rem;
+}
+
+.google-page {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  background-color: #202124;
+  color: #e8eaed;
+  font-family: Arial, sans-serif;
+  width: 100%;
+}
+
+.google-header {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding: 15px 20px;
+  gap: 15px;
+  font-size: 13px;
+}
+
+.header-link {
+  color: #e8eaed;
+  text-decoration: none;
+}
+
+.header-link:hover {
+  text-decoration: underline;
+}
+
+.apps-button {
+  background: transparent;
+  border: none;
+  color: #e8eaed;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 8px;
+  border-radius: 50%;
+}
+
+.apps-button:hover {
+  background-color: rgba(255, 255, 255, 0.039);
+}
+
+.profile-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: #a52a2a;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 16px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  position: relative;
+  cursor: pointer;
+}
+
+.account-panel {
+  position: absolute;
+  z-index: 3;
+  top: 64px;
+  right: 20px;
+  width: min(340px, calc(100vw - 40px));
+  overflow: hidden;
+  border: 1px solid #5f6368;
+  border-radius: 16px;
+  background: #303134;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.45);
+}
+
+.account-panel__identity {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem 1rem 1rem;
+}
+
+.account-panel__avatar {
+  display: grid;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 0.35rem;
+  place-items: center;
+  border-radius: 50%;
+  background: #a52a2a;
+  color: #fff;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.account-panel__identity strong {
+  color: #fff;
+}
+
+.account-panel__identity span {
+  color: #bdc1c6;
+  font-size: 0.8rem;
+}
+
+.account-panel__tabs {
+  display: flex;
+  border-top: 1px solid #5f6368;
+  border-bottom: 1px solid #5f6368;
+}
+
+.account-panel__tab {
+  flex: 1;
+  padding: 0.7rem 0.3rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: #bdc1c6;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.78rem;
+}
+
+.account-panel__tab:hover,
+.account-panel__tab--active {
+  border-bottom-color: #8ab4f8;
+  color: #fff;
+}
+
+.account-panel__content {
+  min-height: 3.4rem;
+  margin: 0;
+  padding: 1rem;
+  color: #e8eaed;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  text-align: center;
+}
+
+.profile-avatar::after {
+  content: '';
+  position: absolute;
+  top: -4px; right: -4px; bottom: -4px; left: -4px;
+  border-radius: 50%;
+  border: 2px solid;
+  border-image: linear-gradient(45deg, #4285f4, #ea4335) 1;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
+
+.google-main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10vh;
+}
+
+.google-logo {
+  font-size: 5.5rem;
+  font-weight: 400;
+  letter-spacing: -2px;
+  margin: 0 0 30px;
+  color: #fff;
+  font-family: 'Product Sans', Arial, sans-serif;
+}
+
+.search-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 0 20px;
+}
+
+.search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #303134;
+  border: 1px solid #5f6368;
+  border-radius: 24px;
+  padding: 5px 10px 5px 15px;
+  transition: all 0.2s;
+}
+
+.search-bar:hover, .search-bar:focus-within {
+  background-color: #303134;
+  box-shadow: 0 1px 6px rgba(23, 23, 23, 0.28);
+  border-color: #5f6368;
+}
+
+.search-submit {
+  padding: 0.45rem 0.8rem;
+  border: 0;
+  border-radius: 4px;
+  background: #8ab4f8;
+  color: #202124;
+  cursor: pointer;
+  font-size: 0.8rem;
+  white-space: nowrap;
+}
+
+.search-submit:hover {
+  background: #aecbfa;
+}
+
+.search-icon-left {
+  color: #9aa0a6;
+  font-size: 1.2rem;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.search-input {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  color: #e8eaed;
+  font-size: 16px;
+  height: 34px;
+  outline: none;
+}
+
+.search-icons-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon {
+  font-size: 1.1rem;
+  cursor: pointer;
+  filter: grayscale(1) opacity(0.7);
+}
+
+.icon:hover {
+  filter: grayscale(0) opacity(1);
+}
+
+.ai-button {
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 16px;
+  color: #e8eaed;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ai-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.search-buttons {
+  display: flex;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.search-feedback {
+  margin: 1.25rem 0 0;
+  color: #bdc1c6;
+  font-size: 0.85rem;
+}
+
+.btn {
+  background-color: #303134;
+  border: 1px solid #303134;
+  border-radius: 4px;
+  color: #e8eaed;
+  font-family: inherit;
+  font-size: 14px;
+  padding: 8px 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  border: 1px solid #5f6368;
+}
+
+.language-offer {
+  margin-top: 25px;
+  font-size: 13px;
+  color: #bdc1c6;
+}
+
+.language-offer a {
+  color: #8ab4f8;
+  text-decoration: none;
+}
+
+.language-offer a:hover {
+  text-decoration: underline;
+}
+
+.google-footer {
+  background-color: #171717;
+  color: #9aa0a6;
+  font-size: 14px;
+  padding: 15px 30px;
+  border-top: 1px solid #3c4043;
+}
+
+@media (max-width: 700px) {
+  .browser-window {
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    min-width: 0;
+    min-height: 0;
+    resize: none;
+    border: 0;
+    border-radius: 0;
+  }
+
+  .browser-tab {
+    width: 140px;
+  }
+
+  .browser-window__controls button {
+    width: 30px;
+  }
+
+  .google-logo {
+    font-size: 4rem;
+  }
+}
