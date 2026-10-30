@@ -2,7 +2,9 @@ import { createServer } from 'node:http'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
+import { pinoHttp } from 'pino-http'
 import type { AnswerRequest } from '@escape/shared'
+import { logger } from './logger.js'
 import { createRealtime } from './realtime.js'
 import { handleAnswer } from './game.js'
 
@@ -14,6 +16,16 @@ const isProd = process.env.NODE_ENV === 'production'
 
 const app = express()
 app.use(express.json())
+app.use(
+  pinoHttp({
+    logger,
+    // Log minimal : méthode + URL + statut + durée, sans les en-têtes.
+    serializers: {
+      req: (req) => ({ method: req.method, url: req.url }),
+      res: (res) => ({ statusCode: res.statusCode }),
+    },
+  }),
+)
 
 // ---------------------------------------------------------------------------
 // API
@@ -59,12 +71,15 @@ if (isProd) {
 // ---------------------------------------------------------------------------
 
 httpServer.listen(PORT, () => {
-  console.log(`Serveur prêt sur http://localhost:${PORT} (${isProd ? 'production' : 'développement'})`)
+  logger.info(
+    { port: PORT, env: isProd ? 'production' : 'development' },
+    `serveur prêt sur http://localhost:${PORT}`,
+  )
 })
 
 for (const signal of ['SIGINT', 'SIGTERM'] as const) {
   process.on(signal, () => {
-    console.log(`\n${signal} reçu, arrêt en cours...`)
+    logger.info({ signal }, 'arrêt en cours')
     void realtime.close().then(() => {
       httpServer.close(() => process.exit(0))
     })
