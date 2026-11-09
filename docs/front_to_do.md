@@ -26,12 +26,12 @@ informations sensibles sont fictifs et propres au jeu.
 
 ### Boîte magnétique
 
-- [ ] **Page pédagogique sur le fonctionnement d'une porte magnétique**
+- [X] **Page pédagogique sur le fonctionnement d'une porte magnétique**
   - Expliquer le principe de façon générale.
-- [ ] **Page sur les pannes de contrôle d'accès**
+- [X] **Page sur les pannes de contrôle d'accès**
   - Suggérer qu'une coupure d'alimentation peut modifier l'état d'un verrou.
-- [ ] **Page leurre sur l'installation d'un contrôle d'accès**
-- [ ] **Notice fictive de la boîte de dépôt**
+- [X] **Page leurre sur l'installation d'un contrôle d'accès**
+- [X] **Notice fictive de la boîte de dépôt**
   - Mentionner une alimentation et un voyant pour recouper les indices du jeu.
   - La résolution attendue est une coupure d'alimentation simulée.
 

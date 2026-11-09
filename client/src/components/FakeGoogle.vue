@@ -1,19 +1,108 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import '@/styles/style_google.css'
+import { sites, type SiteId } from '@/data/fakeSite'
 const pesquisa = ref('')
 const compteOuvert = ref(false)
 const ongletCompte = ref('compte')
 const estMaximisee = ref(true)
 const rechercheLancee = ref(false)
 
+type ResultatRecherche = {
+  id: string
+  motsCles: string[]
+  siteId: SiteId
+}
+
+const resultatsDisponibles: ResultatRecherche[] = [
+  {
+    id: 'porte-fonctionnement',
+    motsCles: ['porte', 'magnetique', 'electromagnetique', 'verrou'],
+    siteId: 'porte-fonctionnement',
+  },
+  {
+    id: 'porte-pannes',
+    motsCles: ['porte', 'magnetique', 'electromagnetique', 'verrou'],
+    siteId: 'porte-pannes',
+  },
+  {
+    id: 'porte-installation',
+    motsCles: ['porte', 'magnetique', 'electromagnetique', 'verrou'],
+    siteId: 'porte-installation',
+  },
+  {
+    id: 'porte-boite-depot',
+    motsCles: ['boite', 'dépôt', 'depot', 'porte', 'magnetique', 'voyant'],
+    siteId: 'porte-boite-depot',
+  },
+  {
+    id: 'proces-officiel',
+    motsCles: ['proces', 'tribunal', 'john due', 'nom entreprise'],
+    siteId: 'proces-officiel',
+  },
+  {
+    id: 'proces-journal',
+    motsCles: ['start-up', 'john due', 'entreprise'],
+    siteId: 'proces-journal',
+  },
+  {
+    id: 'proces-archives',
+    motsCles: ['proces', 'tribunal', 'john due', 'nom entreprise'],
+    siteId: 'proces-archives',
+  },
+  {
+    id: 'startup-officiel',
+    motsCles: ['startup', 'start-up', 'john due', 'entreprise'],
+    siteId: 'startup-officiel',
+  },
+  {
+    id: 'startup-linkedin',
+    motsCles: ['startup', 'start-up', 'linkedin', 'john due'],
+    siteId: 'startup-linkedin',
+  },
+  {
+    id: 'startup-actualite',
+    motsCles: ['startup', 'start-up', 'entreprise'],
+    siteId: 'startup-actualite',
+  },
+  {
+    id: 'alarme-entreprise',
+    motsCles: ['alarme', 'code', 'securite', 'nom entreprise'],
+    siteId: 'alarme-entreprise',
+  },
+  {
+    id: 'alarme-avis',
+    motsCles: ['alarme', 'securite', 'avis'],
+    siteId: 'alarme-avis',
+  },
+  {
+    id: 'alarme-forum',
+    motsCles: ['alarme', 'code', 'securite', 'forum'],
+    siteId: 'alarme-forum',
+  },
+]
+
+defineEmits<{
+  close: []
+  openSite: [siteId: SiteId]
+}>()
+
 const lancerRecherche = () => {
   rechercheLancee.value = pesquisa.value.trim().length > 0
 }
 
-defineEmits<{
-  close: []
-}>()
+const requeteNormalisee = computed(() =>
+  pesquisa.value
+    .toLocaleLowerCase('fr-FR')
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, ''),
+)
+
+const resultats = computed(() =>
+  resultatsDisponibles.filter((resultat) =>
+    resultat.motsCles.some((motCle) => requeteNormalisee.value.includes(motCle)),
+  ),
+)
 </script>
 
 <template>
@@ -126,9 +215,25 @@ defineEmits<{
         <button class="btn">J'ai de la chance</button>
       </div>
 
-      <p v-if="rechercheLancee" class="search-feedback">
-        Résultats de recherche pour : <strong>{{ pesquisa }}</strong>
-      </p>
+      <section v-if="rechercheLancee" class="search-results" aria-label="Résultats de recherche">
+        <p class="search-feedback">
+          Résultats de recherche pour : <strong>{{ pesquisa }}</strong>
+        </p>
+        <button
+          v-for="resultat in resultats"
+          :key="resultat.id"
+          class="search-result"
+          type="button"
+          @click="$emit('openSite', resultat.siteId)"
+        >
+          <span class="search-result__url">{{ sites[resultat.siteId].domaine }}</span>
+          <strong>{{ sites[resultat.siteId].titre }}</strong>
+          <span>{{ sites[resultat.siteId].introduction }}</span>
+        </button>
+        <p v-if="resultats.length === 0" class="search-no-result">
+          Aucun résultat pertinent trouvé pour cette recherche.
+        </p>
+      </section>
 
       <div class="language-offer">
         Disponible sur Google en : <a href="#">français</a>
