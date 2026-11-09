@@ -19,14 +19,13 @@
 
 | Élément | Détail |
 |---|---|
-| Entreprise | '***' Racing Team |
+| Entreprise | Carbona Racing Team |
 | Secret à voler | Plans aéro |
 
 ### L'employé corrompu
 
 - **Nom :** David Ecnasiol
 - **Profil :** ancien employé, aux prud'hommes avec l'entreprise
-- **Procès :** licenciement abusif. Motif : il a couché avec l'ex-femme du patron.
 
 ---
 
