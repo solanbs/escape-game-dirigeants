@@ -32,13 +32,9 @@ restent propres au scénario et simulées.
 | Recherche saisie | Résultats à afficher (ordre suggéré) | Indice apporté |
 |---|---|---|
 | `[NOM ENTREPRISE]` | 1. **[NOM ENTREPRISE] — site officiel** — présentation de l'écurie. 2. **Actualités de [NOM ENTREPRISE]** — articles fictifs. 3. **Résultats sportifs** — leurre ou contenu de contexte. 4. **Procès Affaire de licenciement abusif chez [NOM ENTREPRISE]** | Permet de trouver le site de l'entreprise, de confirmer son activité et de trouver le procès et le nom de David Ecnasiol |
-
 | `David Ecnasiol ` | 1. **La startup de David Ecnasiol** — site fictif avec une adresse de contact. 2. **David Ecnasiol — profil professionnel** — lien vers son LinkedIn fictif. 3. **Homonymes : David E.** — leurre. 4. **David Ecnasiol — Facebook** — profil fictif et publications. | L'adresse du site de la startup permet de trouver le mail de David. |
-
 | `David Ecnasiol LinkedIn` | 1. **David Ecnasiol — LinkedIn** — profil indiquant son ancien poste chez [NOM ENTREPRISE] et sa startup. 2. **Offres d'emploi chez [NOM ENTREPRISE]** — leurre. | Confirme le lien entre David, l'entreprise et sa startup. |
-
 | `ouverture porte magnétique principe` | 1. **Comment fonctionne une porte à verrouillage magnétique ?** — explication générale du principe. 2. **Pannes fréquentes des accès contrôlés** — indique qu'une coupure d'alimentation peut modifier l'état du verrou, sans procédure applicable à un site réel. 3. **Installer un contrôle d'accès** — leurre. | Oriente vers l'hypothèse de coupure d'alimentation, à valider avec les indices propres à la boîte du jeu. |
-
 | `alarme SuperSecure boîtier` | 1. **SuperSecure — système d'alarme** — site fictif signalant que le code d'usine doit être changé et qu'un agent intervient sous 15 minutes. 2. **Revendeur SuperSecure — annonce** — lien vers l'annonce fictive du boîtier sur Leboncoin. 3. **Avis sur les alarmes** — leurre. | Identifie le fabricant et la contrainte de temps. |
 | `SuperSecure code usine` | 1. **Guide SuperSecure : mise en service** — indique que le code initial figure dans la documentation de mise en service. 2. **Code oublié : contacter l'installateur** — leurre. 3. **Forum : configuration d'une alarme** — discussion fictive, indice partiel mais pas le code. | Oriente vers une autre recherche ou vers la documentation trouvée dans le jeu. **À définir :** chaîne d'indices menant au code fictif. |
 | `Sébastien Friand [NOM ENTREPRISE]` | 1. **Sébastien Friand — LinkedIn** — profil fictif le présentant comme dirigeant. 2. **Actualités de [NOM ENTREPRISE]** — article de contexte. 3. **Homonyme** — leurre. | Confirme son rôle. **À définir :** éventuel indice utile à la progression. |
