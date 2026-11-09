@@ -2,6 +2,7 @@ import type { Server as HttpServer } from 'node:http'
 import { Server } from 'socket.io'
 import { IOT_NAMESPACE, SOCKET_EVENTS } from '@escape/shared'
 import type { ClientEvents, ServerEvents, ServerEventName } from '@escape/shared'
+import { logger } from './logger.js'
 
 /** Émet un événement typé vers tous les navigateurs connectés. */
 export type Emit = <E extends ServerEventName>(
@@ -19,16 +20,16 @@ export function createRealtime(httpServer: HttpServer): Realtime {
   const io = new Server<ClientEvents, ServerEvents>(httpServer)
 
   io.on('connection', (socket) => {
-    console.log(`[socket] navigateur connecté (${socket.id})`)
+    logger.info({ socketId: socket.id }, 'navigateur connecté')
 
     socket.emit(SOCKET_EVENTS.READY, { ok: true, at: Date.now() })
 
     socket.on('hello', (payload) => {
-      console.log(`[socket] hello de ${socket.id} :`, payload)
+      logger.debug({ socketId: socket.id, payload }, 'hello')
     })
 
     socket.on('disconnect', (reason) => {
-      console.log(`[socket] navigateur déconnecté (${socket.id}) : ${reason}`)
+      logger.info({ socketId: socket.id, reason }, 'navigateur déconnecté')
     })
   })
 
@@ -36,7 +37,7 @@ export function createRealtime(httpServer: HttpServer): Realtime {
   // Rien à faire pour l'instant ; l'authentification viendra ici.
   const iot = io.of(IOT_NAMESPACE)
   iot.on('connection', (socket) => {
-    console.log(`[iot] objet connecté (${socket.id})`)
+    logger.info({ socketId: socket.id }, 'objet connecté sur /iot')
   })
 
   const emit: Emit = (event, payload) => {

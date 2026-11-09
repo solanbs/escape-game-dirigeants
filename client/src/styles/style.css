@@ -17,6 +17,43 @@ body {
   min-height: 100vh;
 }
 
+.application {
+  min-height: 100vh;
+}
+
+.navigation {
+  position: fixed;
+  z-index: 10;
+  top: 1rem;
+  left: 50%;
+  display: flex;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  transform: translateX(-50%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 999px;
+  background: rgba(15, 23, 35, 0.85);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(12px);
+}
+
+.navigation__bouton {
+  padding: 0.5rem 0.85rem;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: #d7e0ec;
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+
+.navigation__bouton:hover,
+.navigation__bouton--actif {
+  background: #4b76ad;
+  color: #fff;
+}
+
 .bureau {
   min-height: 100vh;
   padding: 4rem 2rem;

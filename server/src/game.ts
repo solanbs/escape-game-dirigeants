@@ -1,6 +1,7 @@
 import { SOCKET_EVENTS } from '@escape/shared'
 import type { AnswerRequest, AnswerResult } from '@escape/shared'
 import type { Emit } from './realtime.js'
+import { logger } from './logger.js'
 
 /**
  * Moteur de jeu — squelette.
@@ -23,8 +24,11 @@ export function handleAnswer(input: AnswerRequest, emit: Emit): AnswerResult {
   }
 
   if (input.value.trim().toLowerCase() !== expected) {
+    logger.debug({ puzzleId: input.puzzleId, teamId: input.teamId }, 'réponse refusée')
     return { ok: false, message: 'Mauvaise réponse' }
   }
+
+  logger.info({ puzzleId: input.puzzleId, teamId: input.teamId }, 'énigme résolue')
 
   const at = Date.now()
   emit(SOCKET_EVENTS.PUZZLE_SOLVED, { puzzleId: input.puzzleId, teamId: input.teamId, at })

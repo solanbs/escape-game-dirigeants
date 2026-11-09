@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
 import Fenetre from '@/components/Fenetre.vue'
+import BureauWindows from '@/components/BureauWindows.vue'
+import FakeGoogle from '@/components/FakeGoogle.vue'
 import { api } from '@/services/api'
 import { connect, game, testAnswer } from '@/stores/game'
 
 const ouverte = ref(true)
+const page = ref<'jeu' | 'windows' | 'google'>('jeu')
 const ping = ref('en attente…')
 
 onMounted(async () => {
@@ -20,7 +23,27 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="bureau">
+  <div class="application">
+    <nav class="navigation" aria-label="Navigation entre les pages">
+      <button
+        class="navigation__bouton"
+        :class="{ 'navigation__bouton--actif': page === 'jeu' }"
+        type="button"
+        @click="page = 'jeu'"
+      >
+        Page actuelle
+      </button>
+      <button
+        class="navigation__bouton"
+        :class="{ 'navigation__bouton--actif': page === 'windows' || page === 'google' }"
+        type="button"
+        @click="page = 'windows'"
+      >
+        Bureau Windows 11
+      </button>
+    </nav>
+
+    <main v-if="page === 'jeu'" class="bureau">
     <Fenetre v-if="ouverte" title="Poste de travail" @close="ouverte = false">
       <p class="ligne">
         API <code>/api/ping</code> : <strong>{{ ping }}</strong>
@@ -46,5 +69,10 @@ onMounted(async () => {
     <button v-else class="bouton bouton--relance" type="button" @click="ouverte = true">
       Rouvrir la fenêtre
     </button>
-  </main>
+    </main>
+
+    <BureauWindows v-else-if="page === 'windows'" @back="page = 'jeu'" @google="page = 'google'" />
+
+    <FakeGoogle v-else @close="page = 'windows'" />
+  </div>
 </template>
