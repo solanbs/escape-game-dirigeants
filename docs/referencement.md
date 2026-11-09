@@ -21,10 +21,32 @@ du scénario. Les éléments marqués **À définir** restent à préciser.
 | 5 — Élévation de privilèges | Poste des attaquants / navigateur | **À construire :** environnement d'énigme autour de l'élévation de privilèges via GTFOBins. | Obtenir les privilèges nécessaires à l'accès aux plans aéro. |
 | 6 — Vol de données | Poste des attaquants / interface de jeu | **À construire :** exfiltration des plans aéro et lancement simulé du ransomware. | Terminer l'attaque et déclencher le débrief. |
 
+## Recherches Google et résultats attendus
+
+Les requêtes ci-dessous sont des exemples de ce que les joueurs peuvent taper.
+Les titres, extraits et pages sont fictifs et doivent être consultables dans le
+navigateur du jeu. Les résultats utiles doivent guider sans afficher
+immédiatement la réponse. Les informations techniques sur la boîte et l'alarme
+restent propres au scénario et simulées.
+
+| Recherche saisie | Résultats à afficher (ordre suggéré) | Indice apporté |
+|---|---|---|
+| `[NOM ENTREPRISE] Racing` | 1. **[NOM ENTREPRISE] Racing — site officiel** — présentation de l'écurie. 2. **Actualités de [NOM ENTREPRISE]** — articles fictifs. 3. **Résultats sportifs** — leurre ou contenu de contexte. | Permet de trouver le site de l'entreprise et de confirmer son activité. |
+| `procès licenciement abusif écurie [NOM ENTREPRISE]` | 1. **Affaire de licenciement abusif chez [NOM ENTREPRISE] Racing** — article fictif mentionnant David Ecnasiol. 2. **[NOM ENTREPRISE] : litige commercial avec un fournisseur** — leurre. 3. **Résultats sportifs de [NOM ENTREPRISE]** — leurre. | Le premier résultat révèle le nom de David et le contexte du procès. |
+| `David Ecnasiol startup` | 1. **La startup de David Ecnasiol** — site fictif avec une adresse de contact. 2. **David Ecnasiol — profil professionnel** — lien vers son LinkedIn fictif. 3. **Homonymes : David E.** — leurre. | L'adresse du site de la startup permet de trouver le mail de David. |
+| `David Ecnasiol LinkedIn` | 1. **David Ecnasiol — LinkedIn** — profil indiquant son ancien poste chez [NOM ENTREPRISE] et sa startup. 2. **Offres d'emploi chez [NOM ENTREPRISE]** — leurre. | Confirme le lien entre David, l'entreprise et sa startup. |
+| `David Ecnasiol Facebook` | 1. **David Ecnasiol — Facebook** — profil fictif et publications. 2. **Pages portant un nom similaire** — leurre. | Apporte un détail de contexte ou un indice secondaire, sans révéler le mot de passe ni la solution d'une autre énigme. **À définir :** détail publié. |
+| `ouverture porte magnétique principe` | 1. **Comment fonctionne une porte à verrouillage magnétique ?** — explication générale du principe. 2. **Pannes fréquentes des accès contrôlés** — indique qu'une coupure d'alimentation peut modifier l'état du verrou, sans procédure applicable à un site réel. 3. **Installer un contrôle d'accès** — leurre. | Oriente vers l'hypothèse de coupure d'alimentation, à valider avec les indices propres à la boîte du jeu. |
+| `boîte magnétique [indice trouvé dans le scénario]` | 1. **Boîte de dépôt — notice fictive** — référence à une alimentation électrique et à un voyant. 2. **Boîtes aux lettres sécurisées** — leurre. | Recoupe les indices trouvés en jeu et mène à la coupure d'alimentation simulée. **À définir :** requête exacte selon l'indice retenu. |
+| `alarme SuperSecure boîtier` | 1. **SuperSecure — système d'alarme** — site fictif signalant que le code d'usine doit être changé et qu'un agent intervient sous 15 minutes. 2. **Revendeur SuperSecure — annonce** — lien vers l'annonce fictive du boîtier sur Leboncoin. 3. **Avis sur les alarmes** — leurre. | Identifie le fabricant et la contrainte de temps. |
+| `SuperSecure code usine` | 1. **Guide SuperSecure : mise en service** — indique que le code initial figure dans la documentation de mise en service. 2. **Code oublié : contacter l'installateur** — leurre. 3. **Forum : configuration d'une alarme** — discussion fictive, indice partiel mais pas le code. | Oriente vers une autre recherche ou vers la documentation trouvée dans le jeu. **À définir :** chaîne d'indices menant au code fictif. |
+| `[indice de code] SuperSecure code par défaut` | 1. **Archive de documentation SuperSecure** — page fictive révélant le code de jeu après recoupement des indices. 2. **Autres marques d'alarmes** — leurre. | Donne le code fictif attendu par le jeu, uniquement après la bonne recherche. **À définir :** indice de recherche et code non réel. |
+| `Sébastien Friand [NOM ENTREPRISE]` | 1. **Sébastien Friand — LinkedIn** — profil fictif le présentant comme dirigeant. 2. **Actualités de [NOM ENTREPRISE]** — article de contexte. 3. **Homonyme** — leurre. | Confirme son rôle. **À définir :** éventuel indice utile à la progression. |
+
 ## Parcours front à prévoir
 
-- Google doit relier les requêtes des joueurs aux références ci-dessus, avec des
-  résultats utiles et quelques leurres cohérents.
+- Google doit relier les recherches du tableau aux références ci-dessus, avec
+  des résultats utiles et quelques leurres cohérents.
 - Le navigateur doit permettre de consulter les sites, profils et blogs
   référencés.
 - Le mail doit prendre en charge l'échange scénarisé avec David.
