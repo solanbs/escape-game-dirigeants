@@ -4,7 +4,12 @@ import Fenetre from '@/components/Fenetre.vue'
 import BureauWindows from '@/components/BureauWindows.vue'
 import FakeGoogle from '@/components/FakeGoogle.vue'
 import FakeSite from '@/components/FakeSite.vue'
-import FakeAlarme from '@/components/FakeAlarme.vue'
+import FakeAlarmeSuperSecure from '@/components/FakeAlarmeSuperSecure.vue'
+import FakeAlarmeAnnonce from '@/components/FakeAlarmeAnnonce.vue'
+import FakeAlarmeArchive from '@/components/FakeAlarmeArchive.vue'
+import FakeAlarmeForum from '@/components/FakeAlarmeForum.vue'
+import FakeAlarmeGuide from '@/components/FakeAlarmeGuide.vue'
+import FakeAlarmeLeurre from '@/components/FakeAlarmeLeurre.vue'
 import FakePorteMagnetiqueFonctionnement from '@/components/FakePorteMagnetiqueFonctionnement.vue'
 import FakePorteMagnetiquePannes from '@/components/FakePorteMagnetiquePannes.vue'
 import FakePorteMagnetiqueBoite from '@/components/FakePorteMagnetiqueBoite.vue'
@@ -87,12 +92,6 @@ onMounted(async () => {
       @open-site="(id) => { siteId = id; page = 'site' }"
     />
 
-    <FakeAlarme
-      v-else-if="siteId === 'alarme-entreprise'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
     <FakePorteMagnetiqueFonctionnement
       v-else-if="siteId === 'porte-fonctionnement'"
       :site-id="siteId"
@@ -113,6 +112,42 @@ onMounted(async () => {
 
     <FakePorteMagnetiqueBoite
       v-else-if="siteId === 'porte-boite-depot'"
+      :site-id="siteId"
+      @back="page = 'google'"
+    />
+
+    <FakeAlarmeSuperSecure
+      v-else-if="siteId === 'alarme-supersecure'"
+      :site-id="siteId"
+      @back="page = 'google'"
+    />
+
+    <FakeAlarmeAnnonce
+      v-else-if="siteId === 'alarme-annonce-occasion'"
+      :site-id="siteId"
+      @back="page = 'google'"
+    />
+
+    <FakeAlarmeArchive
+      v-else-if="siteId === 'alarme-archives-notices'"
+      :site-id="siteId"
+      @back="page = 'google'"
+    />
+
+    <FakeAlarmeForum
+      v-else-if="siteId === 'alarme-forum-entraide'"
+      :site-id="siteId"
+      @back="page = 'google'"
+    />
+
+    <FakeAlarmeGuide
+      v-else-if="siteId === 'alarme-guide-demarrage'"
+      :site-id="siteId"
+      @back="page = 'google'"
+    />
+
+    <FakeAlarmeLeurre
+      v-else-if="siteId === 'alarme-leurre-codes'"
       :site-id="siteId"
       @back="page = 'google'"
     />

@@ -3,15 +3,12 @@ export type SiteId =
   | 'porte-pannes'
   | 'porte-installation'
   | 'porte-boite-depot'
-  | 'proces-officiel'
-  | 'proces-journal'
-  | 'proces-archives'
-  | 'startup-officiel'
-  | 'startup-linkedin'
-  | 'startup-actualite'
-  | 'alarme-entreprise'
-  | 'alarme-avis'
-  | 'alarme-forum'
+  | 'alarme-supersecure'
+  | 'alarme-annonce-occasion'
+  | 'alarme-guide-demarrage'
+  | 'alarme-forum-entraide'
+  | 'alarme-leurre-codes'
+  | 'alarme-archives-notices'
 
 export type FakeSiteData = {
   domaine: string
@@ -50,67 +47,46 @@ export const sites: Record<SiteId, FakeSiteData> = {
     introduction: 'Une notice fictive mentionne une alimentation et un voyant à recouper.',
     points: ['Observer le voyant', 'Repérer l’alimentation sur le schéma', 'Simuler une coupure dans le jeu'],
   },
-  'proces-officiel': {
-    domaine: 'justice-officielle.fake',
+  'alarme-supersecure': {
+    domaine: 'supersecure.fr',
     rubrique: 'Site officiel',
-    titre: 'Dossier public du tribunal',
-    introduction: 'Calendrier fictif de l’affaire opposant deux entreprises.',
-    points: ['Audience préparatoire : 12 mars', 'Témoin principal : John Due', 'Pièce consultable : rapport financier'],
+    titre: 'SuperSecure : La référence de l\'alarme professionnelle',
+    introduction: 'Systèmes de sécurité haute performance avec intervention sur site.',
+    points: ['Télésurveillance 24/7', 'Intervention en 15 minutes', 'Rappel : changez votre code d\'usine'],
   },
-  'proces-journal': {
-    domaine: 'journal-du-soir.fake',
-    rubrique: 'Enquête',
-    titre: 'Le procès qui intrigue le secteur',
-    introduction: 'Un article fictif rassemble les événements importants de l’affaire.',
-    points: ['Le conflit a commencé après une fusion', 'Plusieurs dirigeants sont entendus', 'La prochaine audience est annoncée'],
+  'alarme-annonce-occasion': {
+    domaine: 'leboncoin.fr',
+    rubrique: 'Petites annonces',
+    titre: 'Vends Centrale SuperSecure V2 - Très bon état',
+    introduction: 'Annonce de vente d\'un boîtier d\'alarme d\'occasion.',
+    points: ['Marque SuperSecure bien visible', 'Modèle V2', 'Vendu sans la notice papier'],
   },
-  'proces-archives': {
-    domaine: 'archives-juridiques.fake',
-    rubrique: 'Archives',
-    titre: 'Historique judiciaire de l’entreprise',
-    introduction: 'Cette archive fictive permet de recouper les dates et les noms.',
-    points: ['Dossier 2019-A', 'Dossier 2022-C', 'Dossier actuel : affaire des dirigeants'],
+  'alarme-guide-demarrage': {
+    domaine: 'support.supersecure.fr',
+    rubrique: 'Centre d\'aide',
+    titre: 'Première mise en service de votre alarme',
+    introduction: 'Guide pour faire l\'installation de votre nouvelle alarme.',
+    points: ['Regarder l’étiquette sous le boîtier', 'Comparer la référence du modèle', 'Consulter la notice d’archive correspondante'],
   },
-  'startup-officiel': {
-    domaine: 'nova-startup.fake',
-    rubrique: 'Site officiel',
-    titre: 'Nova Startup — notre histoire',
-    introduction: 'Présentation fictive de la start-up et de ses fondateurs.',
-    points: ['Fondée par John Due', 'Spécialisée dans les objets connectés', 'Siège situé à Bordeaux'],
+  'alarme-forum-entraide': {
+    domaine: 'brico-forum.fr',
+    rubrique: 'Forum de discussion',
+    titre: 'Code usine SuperSecure V2 perdu !',
+    introduction: 'Discussion entre utilisateurs cherchant à réinitialiser le mot de passe d\'une ancienne centrale.',
+    points: ['Les codes génériques (0000, 1234) ne fonctionnent pas sur ce modèle', 'La sécurité de la version V2 nécessite un code spécifique', 'Un membre conseille de rechercher les anciens manuels d\'installation numérisés'],
   },
-  'startup-linkedin': {
-    domaine: 'reseau-pro.fake',
-    rubrique: 'Réseau professionnel',
-    titre: 'Nova Startup et ses employés',
-    introduction: 'Une page fictive de réseau professionnel rassemble les profils clés.',
-    points: ['John Due — direction', 'Maya Martin — opérations', 'Léo Bernard — ingénierie'],
+  'alarme-leurre-codes': {
+    domaine: 'astuces-secu-maison.com',
+    rubrique: 'Blog Sécurité',
+    titre: 'Les 10 codes d\'alarme les plus courants à éviter',
+    introduction: 'Article de prévention listant les mots de passe par défaut les plus utilisés par les fabricants et les utilisateurs.',
+    points: ['1234, souvent utilisé par défaut par les installateurs', '2580 (colonne centrale du clavier)', '0000 (Fréquent sur les vieux modèles d\'entrée de gamme)'],
   },
-  'startup-actualite': {
-    domaine: 'tech-actualites.fake',
-    rubrique: 'Actualités',
-    titre: 'La start-up qui veut changer son secteur',
-    introduction: 'Un article fictif évoque les projets et partenaires de l’entreprise.',
-    points: ['Nouveau laboratoire', 'Partenariat avec un fabricant', 'Lancement prévu cet automne'],
-  },
-  'alarme-entreprise': {
-    domaine: 'supersecure.com',
-    rubrique: 'SuperSecure · Protection professionnelle',
-    titre: 'SuperSecure protège votre entreprise 24h/24',
-    introduction: 'SuperSecure accompagne les entreprises avec des solutions de télésurveillance, d’alarme et d’intervention adaptées à chaque site.',
-    points: ['Accueil principal', 'Salle des archives', 'Panneau de contrôle de l’escape game'],
-  },
-  'alarme-avis': {
-    domaine: 'avis-locaux.fake',
-    rubrique: 'Avis',
-    titre: 'Les visiteurs parlent de la sécurité',
-    introduction: 'Des avis fictifs donnent des indices sur les habitudes du bâtiment.',
-    points: ['Le lecteur est près de l’accueil', 'Le voyant est visible depuis le couloir', 'Les interventions sont consignées'],
-  },
-  'alarme-forum': {
-    domaine: 'forum-batiment.fake',
-    rubrique: 'Forum · Discussion',
-    titre: 'Le code de test du scénario',
-    introduction: 'Un message fictif mentionne un code utilisable uniquement dans le jeu.',
-    points: ['Code de scénario : LUMIERE-42', 'Ce code ne correspond à aucun système réel', 'À saisir uniquement dans le panneau de l’escape game'],
+  'alarme-archives-notices': {
+    domaine: 'notices-pdf-archives.com',
+    rubrique: 'Base de données',
+    titre: 'Archive technique : SuperSecure Gamme 2019',
+    introduction: 'Répertoire web en accès libre archivant d\'anciennes documentations et manuels numérisés.',
+    points: ['Notice d’installation complète au format texte', 'Instructions de premier démarrage de la série V2', 'Mémo de configuration contenant le code usine d\'origine'],
   },
 }

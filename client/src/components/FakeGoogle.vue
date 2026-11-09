@@ -36,49 +36,34 @@ const resultatsDisponibles: ResultatRecherche[] = [
     siteId: 'porte-boite-depot',
   },
   {
-    id: 'proces-officiel',
-    motsCles: ['proces', 'tribunal', 'john due', 'nom entreprise'],
-    siteId: 'proces-officiel',
-  },
-  {
-    id: 'proces-journal',
-    motsCles: ['start-up', 'john due', 'entreprise'],
-    siteId: 'proces-journal',
-  },
-  {
-    id: 'proces-archives',
-    motsCles: ['proces', 'tribunal', 'john due', 'nom entreprise'],
-    siteId: 'proces-archives',
-  },
-  {
-    id: 'startup-officiel',
-    motsCles: ['startup', 'start-up', 'john due', 'entreprise'],
-    siteId: 'startup-officiel',
-  },
-  {
-    id: 'startup-linkedin',
-    motsCles: ['startup', 'start-up', 'linkedin', 'john due'],
-    siteId: 'startup-linkedin',
-  },
-  {
-    id: 'startup-actualite',
-    motsCles: ['startup', 'start-up', 'entreprise'],
-    siteId: 'startup-actualite',
-  },
-  {
     id: 'alarme-entreprise',
     motsCles: ['alarme', 'code', 'securite', 'nom entreprise'],
-    siteId: 'alarme-entreprise',
+    siteId: 'alarme-supersecure',
   },
   {
     id: 'alarme-avis',
     motsCles: ['alarme', 'securite', 'avis'],
-    siteId: 'alarme-avis',
+    siteId: 'alarme-annonce-occasion',
   },
   {
     id: 'alarme-forum',
     motsCles: ['alarme', 'code', 'securite', 'forum'],
-    siteId: 'alarme-forum',
+    siteId: 'alarme-forum-entraide',
+  },
+  {
+    id: 'alarme-guide-demarrage',
+    motsCles: ['alarme', 'supersecure', 'mise en service', 'notice'],
+    siteId: 'alarme-guide-demarrage',
+  },
+  {
+    id: 'alarme-leurre-codes',
+    motsCles: ['alarme', 'code', 'codes', 'securite'],
+    siteId: 'alarme-leurre-codes',
+  },
+  {
+    id: 'alarme-archives-notices',
+    motsCles: ['alarme', 'archive', 'notice', 'supersecure', 'v2'],
+    siteId: 'alarme-archives-notices',
   },
 ]
 

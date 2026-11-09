@@ -1,16 +1,10 @@
 <script setup lang="ts">
-
-import '@/styles/sytle_alarme.css'
+import '@/styles/style_supersecure.css'
+import '@/styles/style_google.css'
 import { sites, type SiteId } from '@/data/fakeSite'
 
-const props = defineProps<{
-  siteId: SiteId
-}>()
-
-defineEmits<{
-  back: []
-}>()
-
+const props = defineProps<{ siteId: SiteId }>()
+defineEmits<{ back: [] }>()
 const site = sites[props.siteId]
 </script>
 
@@ -44,13 +38,10 @@ const site = sites[props.siteId]
         <span>🔒</span>
         <span>{{ site.domaine }}</span>
       </div>
-      <button type="button" aria-label="Favoris">☆</button>
-      <button type="button" aria-label="Menu">⋮</button>
     </div>
 
-    <!-- Contenu du site web (Scrollable) -->
+    <!-- Contenu du site officiel -->
     <main class="corporate-site">
-      <!-- Navigation du site -->
       <nav class="corp-nav">
         <div class="corp-nav__brand">
           <span class="corp-nav__logo">🛡️</span>
@@ -58,73 +49,55 @@ const site = sites[props.siteId]
         </div>
         <div class="corp-nav__links">
           <a href="#">Accueil</a>
-          <a href="#">Nos Systèmes</a>
+          <a href="#">Équipements</a>
           <a href="#">Télésurveillance</a>
-          <a href="#">Contact</a>
+          <a href="#">Support Technique</a>
         </div>
         <div class="corp-nav__actions">
           <span class="corp-phone">📞 0800 112 112</span>
-          <button class="corp-btn corp-btn--outline">Espace Client</button>
+          <button class="corp-btn corp-btn--primary">Espace Client</button>
         </div>
       </nav>
 
-      <!-- Bannière marketing -->
+      <!-- Message d'alerte sécurité -->
+      <section class="corp-alert-banner">
+        <div class="alert-content">
+          <span class="alert-icon">⚠️</span>
+          <div class="alert-text">
+            <strong>Rappel de sécurité majeur :</strong>
+            <p>Afin de garantir l'intégrité de vos locaux, il est impératif de modifier le code d'usine figurant sur la notice lors de la première mise sous tension de votre centrale V2.</p>
+          </div>
+        </div>
+      </section>
+
       <header class="corp-hero">
         <div class="corp-hero__content">
-          <h1>Protégez ce qui compte le plus.</h1>
-          <p>Une protection professionnelle, une intervention rapide, 24h/24 et 7j/7.</p>
+          <h1>La dissuasion absolue.</h1>
+          <p>La référence en protection professionnelle. Une détection infaillible reliée à notre centre de commandement.</p>
           <div class="corp-hero__stats">
             <div>
-              <strong>15 000+</strong>
-              <span>clients protégés</span>
+              <strong>24/7</strong>
+              <span>Télésurveillance active</span>
             </div>
             <div>
-              <strong>4,8/5</strong>
-              <span>note moyenne</span>
-            </div>
-            <div>
-              <strong>20 min</strong>
-              <span>délai d’intervention</span>
+              <strong>15 min</strong>
+              <span>Délai d'intervention garanti</span>
             </div>
           </div>
         </div>
       </header>
 
-      <section class="corp-alert-banner" aria-label="Message important de sécurité">
-        <p class="corp-alert-banner__reminder">⚠️ Pensez à changer le code de base de votre alarme.</p>
-      </section>
-
-      <!-- Arguments de vente -->
       <section class="corp-features">
         <div class="feature">
-          <span class="feature-icon">👁️</span>
-          <h3>Télésurveillance 24/7</h3>
-          <p>Nos opérateurs veillent sur vos locaux de jour comme de nuit.</p>
+          <span class="feature-icon">🚨</span>
+          <h3>Levée de doute immédiate</h3>
+          <p>Nos opérateurs analysent les flux vidéo dès le déclenchement des sirènes.</p>
         </div>
         <div class="feature">
-          <span class="feature-icon">⚡</span>
-          <h3>Intervention Rapide</h3>
-          <p>Un réseau d'agents répartis sur tout le territoire national.</p>
+          <span class="feature-icon">🚔</span>
+          <h3>Intervention Physique</h3>
+          <p>En cas d'intrusion confirmée, un agent motorisé sécurise le site en moins de 15 minutes.</p>
         </div>
-        <div class="feature">
-          <span class="feature-icon">📱</span>
-          <h3>Application Mobile</h3>
-          <p>Contrôlez votre système d'alarme du bout des doigts.</p>
-        </div>
-      </section>
-
-      <section class="corp-reviews">
-        <p class="corp-reviews__eyebrow">Ils nous font confiance</p>
-        <h2>Une sécurité reconnue par nos clients</h2>
-        <div class="corp-reviews__rating" aria-label="Note de 4,8 sur 5">
-          <strong>4,8</strong>
-          <span>★★★★★</span>
-          <small>sur 5 · basée sur 2 400 avis</small>
-        </div>
-        <blockquote>
-          « Une équipe disponible et une intervention annoncée clairement dès le déclenchement. »
-          <cite>— Avis client vérifié</cite>
-        </blockquote>
       </section>
     </main>
   </div>

@@ -37,18 +37,18 @@ informations sensibles sont fictifs et propres au jeu.
 
 ### Alarme
 
-- [ ] **Site fictif de l'alarme SuperSecure**
+- [X] **Site fictif de l'alarme SuperSecure**
   - Mettre en avant l'avertissement de changer le code d'usine.
   - Signaler qu'un agent intervient sous 15 minutes.
-- [ ] **Annonce fictive Leboncoin du boîtier SuperSecure**
+- [X] **Annonce fictive Leboncoin du boîtier SuperSecure**
   - Montrer le boîtier et rendre sa marque identifiable.
-- [ ] **Guide fictif de mise en service SuperSecure**
+- [X] **Guide fictif de mise en service SuperSecure**
   - Indiquer où trouver le code initial, sans révéler immédiatement la réponse.
-- [ ] **Blog / forum fictif sur les alarmes SuperSecure**
+- [X] **Blog / forum fictif sur les alarmes SuperSecure**
   - Fournir un indice partiel sur la documentation ou le code du jeu.
-- [ ] **Pages leurres sur les codes d'alarme**
+- [X] **Pages leurres sur les codes d'alarme**
   - Proposer des résultats plausibles, mais non concluants.
-- [ ] **Page d'archive fictive de documentation**
+- [X] **Page d'archive fictive de documentation**
   - Donner le code fictif attendu uniquement après recoupement des indices.
 
 ## Applications et interfaces

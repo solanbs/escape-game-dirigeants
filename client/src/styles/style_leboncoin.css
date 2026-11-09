@@ -1,0 +1,109 @@
+.lbc-site {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f4f6f7;
+  color: #1a1a1a;
+  flex: 1;
+  overflow-y: auto;
+  min-height: 0;
+}
+.lbc-container {
+  max-width: 1024px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+.lbc-header {
+  background-color: #ff6e14;
+  padding: 1rem 0;
+}
+.header-inner {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+}
+.lbc-logo {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: 900;
+  letter-spacing: -1px;
+}
+.lbc-logo span { font-weight: 400; font-size: 1rem; }
+.lbc-search {
+  flex: 1;
+  display: flex;
+  background: white;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.lbc-search input {
+  flex: 1;
+  border: none;
+  padding: 0.8rem 1rem;
+  outline: none;
+}
+.lbc-search button {
+  background: #000;
+  color: white;
+  border: none;
+  padding: 0 1.5rem;
+  font-weight: bold;
+}
+.ad-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+  margin-top: 2rem;
+  padding-bottom: 4rem;
+}
+.ad-main {
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.ad-image-gallery {
+  background: #e8ecef;
+  height: 400px;
+  display: grid;
+  place-items: center;
+}
+.image-placeholder {
+  color: #72818c;
+  font-size: 1.2rem;
+}
+.ad-details { padding: 2rem; }
+.ad-details h1 { margin: 0 0 1rem; font-size: 1.5rem; }
+.ad-price { color: #ff6e14; font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
+.ad-date { color: #72818c; font-size: 0.85rem; margin-bottom: 2rem; }
+.ad-description { line-height: 1.6; color: #333; }
+.seller-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+.seller-avatar {
+  width: 60px;
+  height: 60px;
+  background: #e8ecef;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #72818c;
+}
+.seller-info strong { display: block; margin-bottom: 0.2rem; }
+.seller-info span { color: #72818c; font-size: 0.9rem; }
+.btn-contact, .btn-phone {
+  width: 100%;
+  padding: 0.8rem;
+  border-radius: 4px;
+  border: none;
+  font-weight: bold;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+.btn-contact { background: #ff6e14; color: white; }
+.btn-phone { background: white; color: #ff6e14; border: 1px solid #ff6e14; }

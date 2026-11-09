@@ -416,6 +416,22 @@
   font-style: normal;
 }
 
+.corp-alert-banner {
+  background: #fff3cd;
+  border-bottom: 2px solid #ffeeba;
+  padding: 1rem 2rem;
+  color: #856404;
+}
+.alert-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+.alert-icon { font-size: 1.5rem; }
+.alert-text p { margin: 0; font-size: 0.9rem; }
+
 /* --- RESPONSIVE --- */
 @media (max-width: 768px) {
   .corp-nav__links {
