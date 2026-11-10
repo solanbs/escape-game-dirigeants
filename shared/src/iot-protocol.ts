@@ -8,10 +8,10 @@ export const IOT_EVENTS = {
     HELLO: 'iot:hello',
     WELCOME: 'iot:welcome',
     COMMAND: 'iot:command',
-    ACK: 'iot:ack',
+    COMMAND_ACK: 'iot:command-ack',
     EVENT: 'iot:event',
+    EVENT_ACK: 'iot:event-ack',
     STATE: 'iot:state',
-    STATUS: 'iot:status',
 } as const
 
 export type CommandId = string
@@ -23,8 +23,22 @@ export type CueName =
     | 'alarm'
     | 'alarm-off'
     | 'success'
-    | 'intrusion'
+    | 'failure'
     | 'ambiance'
+
+/** volume : 0-100 */
+export type IotAudioRequest = {
+    track: string
+    volume?: number
+    loop?: boolean
+}
+
+export type IotAudioState = {
+    track: string
+    volume: number
+    loop: boolean
+    status: 'stopped' | 'playing' | 'failed'
+}
 
 // ---------------------------------------------------------------------------
 // Commandes serveur → gateway
@@ -32,15 +46,27 @@ export type CueName =
 
 export type IotCommand =
     | { commandId: CommandId; type: 'cue'; cue: CueName }
-    | { commandId: CommandId; type: 'light'; action: 'on' | 'off' | 'scene'; scene?: string }
-    | { commandId: CommandId; type: 'audio'; action: 'play' | 'stop'; track?: string; volume?: number; loop?: boolean }
-    | { commandId: CommandId; type: 'relay'; action: 'on' | 'off' }
+    | { commandId: CommandId; type: 'light'; action: 'on' | 'off' }
+    | { commandId: CommandId; type: 'light'; action: 'scene'; scene: string }
+    | {
+        commandId: CommandId
+        type: 'audio'
+        action: 'play'
+        audio: IotAudioRequest
+    }
+    | { commandId: CommandId; type: 'audio'; action: 'stop' }
 
-export type IotAck = {
+export type IotCommandAck =
+    | {
     commandId: CommandId
-    ok: boolean
-    state?: IotDeviceState
-    error?: string
+    ok: true
+    outputs: IotOutputState
+}
+    | {
+    commandId: CommandId
+    ok: false
+    error: string
+    outputs?: IotOutputState
 }
 
 // ---------------------------------------------------------------------------
@@ -48,21 +74,39 @@ export type IotAck = {
 // ---------------------------------------------------------------------------
 
 export type IotEvent =
-    | { eventId: EventId; type: 'motion'; deviceId: DeviceId; state: 'detected' | 'clear'; at: number }
     | { eventId: EventId; type: 'door'; deviceId: DeviceId; state: 'open' | 'closed'; at: number }
     | { eventId: EventId; type: 'code'; deviceId: DeviceId; code: string; at: number }
-    | { eventId: EventId; type: 'audio'; deviceId: DeviceId; state: 'started' | 'ended' | 'failed'; track: string; at: number }
+
+export type IotEventAck =
+    | {
+    eventId: EventId
+    ok: true
+    result: {
+        type: 'code'
+        accepted: boolean
+        display: string
+    }
+}
+    | {
+    eventId: EventId
+    ok: false
+    error: string
+}
 
 // ---------------------------------------------------------------------------
 // État et cycle de vie
 // ---------------------------------------------------------------------------
 
-export type IotDeviceState = {
+export type IotOutputState = {
     lights: string | null
-    audio: string | null
-    relay: 'on' | 'off'
-    lastMotionAt: number | null
+    audio: IotAudioState | null
 }
+
+export type IotInputState = {
+    door: 'open' | 'closed'
+}
+
+export type IotDeviceState = IotOutputState & IotInputState
 
 export type IotStateReport = {
     gatewayId: GatewayId
@@ -78,14 +122,13 @@ export type IotHello = {
     at: number
 }
 
-export type IotWelcome = {
-    sessionId: string
-    desiredState: IotDeviceState
-    at: number
+export type IotDesiredState = {
+    lights: string | null
+    audio: IotAudioRequest | null
 }
 
-export type IotGatewayStatus = {
-    gatewayId: GatewayId
-    online: boolean
-    lastSeenAt: number
+export type IotWelcome = {
+    sessionId: string
+    desiredState: IotDesiredState
+    at: number
 }

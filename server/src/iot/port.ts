@@ -1,4 +1,4 @@
-import type { CueName, GatewayId, IotDeviceState } from '@escape/shared/iot'
+import type { CueName, GatewayId, DeviceId, IotDeviceState } from '@escape/shared/iot'
 
 export type Unsubscribe = () => void
 
@@ -6,22 +6,9 @@ export type Unsubscribe = () => void
 // Événements exposés au jeu
 // ---------------------------------------------------------------------------
 
-export type MotionEvent = {
-    deviceId: string
-    state: 'detected' | 'clear'
-    at: number
-}
-
 export type DoorEvent = {
-    deviceId: string
+    deviceId: DeviceId
     state: 'open' | 'closed'
-    at: number
-}
-
-export type AudioEvent = {
-    deviceId: string
-    state: 'started' | 'ended' | 'failed'
-    track: string
     at: number
 }
 
@@ -30,15 +17,14 @@ export type AudioEvent = {
 // ---------------------------------------------------------------------------
 
 export type CodeRequest = {
-    deviceId: string
+    deviceId: DeviceId
     code: string
     at: number
 }
 
 export type CodeResult = {
-    ok: boolean
+    accepted: boolean
     display: string
-    cue?: CueName
     error?: string
 }
 
@@ -78,11 +64,11 @@ export interface IotPort {
     cue(name: CueName): Promise<IotCommandResult>
 
     // Notifications : le matériel pousse un événement
-    onDoorOpened(handler: (event: DoorEvent) => void): Unsubscribe
+    onDoor(handler: (event: DoorEvent) => void): Unsubscribe
     // Requête/réponse : le clavier attend un résultat
     onCode(handler: (request: CodeRequest) => Promise<CodeResult>): Unsubscribe
 
     // Supervision
     getSnapshot(): IotSnapshot
-    onStatus(handler: (status: IotStatus) => void): Unsubscribe
+    onGatewayStatus(handler: (status: IotStatus) => void): Unsubscribe
 }
