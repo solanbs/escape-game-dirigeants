@@ -48,6 +48,7 @@ export type IotSnapshot = {
         id: GatewayId
         online: boolean
         lastSeenAt: number
+        offlineAt?: number
         state: IotDeviceState
     }>
 }
