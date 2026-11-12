@@ -19,6 +19,7 @@ export type Registry = {
     setInputState(id: GatewayId, input: IotInputState): void
     setState(id: GatewayId, state: IotDeviceState): void
     get(id: GatewayId): GatewayEntry | undefined
+    getGatewayId(socketId: string): GatewayId | undefined
     getOnline(): GatewayEntry[]
     snapshot(): IotSnapshot
     onStatus(handler: (status: IotStatus) => void): Unsubscribe // Call getSnapshot() to get initial state
@@ -119,6 +120,10 @@ export function createRegistry(): Registry {
         },
         setState(id, state) {
             setStateInternal(gateways, id, state)
+        },
+        getGatewayId(socketId: string): GatewayId | undefined {
+            const gateway = Array.from(gateways.values()).find(g => g.socketId === socketId)
+            return gateway ? gateway.id : undefined
         },
         get(id) {
             const gateway = gateways.get(id)

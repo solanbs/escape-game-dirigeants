@@ -51,7 +51,7 @@ app.post('/api/answer', (req, res) => {
 // ---------------------------------------------------------------------------
 
 const httpServer = createServer(app)
-const realtime = createRealtime(httpServer)
+export const realtime = createRealtime(httpServer)
 
 // ---------------------------------------------------------------------------
 // Front statique (production uniquement : en dev, c'est Vite qui sert le front)
