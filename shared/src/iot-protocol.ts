@@ -19,6 +19,7 @@ export type EventId = string
 export type GatewayId = string
 export type DeviceId = string
 
+/** Nom logique d'un cue de scénario. La résolution est faite côté serveur. */
 export type CueName =
     | 'alarm'
     | 'alarm-off'
@@ -44,17 +45,21 @@ export type IotAudioState = {
 // Commandes serveur → gateway
 // ---------------------------------------------------------------------------
 
-export type IotCommand =
-    | { commandId: CommandId; type: 'cue'; cue: CueName }
-    | { commandId: CommandId; type: 'light'; action: 'on' | 'off' }
-    | { commandId: CommandId; type: 'light'; action: 'scene'; scene: string }
+/**
+ * Commande matérielle envoyée au gateway, sans identifiant.
+ * Les cues sont résolus côté serveur avant l'envoi.
+ */
+export type IotCommandPayload =
+    | { type: 'light'; action: 'on' | 'off' }
+    | { type: 'light'; action: 'scene'; scene: string }
     | {
-        commandId: CommandId
         type: 'audio'
         action: 'play'
         audio: IotAudioRequest
     }
-    | { commandId: CommandId; type: 'audio'; action: 'stop' }
+    | { type: 'audio'; action: 'stop' }
+
+export type IotCommand = IotCommandPayload & { commandId: CommandId }
 
 export type IotCommandAck =
     | {

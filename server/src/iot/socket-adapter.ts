@@ -1,4 +1,4 @@
-import {
+import type {
     CodeRequest,
     CodeResult,
     DoorEvent,
@@ -9,20 +9,28 @@ import {
     Unsubscribe
 } from "./port.js";
 import {
-    CommandId,
-    CueName, GatewayId,
     IOT_EVENTS,
-    IOT_NAMESPACE, IotCommand,
-    IotCommandAck, IotDesiredState,
+    IOT_NAMESPACE,
+} from "@escape/shared/iot";
+import type {
+    CommandId,
+    CueName,
+    GatewayId,
+    IotCommand,
+    IotCommandAck,
+    IotCommandPayload,
+    IotDesiredState,
     IotDeviceState,
     IotEvent,
     IotHello,
     IotWelcome
 } from "@escape/shared/iot";
-import {Namespace, Server, Socket} from "socket.io";
+import type {Namespace, Server, Socket} from "socket.io";
 import {createRegistry} from "./registry.js";
+import {CUES} from "./cues.js";
 import {logger} from "../logger.js";
 import {randomUUID} from "node:crypto";
+import type {IotAdminPort} from "./admin-port.js";
 
 type PendingCommand = {
     commandId: CommandId
@@ -34,13 +42,20 @@ type PendingCommand = {
     sentAt: number
 }
 
+export type IotDeps = {
+    getDesiredState: () => IotDesiredState
+    getSessionId: () => string
+}
+
+export type IotAdapter = {
+    port: IotPort
+    admin: IotAdminPort
+}
+
 export function createSocketAdapter(
     io: Server,
-    deps: {
-        getDesiredState: () => IotDesiredState
-        getSessionId: () => string
-    },
-): IotPort {
+    deps: IotDeps,
+): IotAdapter {
     const iot: Namespace = io.of(IOT_NAMESPACE)
     const registry = createRegistry()
     const sockets = new Map<GatewayId, Socket>()
@@ -92,16 +107,19 @@ export function createSocketAdapter(
         return undefined
     }
 
-    async function cue(name: CueName): Promise<IotCommandResult> {
+    async function execute(command: IotCommandPayload): Promise<IotCommandResult> {
         const gatewayId = getMainGatewayId()
         if (!gatewayId) {
             return {ok: false, error: "No gateway connected"}
         }
 
-        const command: IotCommand = {commandId: randomUUID(), type: 'cue', cue: name}
+        const fullCommand = {
+            ...command,
+            commandId: randomUUID(),
+        } as IotCommand
 
         try {
-            await sendCommand(gatewayId, command)
+            await sendCommand(gatewayId, fullCommand)
             return {ok: true}
         } catch (error) {
             return {
@@ -109,6 +127,25 @@ export function createSocketAdapter(
                 error: (error instanceof Error ? error.message : String(error))
             }
         }
+    }
+
+    async function cue(name: CueName): Promise<IotCommandResult> {
+        const commands = CUES[name]
+        if (!commands) {
+            return {ok: false, error: `Unknown cue: ${name}`}
+        }
+
+        const results = await Promise.all(commands.map((command) => execute(command)))
+        const failure = results.find((result) => !result.ok)
+
+        if (failure) {
+            return {
+                ok: false,
+                error: `Cue ${name}: ${failure.error ?? "unknown error"}`
+            }
+        }
+
+        return {ok: true}
     }
 
     function getSnapshot(): IotSnapshot {
@@ -346,13 +383,54 @@ export function createSocketAdapter(
 
     iot.use(authenticate)
 
+    async function setLight(scene: string): Promise<IotCommandResult> {
+        if (!scene.trim()) {
+            return {ok: false, error: "scene is required"}
+        }
+
+        return execute({type: 'light', action: 'scene', scene})
+    }
+
+    async function playAudio(
+        track: string,
+        opts?: { volume?: number; loop?: boolean },
+    ): Promise<IotCommandResult> {
+        if (!track.trim()) {
+            return {ok: false, error: "track is required"}
+        }
+
+        if (
+            opts?.volume !== undefined &&
+            (!Number.isFinite(opts.volume) || opts.volume < 0 || opts.volume > 100)
+        ) {
+            return {ok: false, error: "volume must be between 0 and 100"}
+        }
+
+        return execute({
+            type: 'audio',
+            action: 'play',
+            audio: {track, volume: opts?.volume, loop: opts?.loop}
+        })
+    }
+
+    async function stopAudio(): Promise<IotCommandResult> {
+        return execute({type: 'audio', action: 'stop'})
+    }
+
     return {
-        start,
-        stop,
-        cue,
-        onDoor,
-        onCode,
-        getSnapshot,
-        onGatewayStatus,
+        port: {
+            start,
+            stop,
+            cue,
+            onDoor,
+            onCode,
+            getSnapshot,
+            onGatewayStatus,
+        },
+        admin: {
+            setLight,
+            playAudio,
+            stopAudio,
+        }
     }
 }

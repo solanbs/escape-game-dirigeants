@@ -43,10 +43,6 @@ export function connect() {
     log(`indice : ${text}`)
   })
 
-  socket.on(SOCKET_EVENTS.IOT_TRIGGER, ({ target, action }) => {
-    log(`iot → ${target} ${action}`)
-  })
-
   socket.connect()
 }
 

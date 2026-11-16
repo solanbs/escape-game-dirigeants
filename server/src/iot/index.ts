@@ -1,11 +1,17 @@
-import {createSocketAdapter} from "./socket-adapter.js";
-import {IotDesiredState} from "@escape/shared/iot";
-import {IotPort} from "./port.js";
-import {Server} from "socket.io";
+import type {Server} from 'socket.io'
+import {createSocketAdapter} from './socket-adapter.js'
+import type {IotAdapter, IotDeps} from './socket-adapter.js'
 
-export function createIot(io: Server, deps: {
-    getDesiredState: () => IotDesiredState,
-    getSessionId: () => string;
-}): IotPort {
-    return createSocketAdapter(io, deps);
+export type {IotAdapter, IotDeps} from './socket-adapter.js'
+export type {IotAdminPort} from './admin-port.js'
+export type {
+    IotCommandResult,
+    IotPort,
+    IotSnapshot,
+    IotStatus,
+    Unsubscribe,
+} from './port.js'
+
+export function createIot(io: Server, deps: IotDeps): IotAdapter {
+    return createSocketAdapter(io, deps)
 }

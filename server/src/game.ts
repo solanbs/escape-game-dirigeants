@@ -32,7 +32,6 @@ export function handleAnswer(input: AnswerRequest, emit: Emit): AnswerResult {
 
   const at = Date.now()
   emit(SOCKET_EVENTS.PUZZLE_SOLVED, { puzzleId: input.puzzleId, teamId: input.teamId, at })
-  emit(SOCKET_EVENTS.IOT_TRIGGER, { target: 'relay', action: 'on', at })
 
   return { ok: true, message: 'Énigme résolue' }
 }
