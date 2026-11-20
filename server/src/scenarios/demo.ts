@@ -1,7 +1,7 @@
 /**
  * Scénario D'EXEMPLE, pour comprendre le moteur. Ce n'est pas le vrai scénario.
  *
- * Il s'inspire des étapes 4 à 6 de docs/scenario.md, simplifiées.
+ * Il s'inspire des étapes 4 à 6 de docs/scenario.md (Carbona Racing Team), simplifiées.
  * Les mots de passe sont des valeurs bidon.
  *
  *   Alarme ──► Session de Maël ──┬──► outil Shell
@@ -9,15 +9,15 @@
  *                                └──► Chemin des plans ───┴─► (les deux) ──► outil Exfiltration
  *
  * Il montre : un enchaînement séquentiel, deux énigmes en parallèle (AllOf),
- * des outils qui se débloquent, un effet IoT, une notification, et des
+ * des outils qui se débloquent, un cue IoT, une notification, et des
  * éléments visibles selon le rôle.
  */
-import { AllOf, IotRelay, Notify, PasswordLock, Tool } from '../elements/index.js'
+import { AllOf, IotCue, Notify, PasswordLock, Tool } from '../elements/index.js'
 import { element, type Scenario } from '../engine/types.js'
 
 export const demoScenario: Scenario = {
   id: 'demo',
-  title: 'Exemple : intrusion chez Racing Team',
+  title: 'Exemple : intrusion chez Carbona Racing Team',
 
   elements: {
     // --- Outils passifs, disponibles dès le début pour tout le monde -------
@@ -36,8 +36,8 @@ export const demoScenario: Scenario = {
       allow: ['master'], // seul le master peut saisir
       visibleTo: ['master'],
     }),
-    siren: element(IotRelay, {
-      config: { deviceId: 'alarme-01' }, // pas de visibleTo : seul le MJ le voit
+    alarmOffCue: element(IotCue, {
+      config: { cue: 'alarm-off' }, // lumières d'ambiance + arrêt de la sirène ; seul le MJ le voit
     }),
     alarmOffMessage: element(Notify, {
       config: { to: ['master', 'ops'], message: 'Alarme désactivée. Vous pouvez fouiller les bureaux.' },
@@ -46,7 +46,8 @@ export const demoScenario: Scenario = {
     // --- Étape B : la session de Maël (inactive tant que l'alarme sonne) -------
     maelSession: element(PasswordLock, {
       enabled: false,
-      config: { label: 'Session Windows de Maël Morin', answer: ['m.morin:Ferrari2024', 'mmorin:Ferrari2024'] },
+      // Format des identifiants (docs/infos.md) : nom + initiale du prénom.
+      config: { label: 'Session Windows de Maël Morin', answer: 'morinm:Carbona2024' },
       allow: ['master'],
       visibleTo: ['master'],
     }),
@@ -81,7 +82,7 @@ export const demoScenario: Scenario = {
 
   // C'est ici que se trouve TOUT le déroulé de la partie.
   wires: [
-    ['alarmPanel.solved', 'siren.off'],
+    ['alarmPanel.solved', 'alarmOffCue.play'],
     ['alarmPanel.solved', 'alarmOffMessage.send'],
     ['alarmPanel.solved', 'maelSession.enable'],
 

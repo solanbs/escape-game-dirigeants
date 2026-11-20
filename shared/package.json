@@ -9,6 +9,10 @@
     ".": {
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
+    },
+    "./iot" : {
+      "types": "./dist/iot-protocol.d.ts",
+      "import": "./dist/iot-protocol.js"
     }
   },
   "files": [

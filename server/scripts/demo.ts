@@ -21,11 +21,11 @@ const log = pino(
   pretty({ sync: true, colorize: true, translateTime: 'SYS:HH:MM:ss', ignore: 'pid,hostname' }),
 )
 
-// Fausses sorties : à la place de Socket.IO et MQTT, on affiche.
+// Fausses sorties : à la place de Socket.IO et du module IoT, on affiche.
 const outputs: Outputs = {
   pushViews: () => {},
   notify: (to, message) => console.log(`   📣 toast pour [${to.join(', ')}] : ${message}`),
-  iot: (deviceId, action) => console.log(`   🔌 MQTT escape/dev/${deviceId}/cmd → ${action}`),
+  cue: (name) => console.log(`   🔌 IoT : cue « ${name} » (lumières + son)`),
 }
 
 const engine = createEngine(demoScenario, registry)
@@ -74,12 +74,12 @@ play(ops, 'alarmPanel', 'submit', 'SuperSecure1234')
 step('Le master se trompe de code')
 play(master, 'alarmPanel', 'submit', 'admin')
 
-step('Le master saisit le bon code → sirène coupée, toast, session de Maël débloquée')
+step('Le master saisit le bon code → cue « alarm-off », toast, session de Maël débloquée')
 play(master, 'alarmPanel', 'submit', 'supersecure1234')
 show('master')
 
 step('Le master ouvre la session de Maël → shell + 2 énigmes en parallèle')
-play(master, 'maelSession', 'submit', 'm.morin:Ferrari2024')
+play(master, 'maelSession', 'submit', 'morinm:Carbona2024')
 show('master')
 
 step('Mot de passe root trouvé (il manque encore les plans)')
@@ -97,7 +97,7 @@ show('gm')
 step('Le MJ met en pause : les joueurs sont bloqués, pas le MJ')
 game.pause()
 play(master, 'alarmPanel', 'submit', 'x')
-play(gm, 'siren', 'on')
+play(gm, 'alarmOffCue', 'play')
 game.resume()
 
 step('Fin de partie')

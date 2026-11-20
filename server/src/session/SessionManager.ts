@@ -145,8 +145,8 @@ export class SessionManager {
 
   private apply(effect: Effect) {
     switch (effect.type) {
-      case 'iot':
-        this.out.iot(effect.deviceId, effect.action)
+      case 'cue':
+        this.out.cue(effect.name)
         break
       case 'notify':
         this.out.notify(effect.to, effect.message)

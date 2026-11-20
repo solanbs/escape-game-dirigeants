@@ -1,0 +1,54 @@
+.archive-site {
+  font-family: monospace;
+  background-color: #ffffff;
+  color: #000000;
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+.archive-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.archive-header h1 {
+  font-size: 1.5rem;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+.archive-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  margin-bottom: 3rem;
+}
+.archive-table th { border-bottom: 1px solid #ccc; padding: 0.5rem; }
+.archive-table td { padding: 0.5rem; }
+.archive-table a { color: #0000ee; text-decoration: none; }
+.archive-table a:hover { text-decoration: underline; }
+.highlight-row { background-color: #f0f8ff; }
+.file-preview {
+  border: 1px solid #999;
+  background: #f9f9f9;
+  margin-bottom: 2rem;
+}
+.file-preview-header {
+  background: #eee;
+  padding: 0.5rem 1rem;
+  border-bottom: 1px solid #999;
+  font-weight: bold;
+}
+.file-content {
+  padding: 1rem;
+  margin: 0;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  color: #333;
+}
+.back-btn {
+  padding: 0.5rem 1rem;
+  background: #eee;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  font-family: inherit;
+}

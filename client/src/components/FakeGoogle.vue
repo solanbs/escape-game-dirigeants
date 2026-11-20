@@ -1,19 +1,93 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import '@/styles/style_google.css'
+import { sites, type SiteId } from '@/data/fakeSite'
 const pesquisa = ref('')
 const compteOuvert = ref(false)
 const ongletCompte = ref('compte')
 const estMaximisee = ref(true)
 const rechercheLancee = ref(false)
 
+type ResultatRecherche = {
+  id: string
+  motsCles: string[]
+  siteId: SiteId
+}
+
+const resultatsDisponibles: ResultatRecherche[] = [
+  {
+    id: 'porte-fonctionnement',
+    motsCles: ['porte', 'magnetique', 'electromagnetique', 'verrou'],
+    siteId: 'porte-fonctionnement',
+  },
+  {
+    id: 'porte-pannes',
+    motsCles: ['porte', 'magnetique', 'electromagnetique', 'verrou'],
+    siteId: 'porte-pannes',
+  },
+  {
+    id: 'porte-installation',
+    motsCles: ['porte', 'magnetique', 'electromagnetique', 'verrou'],
+    siteId: 'porte-installation',
+  },
+  {
+    id: 'porte-boite-depot',
+    motsCles: ['boite', 'dépôt', 'depot', 'porte', 'magnetique', 'voyant'],
+    siteId: 'porte-boite-depot',
+  },
+  {
+    id: 'alarme-entreprise',
+    motsCles: ['alarme', 'code', 'securite', 'nom entreprise'],
+    siteId: 'alarme-supersecure',
+  },
+  {
+    id: 'alarme-avis',
+    motsCles: ['alarme', 'securite', 'avis'],
+    siteId: 'alarme-annonce-occasion',
+  },
+  {
+    id: 'alarme-forum',
+    motsCles: ['alarme', 'code', 'securite', 'forum'],
+    siteId: 'alarme-forum-entraide',
+  },
+  {
+    id: 'alarme-guide-demarrage',
+    motsCles: ['alarme', 'supersecure', 'mise en service', 'notice'],
+    siteId: 'alarme-guide-demarrage',
+  },
+  {
+    id: 'alarme-leurre-codes',
+    motsCles: ['alarme', 'code', 'codes', 'securite'],
+    siteId: 'alarme-leurre-codes',
+  },
+  {
+    id: 'alarme-archives-notices',
+    motsCles: ['alarme', 'archive', 'notice', 'supersecure', 'v2'],
+    siteId: 'alarme-archives-notices',
+  },
+]
+
+defineEmits<{
+  close: []
+  openSite: [siteId: SiteId]
+}>()
+
 const lancerRecherche = () => {
   rechercheLancee.value = pesquisa.value.trim().length > 0
 }
 
-defineEmits<{
-  close: []
-}>()
+const requeteNormalisee = computed(() =>
+  pesquisa.value
+    .toLocaleLowerCase('fr-FR')
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, ''),
+)
+
+const resultats = computed(() =>
+  resultatsDisponibles.filter((resultat) =>
+    resultat.motsCles.some((motCle) => requeteNormalisee.value.includes(motCle)),
+  ),
+)
 </script>
 
 <template>
@@ -126,9 +200,25 @@ defineEmits<{
         <button class="btn">J'ai de la chance</button>
       </div>
 
-      <p v-if="rechercheLancee" class="search-feedback">
-        Résultats de recherche pour : <strong>{{ pesquisa }}</strong>
-      </p>
+      <section v-if="rechercheLancee" class="search-results" aria-label="Résultats de recherche">
+        <p class="search-feedback">
+          Résultats de recherche pour : <strong>{{ pesquisa }}</strong>
+        </p>
+        <button
+          v-for="resultat in resultats"
+          :key="resultat.id"
+          class="search-result"
+          type="button"
+          @click="$emit('openSite', resultat.siteId)"
+        >
+          <span class="search-result__url">{{ sites[resultat.siteId].domaine }}</span>
+          <strong>{{ sites[resultat.siteId].titre }}</strong>
+          <span>{{ sites[resultat.siteId].introduction }}</span>
+        </button>
+        <p v-if="resultats.length === 0" class="search-no-result">
+          Aucun résultat pertinent trouvé pour cette recherche.
+        </p>
+      </section>
 
       <div class="language-offer">
         Disponible sur Google en : <a href="#">français</a>

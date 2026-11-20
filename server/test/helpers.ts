@@ -1,5 +1,6 @@
 import { pino } from 'pino'
 import type { Role } from '@escape/shared'
+import type { CueName } from '@escape/shared/iot'
 import type { Actor } from '../src/engine/types.js'
 import type { Outputs } from '../src/session/ports.js'
 
@@ -14,12 +15,12 @@ export function fakeOutputs() {
   const calls = {
     pushViews: 0,
     notify: [] as { to: Role[]; message: string }[],
-    iot: [] as { deviceId: string; action: string }[],
+    cue: [] as CueName[],
   }
   const outputs: Outputs = {
     pushViews: () => void calls.pushViews++,
     notify: (to, message) => void calls.notify.push({ to, message }),
-    iot: (deviceId, action) => void calls.iot.push({ deviceId, action }),
+    cue: (name) => void calls.cue.push(name),
   }
   return { outputs, calls }
 }

@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict'
-import { beforeEach, describe, it } from 'node:test'
+import { beforeEach, describe, it } from 'vitest'
 import { createEngine } from '../src/engine/engine.js'
 import { registry } from '../src/elements/index.js'
 import { MemorySessionRepo } from '../src/persistence/MemorySessionRepo.js'
@@ -79,11 +79,11 @@ describe('scénario de démo, de bout en bout', () => {
     assert.equal(play(master, 'alarmPanel', 'submit', 'mauvais').ok, false)
     assert.equal(play(master, 'alarmPanel', 'submit', 'supersecure1234').ok, true)
 
-    assert.deepEqual(calls.iot, [{ deviceId: 'alarme-01', action: 'off' }])
+    assert.deepEqual(calls.cue, ['alarm-off'])
     assert.equal(calls.notify.length, 1)
     assert.ok(visible('master').includes('maelSession'))
 
-    play(master, 'maelSession', 'submit', 'm.morin:Ferrari2024')
+    play(master, 'maelSession', 'submit', 'morinm:Carbona2024')
     assert.ok(visible('master').includes('shell'))
 
     // Énigmes parallèles : une seule ne suffit pas.

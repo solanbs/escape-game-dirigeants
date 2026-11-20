@@ -26,29 +26,29 @@ informations sensibles sont fictifs et propres au jeu.
 
 ### Boîte magnétique
 
-- [ ] **Page pédagogique sur le fonctionnement d'une porte magnétique**
+- [X] **Page pédagogique sur le fonctionnement d'une porte magnétique**
   - Expliquer le principe de façon générale.
-- [ ] **Page sur les pannes de contrôle d'accès**
+- [X] **Page sur les pannes de contrôle d'accès**
   - Suggérer qu'une coupure d'alimentation peut modifier l'état d'un verrou.
-- [ ] **Page leurre sur l'installation d'un contrôle d'accès**
-- [ ] **Notice fictive de la boîte de dépôt**
+- [X] **Page leurre sur l'installation d'un contrôle d'accès**
+- [X] **Notice fictive de la boîte de dépôt**
   - Mentionner une alimentation et un voyant pour recouper les indices du jeu.
   - La résolution attendue est une coupure d'alimentation simulée.
 
 ### Alarme
 
-- [ ] **Site fictif de l'alarme SuperSecure**
+- [X] **Site fictif de l'alarme SuperSecure**
   - Mettre en avant l'avertissement de changer le code d'usine.
   - Signaler qu'un agent intervient sous 15 minutes.
-- [ ] **Annonce fictive Leboncoin du boîtier SuperSecure**
+- [X] **Annonce fictive Leboncoin du boîtier SuperSecure**
   - Montrer le boîtier et rendre sa marque identifiable.
-- [ ] **Guide fictif de mise en service SuperSecure**
+- [X] **Guide fictif de mise en service SuperSecure**
   - Indiquer où trouver le code initial, sans révéler immédiatement la réponse.
-- [ ] **Blog / forum fictif sur les alarmes SuperSecure**
+- [X] **Blog / forum fictif sur les alarmes SuperSecure**
   - Fournir un indice partiel sur la documentation ou le code du jeu.
-- [ ] **Pages leurres sur les codes d'alarme**
+- [X] **Pages leurres sur les codes d'alarme**
   - Proposer des résultats plausibles, mais non concluants.
-- [ ] **Page d'archive fictive de documentation**
+- [X] **Page d'archive fictive de documentation**
   - Donner le code fictif attendu uniquement après recoupement des indices.
 
 ## Applications et interfaces

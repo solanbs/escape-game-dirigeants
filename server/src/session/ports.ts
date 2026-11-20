@@ -1,10 +1,11 @@
 /**
  * Ce dont le SessionManager a besoin du monde extérieur, sous forme
- * d'interfaces. Il ne connaît ni Socket.IO, ni MQTT, ni SQLite :
+ * d'interfaces. Il ne connaît ni Socket.IO, ni le protocole IoT, ni SQLite :
  * les vraies implémentations sont branchées dans index.ts, et les tests
  * en fournissent de fausses.
  */
 import type { Role, SessionInfo } from '@escape/shared'
+import type { CueName } from '@escape/shared/iot'
 import type { EngineState, TraceEntry } from '../engine/types.js'
 
 /** Une session = ses infos publiques + l'état du moteur. */
@@ -16,8 +17,8 @@ export interface Outputs {
   pushViews(): void
   /** Message ponctuel (toast) pour certains rôles. */
   notify(to: Role[], message: string): void
-  /** Ordre à un appareil IoT. */
-  iot(deviceId: string, action: string): void
+  /** Joue un cue IoT. Branché sur IotPort.cue() ; les erreurs sont gérées par l'adaptateur. */
+  cue(name: CueName): void
 }
 
 /** Stockage des sessions et de leur journal. */

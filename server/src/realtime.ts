@@ -1,6 +1,6 @@
 import type { Server as HttpServer } from 'node:http'
 import { Server } from 'socket.io'
-import { IOT_NAMESPACE, SOCKET_EVENTS } from '@escape/shared'
+import { SOCKET_EVENTS } from '@escape/shared'
 import type { ClientEvents, ServerEvents, ServerEventName } from '@escape/shared'
 import { logger } from './logger.js'
 
@@ -31,13 +31,6 @@ export function createRealtime(httpServer: HttpServer): Realtime {
     socket.on('disconnect', (reason) => {
       logger.info({ socketId: socket.id, reason }, 'navigateur déconnecté')
     })
-  })
-
-  // Objets connectés : même protocole, namespace dédié.
-  // Rien à faire pour l'instant ; l'authentification viendra ici.
-  const iot = io.of(IOT_NAMESPACE)
-  iot.on('connection', (socket) => {
-    logger.info({ socketId: socket.id }, 'objet connecté sur /iot')
   })
 
   const emit: Emit = (event, payload) => {

@@ -8,7 +8,7 @@
 
 ## Résumé des décisions
 
-- **Un moteur générique** qui prend en entrée **un scénario** (des fichiers YAML) et **une interface IoT** (section 12, documentée séparément). Il gère le suivi du scénario, les connexions et la construction des pages.
+- **Un moteur générique** qui prend en entrée **un scénario** (des fichiers YAML) et **une interface IoT** (`IotPort`, section 12). Il gère le suivi du scénario, les connexions et la construction des pages.
 - **Un seul serveur Node** sert le front (compilé par Vite) et fait tourner le jeu.
 - **Le client est une application monopage** : un `index.html` quasi vide et un `app.js` qui contient tous les templates de pages, mais **aucun contenu de jeu**.
 - **Une page = un template + un contenu.** Le template est un `.vue` compilé dans le JS. Le contenu est un YAML qui reste sur le serveur et n'est envoyé qu'aux tablettes qui y ont droit.
@@ -16,6 +16,7 @@
 - **Le scénario est un graphe de nœuds reliés par des liens.** Le comportement vient du câblage entre nœuds, pas du code.
 - **Un contenu apparaît quand une sortie de nœud a été déclenchée** (`when: mailDavid.sent`).
 - **À chaque changement, le serveur renvoie la page entière** ; Vue ne redessine que ce qui a changé.
+- **Le matériel est piloté par un processus séparé, `iot-gateway`**, relié au serveur en Socket.IO (namespace `/iot`). Le moteur ne voit que l'interface `IotPort` (section 12).
 - **Par partie : 1 MJ, 1 master, n opé, une seule partie à la fois**, toujours portée par une session identifiée.
 
 ---
@@ -25,7 +26,7 @@
 | Terme | Définition |
 |---|---|
 | **Scénario** | Le dossier de données d'une partie : nœuds, liens, appareils, pages. |
-| **Nœud** | Une brique du scénario : un champ de mot de passe, une application, un mail, un relais IoT, une porte logique… Chaque nœud a des **entrées**, des **sorties**, un **état**. |
+| **Nœud** | Une brique du scénario : un champ de mot de passe, une application, un mail, un cue IoT, une porte logique… Chaque nœud a des **entrées**, des **sorties**, un **état**. |
 | **Type de nœud** | Le comportement d'une catégorie de nœuds (`PasswordLock`, `App`, `AllOf`…), écrit en TypeScript une fois pour toutes. |
 | **Lien** | Relie la sortie d'un nœud à l'entrée d'un autre : `alarmPanel.solved → maelSession.enable`. |
 | **Sortie déclenchée** | Une sortie qui a été émise au moins une fois pendant la partie. Sert de condition d'apparition (`when`). |
@@ -44,17 +45,19 @@
 │  docker compose                                                          │
 │  ┌──────────────────────────────────────────┐                            │
 │  │ conteneur "game" (Node)                  │                            │
-│  │  - moteur + modules                      │◄──►  partie IoT            │
-│  │  - sert le front compilé par Vite        │      (section 12)          │
-│  │  - Socket.IO                             │                            │
-│  │  - lit scenarios/<nom>/ (YAML)           │                            │
-│  │  - SQLite (data/)                        │                            │
-│  └───────────────▲──────────────────────────┘                            │
-└──────────────────┼───────────────────────────────────────────────────────┘
-                   │ Wi-Fi local, sans accès Internet
-     ┌─────────────┼───────────────┐
-  tablette fixe  tablettes opé   poste MJ
-  ?device=master  ?device=ops-N  ?device=gm
+│  │  - moteur + modules                      │                            │
+│  │  - sert le front compilé par Vite        │                            │
+│  │  - Socket.IO : tablettes + namespace /iot│◄───────────────┐           │
+│  │  - lit scenarios/<nom>/ (YAML)           │                │           │
+│  │  - SQLite (data/)                        │                │           │
+│  └───────────────▲──────────────────────────┘                │           │
+└──────────────────┼───────────────────────────────────────────┼───────────┘
+                   │ Wi-Fi local, sans accès Internet          │ Socket.IO /iot
+     ┌─────────────┼───────────────┐                  ┌────────┴────────┐
+  tablette fixe  tablettes opé   poste MJ             │   iot-gateway   │  même machine
+  ?device=master  ?device=ops-N  ?device=gm           │     (Node)      │  ou Raspberry Pi
+                                                      └────────┬────────┘
+                                                WLED · audio (mpv) · clavier ESP32 · porte
 ```
 
 - **En production**, le front est compilé par Vite lors de la construction de l'image Docker, puis servi par Express.
@@ -75,7 +78,7 @@ Il y a **trois natures de fichiers**, rangées séparément :
 
 ```
 scenarios/
-  racing-team/
+  scenario1_red_team/
     scenario.yaml           nœuds + liens : le déroulé de la partie
     devices.yaml            tablettes
     pages/*.yaml            contenu des pages (template + données + conditions)
@@ -84,6 +87,7 @@ scenarios/
 
 shared/src/
   protocol.ts               messages Socket.IO, ViewState, PageView
+  iot-protocol.ts           contrat filaire serveur ↔ iot-gateway (export @escape/shared/iot)
   templates/*.ts            schéma de données de chaque template de page
 
 server/src/
@@ -95,9 +99,11 @@ server/src/
     views/                  construit les vues et les pages pour chaque rôle
     session/                cycle de vie de la partie, orchestration
     connections/            tablettes : jetons, rôles, Socket.IO
-    iot/                    partie IoT (section 12)
+    iot/                    adaptateur IoT : IotPort, cues, namespace /iot (section 12)
     persistence/            SQLite : sessions et journal
   logger.ts
+
+iot-gateway/src/            processus qui pilote le matériel (section 12)
 
 client/src/
   main.ts
@@ -135,7 +141,7 @@ client/src/
                 └─────▲──────┘       └─────▲──────┘
                       │                    │
                 ┌─────┴────────────────────┴─────┐
-                │        scenario-loader          │ ◄── scenarios/racing-team/*.yaml
+                │        scenario-loader          │ ◄── scenarios/scenario1_red_team/*.yaml
                 └─────────────────────────────────┘
 ```
 
@@ -148,7 +154,7 @@ client/src/
 | **views** | Construire ce que voit chaque rôle : la **vue** (bureau, applications, champs) et les **pages** (template + contenu filtré par les `when`). | `buildView(state, role)`, `page(state, role, url)`, `search(state, role, query)` | le réseau, les règles des nœuds |
 | **session** | Cycle de vie de la partie, porte d'entrée unique, **orchestration** : appelle les autres modules dans le bon ordre. | `create`, `start`, `pause`, `end`, `dispatch(input)` | Socket.IO, le protocole IoT, SQLite, le contenu du scénario |
 | **connections** | Les tablettes : jeton → appareil → rôle, salles, présence, pages surveillées, aller-retour Socket.IO. | implémente `Clients` : `pushViews()`, `pushPages()`, `notify()` | les règles du jeu |
-| **iot** | La partie IoT, documentée séparément (section 12). | à définir (section 12) | les règles du jeu |
+| **iot** | Dialoguer avec `iot-gateway` (namespace `/iot`), traduire un cue en commandes matérielles, suivre l'état du gateway. | `IotPort` : `cue(name)`, `onDoor()`, `onCode()`, `getSnapshot()` | les règles du jeu |
 | **persistence** | Sauvegarder les sessions et le journal. | implémente `Store` : `loadActive()`, `save()`, `append()` | les règles du jeu |
 | **app.ts** | Instancier les modules et les brancher entre eux. | — | il ne contient aucune logique |
 
@@ -156,7 +162,7 @@ client/src/
 
 1. **Chaque module expose un seul `index.ts`.** On n'importe jamais un fichier interne d'un autre module.
 2. **Un seul orchestrateur : `session`.** `connections` et `iot` *appellent* la session ; la session *appelle* `timeline`, `views`, `persistence`, puis les sorties. Pas de bus d'événements global, où on ne sait plus qui déclenche quoi.
-3. **La session ne dépend que d'interfaces** (`Clients`, `Store`, et celle de la partie IoT) déclarées dans `session/ports.ts`. On la teste avec de faux objets, sans réseau.
+3. **La session ne dépend que d'interfaces** (`Clients`, `Store`, et `cue()` pour l'IoT) déclarées dans `session/ports.ts`. On la teste avec de faux objets, sans réseau.
 4. **`timeline` ne connaît pas les pages, et `views` ne connaît des nœuds que `nodesFor` et `hasFired`.** Le contenu et le déroulé évoluent indépendamment.
 5. **Ces règles sont vérifiées automatiquement** (dependency-cruiser ou ESLint) : un import interdit casse la CI.
 
@@ -174,13 +180,13 @@ Pour décider où placer une nouvelle fonctionnalité :
 
 ## 5. Le scénario en données
 
-Le moteur ne contient aucune ligne propre à Racing Team. Un autre scénario = un autre dossier dans `scenarios/`.
+Le moteur ne contient aucune ligne propre à Carbona Racing Team. Un autre scénario = un autre dossier dans `scenarios/`.
 
 ### `scenario.yaml` : nœuds et liens
 
 ```yaml
-id: racing-team
-title: Intrusion chez Racing Team
+id: carbona-racing-team
+title: Intrusion chez Carbona Racing Team
 
 nodes:
   browser:
@@ -190,7 +196,7 @@ nodes:
 
   mailDavid:
     type: MailThread
-    config: { contact: david.ecnasiol@aerolab.fr }
+    config: { contact: david.ecnasiol@aerofourneau-consulting.fr }
     allow: [master]          # seul le master peut envoyer
     visibleTo: [master]
 
@@ -207,7 +213,12 @@ nodes:
     allow: [master]
     visibleTo: [master]
 
+  alarmOffCue:
+    type: IotCue
+    config: { cue: alarm-off }     # lumières d'ambiance + arrêt de la sirène (section 12)
+
 links:
+  - [alarmPanel.solved, alarmOffCue.play]
   - [alarmPanel.solved, maelSession.enable]
 ```
 
@@ -221,7 +232,7 @@ tablets:
   - { id: poste-mj,   role: gm }
 ```
 
-La description des objets IoT relève de la section 12.
+Le matériel IoT est décrit dans la configuration de `iot-gateway` (section 12), pas dans le scénario.
 
 Les jetons des tablettes ne sont pas dans le scénario : ils sont fournis par l'environnement (fichier `.env` ou secret Docker).
 
@@ -234,11 +245,11 @@ visibleTo: [master, ops]
 when: osintDone.found                     # optionnel : page disponible après cette sortie
 data:
   nom: David Ecnasiol
-  titre: Fondateur @ AeroLab
+  titre: Fondateur @ Aérofourneau Consulting
   photo: assets/david.jpg
   posts:
     - id: p1
-      texte: "Fier de lancer AeroLab !"
+      texte: "Fier de lancer Aérofourneau Consulting !"
     - id: p3
       when: mailDavid.sent                # ce post n'apparaît qu'après le mail du master
       texte: "Certaines entreprises ne respectent pas leurs anciens…"
@@ -253,7 +264,7 @@ data:
 ```yaml
 - query: [david ecnasiol, ecnasiol]       # mots-clés reconnus
   results:
-    - { url: aerolab.fr, title: "AeroLab — la startup de David Ecnasiol", snippet: "…" }
+    - { url: aerofourneau-consulting.fr, title: "Aérofourneau Consulting — la startup de David Ecnasiol", snippet: "…" }
     - { url: linkedin.com/in/david-ecnasiol, title: "David Ecnasiol — LinkedIn", snippet: "…" }
     - { url: facebook.com/david.e, title: "Homonymes : David E.", snippet: "…" }
 ```
@@ -344,7 +355,7 @@ Le piège serait de créer un type par énigme. On vise une quinzaine de briques
 
 `PasswordLock`, `App`, `MailThread`, `AllOf`, `AnyOf`, `Counter`, `Timer`, `Delay`, `Notify`, `Hint`, `Sound`
 
-Les éventuels types de nœuds liés aux objets relèvent de la section 12.
+Côté IoT : `IotCue` (joue un cue) existe déjà ; les nœuds alimentés par le clavier et la porte sont décrits en section 12.
 
 ### Le temps
 
@@ -587,16 +598,121 @@ quitte la page
 
 ## 12. IoT
 
-> **Section réservée.** La partie IoT est conçue et documentée par un autre membre de l'équipe.
+> Partie conçue et implémentée par le responsable IoT de l'équipe.
 
-### Points de raccordement avec le moteur (à définir ensemble)
+### 12.1 Principe : Socket.IO + `iot-gateway`
 
-Du côté du moteur, deux points restent à fixer avec le responsable IoT :
+Le serveur reste la **source de vérité**. Le `iot-gateway` est un exécuteur matériel : il ne décide rien du scénario.
 
-1. **Objet → moteur** : comment un événement venant d'un objet devient une entrée de nœud transmise à `session.dispatch`.
-2. **Moteur → objet** : quel effet un nœud produit pour agir sur un objet, et quelle interface la session appelle pour le transmettre.
+- Le serveur expose un seul HTTP/Socket.IO, avec le namespace `/iot` pour le gateway.
+- Le gateway s'authentifie avec `IOT_GATEWAY_TOKEN` (variable d'environnement, aussi passée dans `docker-compose.yml`).
+- `shared/src/iot-protocol.ts` contient le contrat filaire (export `@escape/shared/iot`).
+- `server/src/iot/port.ts` contient l'interface serveur `IotPort`.
+- `server/src/iot/cues.ts` contient les cues du scénario, côté serveur uniquement.
+- Le gateway n'importe que `@escape/shared/iot` : il ne connaît ni `CueName`, ni `CUES`, ni `IotPort`.
 
-Une fois fixés, ces deux points seront déclarés dans `session/ports.ts` et `shared/`, comme les interfaces des autres modules.
+### 12.2 Protocole
+
+| Événement | Sens | Rôle |
+|---|---|---|
+| `HELLO` | gateway → serveur | annonce `gatewayId`, version, devices, état réel |
+| `WELCOME` | serveur → gateway | `sessionId` et `desiredState` |
+| `COMMAND` | serveur → gateway | commande précise `light` ou `audio`, avec `commandId` |
+| `COMMAND_ACK` | gateway → serveur | résultat de la commande et état réel des sorties |
+| `EVENT` | gateway → serveur | événements `door` et `code` |
+| `EVENT_ACK` | serveur → gateway | réponse uniquement au code |
+| `STATE` | gateway → serveur | état réel complet |
+
+Règles :
+
+- une commande est une `Promise` côté serveur, corrélée par `commandId` ;
+- deux acks distincts : `COMMAND_ACK` pour les commandes, `EVENT_ACK` pour le code ;
+- la porte et le mouvement sont fire-and-forget, sans ack ;
+- il n'y a pas d'événement audio gateway → serveur : l'audio est une commande, et son état réel remonte via `STATE` ;
+- la porte est un capteur d'entrée, jamais dans `desiredState` ;
+- `IotDesiredState` contient uniquement les sorties : `lights` et `audio` ;
+- `IotDeviceState = IotOutputState & IotInputState`.
+
+Les cues sont résolus côté serveur. Par exemple `alarm` devient :
+
+```ts
+[
+  { type: 'light', action: 'scene', scene: 'alarm' },
+  {
+    type: 'audio',
+    action: 'play',
+    audio: { track: 'alarm.mp3', volume: 80, loop: true },
+  },
+]
+```
+
+Le gateway ne reçoit que ces commandes précises, jamais le nom du cue.
+
+### 12.3 Le gateway et le matériel
+
+Le gateway peut tourner sur le même serveur physique que le serveur principal ou sur un Raspberry Pi. Le protocole ne change pas : seule la couche devices change.
+
+Le gateway est un seul processus Node. Il instancie ses devices via de la configuration :
+
+```ts
+type GatewayConfig = {
+  gatewayId: string
+  serverUrl: string
+  token: string
+
+  light: { driver: 'wled'; url: string }
+  audio: { driver: 'mpv'; device?: string }
+  door: { driver: 'gpio' | 'http' | 'mqtt'; pin?: number; endpoint?: string }
+  keypad: { driver: 'http'; port: number }
+}
+```
+
+- **Lumières** : WLED en HTTP/WiFi.
+- **Audio** : driver `mpv` générique pour l'instant. L'enceinte filaire ou USB est recommandée : elle reste proche de l'hôte qui exécute `mpv`. La sortie est configurable (`device`), avec la sortie par défaut comme fallback. Un driver Bluetooth ou WiFi/Chromecast pourra être ajouté plus tard derrière la même interface `AudioDevice`.
+- **Clavier ESP32** : envoie le code au gateway via un endpoint HTTP local. Le gateway émet un `EVENT` de type `code`, attend l'`EVENT_ACK`, puis renvoie l'affichage au clavier.
+- **Porte** : capteur magnétique de type contact reed switch. Il indique `open` ou `closed`. Sur Raspberry Pi, il peut être lu directement sur un GPIO. Sans Pi, un ESP32 lit le capteur et envoie l'événement au gateway en HTTP ou MQTT.
+
+Lancement en développement : `npm run dev:gateway` (devices factices disponibles dans `iot-gateway/src/devices/fake.ts`).
+
+### 12.4 Raccordement avec le moteur
+
+Le moteur ne voit que l'interface `IotPort`. Le raccordement se fait dans `app.ts` (aujourd'hui `server/src/index.ts`), comme pour les autres modules.
+
+| Sens | Côté IoT | Côté moteur | État |
+|---|---|---|---|
+| moteur → objets | `IotPort.cue(name)` | un nœud `IotCue` produit l'effet `{ type: 'cue', name }` ; la session appelle `Outputs.cue(name)` | ✅ nœud, effet et sortie en place ; branchement sur `IotPort` à faire |
+| clavier → moteur | `IotPort.onCode(handler)` | le handler appelle `session.dispatch` sur un nœud `PasswordLock` (acteur `iot`) ; `ok` → `accepted`, `message` → `display` | ⏳ |
+| porte → moteur | `IotPort.onDoor(handler)` | le handler appelle `session.dispatch` sur un nœud capteur (à créer), qui émet `opened` / `closed` | ⏳ |
+| session → gateway | `getSessionId()`, `getDesiredState()` | l'id vient de la session active ; l'état désiré découle des cues joués | ⏳ (valeurs temporaires dans `index.ts`) |
+| supervision | `getSnapshot()`, `onGatewayStatus()` | affichés dans la console MJ | ⏳ |
+
+### 12.5 Points encore ouverts
+
+- Sémantique exacte de `null` dans `IotDesiredState` : « éteint/arrêté » ou « ne rien changer ».
+- `IotStateReport` existe dans `shared`, mais l'adapter serveur attend actuellement `IotDeviceState` pour `STATE`.
+- Pour l'instant un seul gateway est pris en charge ; le serveur sélectionne le premier socket connecté.
+- La reprise audio après reconnexion ne gère pas encore de position dans la piste.
+
+### 12.6 Perspective MQTT (information)
+
+Ce qui suit décrit une cible envisagée si les ESP32 doivent un jour parler directement au serveur. Ce n'est pas l'état actuel de l'implémentation.
+
+Socket.IO sur ESP32 est fragile : les bibliothèques sont peu maintenues et suivent mal les versions du protocole Engine.IO. MQTT apporterait :
+
+- des bibliothèques solides côté ESP32 (PubSubClient, ou `mqtt` en MicroPython) ;
+- un **Last Will** : le broker annonce lui-même qu'un appareil s'est déconnecté ;
+- un débogage simple avec MQTT Explorer ;
+- un conteneur `eclipse-mosquitto` et le paquet npm `mqtt` côté serveur.
+
+Topics envisagés :
+
+```
+escape/dev/<deviceId>/cmd      serveur → appareil   {"action":"unlock"}
+escape/dev/<deviceId>/event    appareil → serveur   {"type":"opened"}
+escape/dev/<deviceId>/status   online/offline (retained + Last Will)
+```
+
+Les appareils resteraient des capteurs et des actionneurs, sans logique de scénario : la passerelle traduit un `event` en commande pour le moteur, exactement comme le fait aujourd'hui l'adapter Socket.IO.
 
 ---
 
@@ -606,7 +722,7 @@ Une fois fixés, ces deux points seront déclarés dans `session/ports.ts` et `s
 
 - créer la session (nom d'équipe), la lancer, la mettre en pause, la terminer ;
 - déclencher n'importe quelle entrée de n'importe quel nœud (forcer une étape, ouvrir la boîte à la main…) ;
-- voir les tablettes connectées et le journal en direct.
+- voir les tablettes connectées, l'état du gateway IoT (`getSnapshot`) et le journal en direct.
 
 Le jour J, si un objet ou une tablette plante, c'est la console MJ qui sauve la partie.
 
@@ -629,7 +745,7 @@ Le jour J, si un objet ou une tablette plante, c'est la console MJ qui sauve la 
 | Validation | `zod` (YAML au démarrage, messages entrants) |
 | Format du scénario | YAML (`yaml` côté serveur uniquement) |
 | Logs | pino, logger enfant par session |
-| IoT | section 12 |
+| IoT | processus `iot-gateway` (Node) relié en Socket.IO `/iot` ; MQTT envisagé plus tard (section 12) |
 | Persistance | SQLite (`better-sqlite3`) |
 | Tests | `node:test` lancé via `tsx` |
 | Cloisonnement | dependency-cruiser ou ESLint (règles d'import entre modules) |
@@ -640,19 +756,24 @@ Le jour J, si un objet ou une tablette plante, c'est la console MJ qui sauve la 
 
 ### Ce qui existe déjà
 
-Un premier moteur fonctionne et est testé (`npm test`, `npm run demo`), avec l'ancien vocabulaire « élément / câble » et un scénario écrit en TypeScript.
+- **Moteur** : un premier moteur fonctionne et est testé (`npm test`, `npm run demo`), avec l'ancien vocabulaire « élément / câble » et un scénario écrit en TypeScript.
+- **IoT** : l'adaptateur serveur (`server/src/iot/`) et le processus `iot-gateway` fonctionnent avec des devices factices, et sont testés (section 12).
+- **Front** : les pages de la porte magnétique et de l'alarme SuperSecure existent déjà, sous forme de composants `.vue` avec leur texte en dur.
 
 | Code actuel | Devient |
 |---|---|
 | `server/src/engine/` (éléments + câbles) | `server/src/modules/timeline/` (nœuds + liens), avec `fired` et `hasFired` en plus |
 | `server/src/elements/*.ts` | `server/src/modules/timeline/nodes/*.ts` ; `Tool` devient `App` |
 | `server/src/scenarios/demo.ts` | `scenarios/demo/scenario.yaml` |
+| `scenarios/scenario1_red_team/carbona_racing_team.yml` (amorce) | `scenarios/scenario1_red_team/scenario.yaml` + `pages/` + `search.yaml` |
+| `server/src/iot/` | `server/src/modules/iot/` : simple déplacement, à valider avec le responsable IoT |
 | `server/src/session/` | `server/src/modules/session/` |
 | `server/src/persistence/MemorySessionRepo.ts` | `server/src/modules/persistence/`, plus une version SQLite |
 | `server/src/game.ts`, `realtime.ts`, `POST /api/answer` | supprimés, remplacés par `connections/` |
 | `client/src/services/socket.ts` | `client/src/network/` |
 | `client/src/components/FakeGoogle.vue` | application `apps/Browser` + template `SearchResults` alimenté par `search.yaml` (le texte en dur disparaît) |
 | `client/src/components/BureauWindows.vue` | `os/`, avec des icônes construites à partir de la vue |
+| `client/src/components/FakeAlarme*.vue`, `FakePorteMagnetique*.vue`, `FakeSite.vue` + `client/src/data/fakeSite.ts` | des **templates** génériques (`templates/`) + un **YAML par page** dans `scenarios/…/pages/` ; la mise en page et le CSS sont conservés, seul le texte part dans le YAML |
 
 ### Ordre de construction
 
@@ -667,5 +788,5 @@ Chaque étape produit quelque chose qui fonctionne et se teste.
 | 5 | Front : `network/`, `state/`, coquilles par rôle, bureau piloté par la vue, navigateur + 1 template | Un post LinkedIn apparaît en direct quand le master agit |
 | 6 | Console MJ | Créer, lancer, mettre en pause ; forcer une entrée |
 | 7 | SQLite | Redémarrage du serveur en pleine partie : tout revient |
-| 8 | Raccordement de la partie IoT (section 12) | À définir avec le responsable IoT |
-| 9 | Le vrai scénario Racing Team en YAML + ses pages | Partie jouable de bout en bout |
+| 8 | Raccordement IoT dans `app.ts` : `cue()`, `onCode()`, `onDoor()` (section 12.4) | Avec `iot-gateway` et ses devices factices : le bon code au clavier fait avancer la timeline |
+| 9 | Le vrai scénario Carbona Racing Team en YAML + ses pages | Partie jouable de bout en bout |

@@ -9,6 +9,7 @@
  * - un SCÉNARIO = des éléments + des câbles. C'est de la donnée, pas du code.
  */
 import type { CommandResult, ElementView, PlayerRole, Role } from '@escape/shared'
+import type { CueName } from '@escape/shared/iot'
 
 // ---------------------------------------------------------------------------
 // Entrées et sorties du moteur
@@ -39,7 +40,7 @@ export type InputResult = CommandResult
  * il le renvoie, et ce sont les passerelles (MQTT, Socket.IO…) qui agissent.
  */
 export type Effect =
-  | { type: 'iot'; deviceId: string; action: string }
+  | { type: 'cue'; name: CueName }
   | { type: 'notify'; to: Role[]; message: string }
 
 /** Une ligne du journal : chaque signal qui a circulé pendant une action. */

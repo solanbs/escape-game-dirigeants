@@ -10,6 +10,7 @@ services:
       LOG_LEVEL: info
       # Retirer cette ligne (ou mettre json) pour des logs bruts.
       LOG_FORMAT: pretty
+      IOT_GATEWAY_TOKEN: ${IOT_GATEWAY_TOKEN}
     volumes:
       # Prêt pour la base SQLite et les fichiers persistants.
       - ./data:/app/data

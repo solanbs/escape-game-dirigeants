@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict'
-import { describe, it } from 'node:test'
+import { describe, it } from 'vitest'
 import { createEngine, createRegistry } from '../src/engine/engine.js'
 import { defineElement, element, type Scenario } from '../src/engine/types.js'
-import { AllOf, IotRelay, PasswordLock, Tool, registry } from '../src/elements/index.js'
+import { AllOf, IotCue, PasswordLock, Tool, registry } from '../src/elements/index.js'
 import { gm, master, ops } from './helpers.js'
 
-/** Petit scénario : un cadenas qui débloque un outil et coupe un relais. */
+/** Petit scénario : un cadenas qui débloque un outil et joue un cue IoT. */
 const scenario: Scenario = {
   id: 'test',
   title: 'test',
@@ -20,11 +20,11 @@ const scenario: Scenario = {
       config: { title: 'Outil', component: 'X' },
       visibleTo: ['master', 'ops'],
     }),
-    relay: element(IotRelay, { config: { deviceId: 'box-01' } }),
+    cue: element(IotCue, { config: { cue: 'success' } }),
   },
   wires: [
     ['lock.solved', 'tool.enable'],
-    ['lock.solved', 'relay.on'],
+    ['lock.solved', 'cue.play'],
   ],
 }
 
@@ -47,7 +47,7 @@ describe('validation du scénario', () => {
 })
 
 describe('propagation des signaux', () => {
-  it('suit les câbles : bon code → outil débloqué + effet IoT', () => {
+  it('suit les câbles : bon code → outil débloqué + cue IoT', () => {
     const { state, effects, result } = engine.run(engine.init(), {
       element: 'lock',
       input: 'submit',
@@ -57,7 +57,7 @@ describe('propagation des signaux', () => {
 
     assert.deepEqual(result, { ok: true, message: 'Accès accepté' })
     assert.equal(state.tool?.enabled, true)
-    assert.deepEqual(effects, [{ type: 'iot', deviceId: 'box-01', action: 'on' }])
+    assert.deepEqual(effects, [{ type: 'cue', name: 'success' }])
   })
 
   it('mauvais code → rien ne se débloque', () => {
@@ -147,7 +147,7 @@ describe('vues par rôle', () => {
     const ids = (role: 'master' | 'ops' | 'gm') => engine.view(solved, role).map((v) => v.id)
     assert.deepEqual(ids('master'), ['lock', 'tool'])
     assert.deepEqual(ids('ops'), ['tool'])
-    assert.deepEqual(ids('gm'), ['lock', 'tool', 'relay'])
+    assert.deepEqual(ids('gm'), ['lock', 'tool', 'cue'])
   })
 
   it('la solution n’est jamais envoyée aux joueurs', () => {

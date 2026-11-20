@@ -6,13 +6,16 @@
   "workspaces": [
     "shared",
     "server",
-    "client"
+    "client",
+    "iot-gateway"
   ],
   "scripts": {
     "dev": "npm run build -w @escape/shared && concurrently -n shared,server,client -c gray,blue,green \"npm:dev:shared\" \"npm:dev:server\" \"npm:dev:client\"",
     "dev:shared": "npm run dev -w @escape/shared",
     "dev:server": "npm run dev -w @escape/server",
     "dev:client": "npm run dev -w @escape/client",
+    "dev:gateway": "npm run dev -w @escape/iot-gateway",
+    "build:gateway": "npm run build -w @escape/iot-gateway",
     "build": "npm run build -w @escape/shared && npm run build -w @escape/server && npm run build -w @escape/client",
     "typecheck": "npm run build -w @escape/shared && npm run typecheck -w @escape/server && npm run typecheck -w @escape/client",
     "test": "npm run build -w @escape/shared && npm run test -w @escape/server",

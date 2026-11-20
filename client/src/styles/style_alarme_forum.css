@@ -1,0 +1,16 @@
+.forum-site { flex: 1; overflow-y: auto; background: #e5e5e5; font-family: Arial, sans-serif; padding: 2rem; }
+.forum-container { max-width: 900px; margin: 0 auto; background: white; border-radius: 4px; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+.forum-header { background: #f38020; color: white; padding: 1rem 1.5rem; }
+.forum-logo { font-size: 1.5rem; font-weight: bold; margin-bottom: 0.5rem; }
+.forum-nav { font-size: 0.85rem; }
+.thread-title { padding: 1.5rem; background: #fafafa; border-bottom: 1px solid #ddd; }
+.thread-title h1 { margin: 0; font-size: 1.4rem; color: #333; }
+.post { display: flex; border-bottom: 1px solid #eee; }
+.post-author { width: 150px; padding: 1.5rem; background: #f9f9f9; border-right: 1px solid #eee; text-align: center; }
+.avatar { width: 60px; height: 60px; background: #ddd; border-radius: 50%; margin: 0 auto 0.5rem; display: grid; place-items: center; font-size: 1.5rem; }
+.post-author strong { display: block; word-break: break-all; }
+.post-author small { color: #888; font-size: 0.8rem; }
+.post-content { padding: 1.5rem; flex: 1; }
+.post-content p { line-height: 1.5; margin-top: 0; color: #222; }
+.post-date { display: block; margin-top: 1.5rem; font-size: 0.8rem; color: #999; text-align: right; }
+.forum-btn { margin: 1.5rem; padding: 0.75rem 1.5rem; background: #333; color: white; border: none; cursor: pointer; }
