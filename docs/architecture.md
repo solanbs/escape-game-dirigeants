@@ -8,7 +8,7 @@
 ## Résumé
 
 - **Tablettes ↔ serveur : WebSocket via Socket.IO** (déjà en place).
-- **IoT ↔ serveur : MQTT** (broker Mosquitto) plutôt que WebSocket.
+- **IoT ↔ serveur : Socket.IO** via le namespace `/iot` et le processus `iot-gateway` (état actuel). MQTT reste une cible future si les ESP32 doivent parler directement au serveur.
 - **Moteur de jeu** : les clients envoient des **commandes**, le serveur fait autorité et renvoie l'**état**.
 - **Scénario décrit en données**, moteur générique et réutilisable.
 
@@ -28,13 +28,13 @@
  ┌────────┐  │         ▲            └──────────────────┘    └───────────┘  │
  │   MJ   │◄─┼─────────┘                 ▲          │                     │
  └────────┘  │                     ┌─────┴──────┐   ▼                     │
-             │                     │ Passerelle │  SQLite (snapshot +     │
-             │                     │    MQTT    │  journal d'événements)  │
+             │                     │  Adapter   │  SQLite (snapshot +     │
+             │                     │   /iot     │  journal d'événements)  │
              └─────────────────────┴─────┬──────┴─────────────────────────┘
-                                         │
-                                  ┌──────┴──────┐
-                                  │  Mosquitto  │◄──► ESP32 (boîte, alarme…)
-                                  └─────────────┘
+                                         │ Socket.IO
+                                  ┌──────┴──────────┐
+                                  │  iot-gateway    │◄── WLED / audio / ESP32
+                                  └─────────────────┘
 ```
 
 ---
@@ -152,20 +152,105 @@ Le parallèle se gère alors sans effort. XState reste possible mais semble surd
 
 ---
 
-## 5. IoT : MQTT
+## 5. IoT
 
-### Pourquoi pas Socket.IO
+### 5.1 État actuel : Socket.IO + `iot-gateway`
+
+Le serveur reste la **source de vérité**. Le `iot-gateway` est un exécuteur matériel : il ne décide rien du scénario.
+
+- Le serveur expose un seul HTTP/Socket.IO, avec le namespace `/iot` pour le gateway.
+- Le gateway s'authentifie avec `IOT_GATEWAY_TOKEN`.
+- `shared/src/iot-protocol.ts` contient le contrat filaire.
+- `server/src/iot/port.ts` contient l'interface serveur `IotPort`.
+- `server/src/iot/cues.ts` contient les cues du scénario, côté serveur uniquement.
+- Le gateway n'importe que `@escape/shared/iot` : il ne connaît ni `CueName`, ni `CUES`, ni `IotPort`.
+
+#### Protocole
+
+| Événement | Sens | Rôle |
+|---|---|---|
+| `HELLO` | gateway → serveur | annonce `gatewayId`, version, devices, état réel |
+| `WELCOME` | serveur → gateway | `sessionId` et `desiredState` |
+| `COMMAND` | serveur → gateway | commande précise `light` ou `audio`, avec `commandId` |
+| `COMMAND_ACK` | gateway → serveur | résultat de la commande et état réel des sorties |
+| `EVENT` | gateway → serveur | événements `door` et `code` |
+| `EVENT_ACK` | serveur → gateway | réponse uniquement au code |
+| `STATE` | gateway → serveur | état réel complet |
+
+Règles :
+
+- une commande est une `Promise` côté serveur, corrélée par `commandId` ;
+- deux acks distincts : `COMMAND_ACK` pour les commandes, `EVENT_ACK` pour le code ;
+- la porte et le mouvement sont fire-and-forget, sans ack ;
+- il n'y a pas d'événement audio gateway → serveur : l'audio est une commande, et son état réel remonte via `STATE` ;
+- la porte est un capteur d'entrée, jamais dans `desiredState` ;
+- `IotDesiredState` contient uniquement les sorties : `lights` et `audio` ;
+- `IotDeviceState = IotOutputState & IotInputState`.
+
+Les cues sont résolus côté serveur. Par exemple `alarm` devient :
+
+```ts
+[
+  { type: 'light', action: 'scene', scene: 'alarm' },
+  {
+    type: 'audio',
+    action: 'play',
+    audio: { track: 'alarm.mp3', volume: 80, loop: true },
+  },
+]
+```
+
+Le gateway ne reçoit que ces commandes précises, jamais le nom du cue.
+
+#### Hôte du gateway
+
+Le gateway peut tourner sur le même serveur physique que le serveur principal ou sur un Raspberry Pi. Le protocole ne change pas : seule la couche devices change.
+
+Le gateway est un seul processus Node. Il instancie ses devices via de la configuration :
+
+```ts
+type GatewayConfig = {
+  gatewayId: string
+  serverUrl: string
+  token: string
+
+  light: { driver: 'wled'; url: string }
+  audio: { driver: 'mpv'; device?: string }
+  door: { driver: 'gpio' | 'http' | 'mqtt'; pin?: number; endpoint?: string }
+  keypad: { driver: 'http'; port: number }
+}
+```
+
+#### Matériel
+
+- **Lumières** : WLED en HTTP/WiFi.
+- **Audio** : driver `mpv` générique pour l'instant. L'enceinte filaire ou USB est recommandée : elle reste proche de l'hôte qui exécute `mpv`. La sortie est configurable (`device`), avec la sortie par défaut comme fallback. Un driver Bluetooth ou WiFi/Chromecast pourra être ajouté plus tard derrière la même interface `AudioDevice`.
+- **Clavier ESP32** : envoie le code au gateway via un endpoint HTTP local. Le gateway émet un `EVENT` de type `code`, attend l'`EVENT_ACK`, puis renvoie l'affichage au clavier.
+- **Porte** : capteur magnétique de type contact reed switch. Il indique `open` ou `closed`. Sur Raspberry Pi, il peut être lu directement sur un GPIO. Sans Pi, un ESP32 lit le capteur et envoie l'événement au gateway en HTTP ou MQTT.
+
+#### Points encore ouverts
+
+- Sémantique exacte de `null` dans `IotDesiredState` : « éteint/arrêté » ou « ne rien changer ».
+- `IotStateReport` existe dans `shared`, mais l'adapter serveur attend actuellement `IotDeviceState` pour `STATE`.
+- Pour l'instant un seul gateway est pris en charge ; le serveur sélectionne le premier socket connecté.
+- La reprise audio après reconnexion ne gère pas encore de position dans la piste.
+
+### 5.2 Perspective MQTT (information)
+
+Le contenu ci-dessous décrit la cible envisagée si les ESP32 doivent un jour parler directement au serveur. Ce n'est pas l'état actuel de l'implémentation.
+
+#### Pourquoi MQTT sur ESP32
 
 Socket.IO sur ESP32 est fragile : les bibliothèques sont peu maintenues et suivent mal les versions du protocole Engine.IO.
 
-### Pourquoi MQTT
+MQTT apporte :
 
-- **Bibliothèques solides** côté ESP32 (PubSubClient, ou `mqtt` en MicroPython).
-- **Last Will** : le broker annonce lui-même qu'un appareil s'est déconnecté. Le MJ voit en direct si la boîte est hors ligne.
-- **Débogage sans matériel** : avec MQTT Explorer sur un PC, on simule un capteur ou on observe les ordres envoyés.
-- **Mise en place simple** : un conteneur `eclipse-mosquitto` dans le `docker-compose`, et le paquet npm `mqtt` côté serveur.
+- des bibliothèques solides côté ESP32 (PubSubClient, ou `mqtt` en MicroPython) ;
+- un **Last Will** : le broker annonce lui-même qu'un appareil s'est déconnecté ;
+- un débogage simple avec MQTT Explorer ;
+- un conteneur `eclipse-mosquitto` et le paquet npm `mqtt` côté serveur.
 
-### Topics
+#### Topics envisagés
 
 ```
 escape/dev/<deviceId>/cmd      serveur → appareil   {"action":"unlock"}
@@ -173,9 +258,9 @@ escape/dev/<deviceId>/event    appareil → serveur   {"type":"opened"}
 escape/dev/<deviceId>/status   online/offline (retained + Last Will)
 ```
 
-### Des appareils « bêtes »
+#### Des appareils « bêtes »
 
-Les appareils ne sont que des capteurs et des actionneurs, sans aucune logique de scénario. La passerelle MQTT traduit un `event` en commande pour le moteur, exactement comme la passerelle Socket.IO. Le moteur ne sait pas d'où vient la commande.
+Les appareils ne sont que des capteurs et des actionneurs, sans logique de scénario. La passerelle traduit un `event` en commande pour le moteur, exactement comme le fait aujourd'hui l'adapter Socket.IO. Le moteur ne sait pas d'où vient la commande.
 
 ---
 
@@ -211,9 +296,9 @@ Une seule session active à la fois (une salle physique), mais un `sessionId` pa
 | Couche | Choix |
 |---|---|
 | Serveur | Node + TypeScript + Express (statique) + Socket.IO (déjà en place) |
-| Contrat | `shared/` : types `Command`, `ViewState`, `Effect`, topics MQTT |
+| Contrat | `shared/` : types `Command`, `ViewState`, `Effect`, protocole IoT dans `shared/src/iot-protocol.ts` ; topics MQTT = futur |
 | Validation | `zod` sur les commandes entrantes |
-| IoT | Mosquitto + paquet `mqtt` ; ESP32 avec PubSubClient |
+| IoT | Socket.IO `/iot` + `iot-gateway` (Node) ; MQTT futur pour les ESP32 |
 | Persistance | SQLite (`better-sqlite3`) |
 | Front | Vue 3 ; `reactive` suffit pour l'instant, Pinia si l'état grossit |
 
@@ -226,4 +311,5 @@ Une seule session active à la fois (une salle physique), mais un `sessionId` pa
 3. Authentification des appareils et salles par rôle dans la passerelle Socket.IO.
 4. Migration de `POST /api/answer` vers une commande socket.
 5. Console MJ minimale.
-6. Conteneur Mosquitto et passerelle MQTT.
+6. Squelette `iot-gateway` avec devices factices, puis WLED, `mpv` et capteurs.
+7. Conteneur Mosquitto et passerelle MQTT si les ESP32 doivent parler directement au serveur.
