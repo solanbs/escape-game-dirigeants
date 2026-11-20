@@ -14,7 +14,9 @@
     "dev:server": "npm run dev -w @escape/server",
     "dev:client": "npm run dev -w @escape/client",
     "build": "npm run build -w @escape/shared && npm run build -w @escape/server && npm run build -w @escape/client",
-    "typecheck": "npm run typecheck -w @escape/client",
+    "typecheck": "npm run build -w @escape/shared && npm run typecheck -w @escape/server && npm run typecheck -w @escape/client",
+    "test": "npm run build -w @escape/shared && npm run test -w @escape/server",
+    "demo": "npm run build -w @escape/shared && npm run demo -w @escape/server",
     "start": "npm run start -w @escape/server"
   },
   "devDependencies": {

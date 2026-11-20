@@ -21,7 +21,7 @@ export const logger = pino({
         target: 'pino-pretty',
         options: {
           colorize: process.env.NO_COLOR === undefined,
-          translateTime: 'HH:MM:ss',
+          translateTime: 'SYS:HH:MM:ss',
           ignore: 'pid,hostname',
         },
       },
