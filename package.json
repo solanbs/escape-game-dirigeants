@@ -17,7 +17,9 @@
     "dev:gateway": "npm run dev -w @escape/iot-gateway",
     "build:gateway": "npm run build -w @escape/iot-gateway",
     "build": "npm run build -w @escape/shared && npm run build -w @escape/server && npm run build -w @escape/client",
-    "typecheck": "npm run typecheck -w @escape/client",
+    "typecheck": "npm run build -w @escape/shared && npm run typecheck -w @escape/server && npm run typecheck -w @escape/client",
+    "test": "npm run build -w @escape/shared && npm run test -w @escape/server",
+    "demo": "npm run build -w @escape/shared && npm run demo -w @escape/server",
     "start": "npm run start -w @escape/server"
   },
   "devDependencies": {

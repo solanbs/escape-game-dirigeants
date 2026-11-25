@@ -1,0 +1,29 @@
+# Type "facebook" : profil sur un réseau social personnel.
+type: facebook
+
+# --- En-tête commun -------------------------------------------------------
+google:                  # résultat affiché dans le faux Google
+  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
+  titre: ""
+  introduction: ""
+icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
+couleur: ""              # couleur principale du site, ex. "#1a73e8"
+
+# --- Contenu ---------------------------------------------------------------
+profil:
+  nom: ""
+  photo: ""
+  couverture: ""
+  bio: ""
+  amis: ""               # ex. "312 amis"
+
+intro: []                # lignes de la colonne "Intro", ex. ["Habite à …", "Travaille chez …"]
+
+publications:            # de la plus récente à la plus ancienne
+  - date: ""
+    texte: ""
+    image: ""
+    reactions: 0
+    commentaires:
+      - auteur: ""
+        texte: ""

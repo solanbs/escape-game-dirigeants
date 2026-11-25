@@ -1,0 +1,111 @@
+# Type "article" : page de journal, de blog ou d'un centre d'aide.
+type: article
+
+# --- En-tête commun -------------------------------------------------------
+google:                  # résultat affiché dans le faux Google
+  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
+  titre: ""
+  introduction: ""
+icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
+couleur: ""              # couleur principale du site, ex. "#1a73e8"
+
+# --- Contenu ---------------------------------------------------------------
+site:                    # le journal / blog / portail qui publie l'article
+  nom: ""
+  slogan: ""
+  logo: ""
+  recherche: false       # true = afficher une barre de recherche (décorative)
+  rubriques: []          # menu du site, ex. ["Actualités", "Sport"]
+
+fil_ariane: []           # ex. ["Accueil", "Justice"]
+rubrique: ""
+titre: ""
+chapo: ""                # texte d'introduction sous le titre
+auteur: ""
+date: ""
+temps_lecture: ""        # ex. "4 min"
+
+corps:
+  # Un élément par bloc, dans l'ordre d'affichage. Supprimer les blocs inutiles,
+  # répéter ceux dont on a besoin. Gras dans le texte : **mot**.
+  - type: paragraphe
+    texte: ""
+
+  - type: intertitre
+    texte: ""
+
+  - type: liste
+    elements:
+      - ""                       # texte simple…
+      - icone: ""                # …ou élément détaillé (tous les champs facultatifs)
+        label: ""
+        texte: ""
+        note: ""
+
+  - type: etapes                 # liste numérotée
+    elements:
+      - titre: ""
+        texte: ""
+
+  - type: encadre
+    ton: info                    # info | alerte
+    icone: ""
+    titre: ""
+    texte: ""
+    avertissement: ""
+    bouton: ""
+
+  - type: citation
+    texte: ""
+    auteur: ""
+
+  - type: tableau
+    titre: ""
+    colonnes: ["", ""]
+    lignes:
+      - ["", ""]
+
+  - type: image
+    fichier: ""                  # nom du fichier image
+    legende: ""
+
+  - type: chiffres
+    elements:
+      - valeur: ""
+        label: ""
+
+  - type: cartes
+    elements:
+      - icone: ""
+        titre: ""
+        texte: ""
+
+  - type: personnes
+    titre: ""
+    liste:
+      - nom: ""
+        poste: ""
+        bio: ""
+        photo: ""
+
+  - type: actus
+    elements:
+      - date: ""
+        titre: ""
+        extrait: ""
+
+  - type: temoignages
+    elements:
+      - texte: ""
+        auteur: ""
+
+  - type: contact
+    titre: ""
+    texte: ""
+    adresse: ""
+    telephone: ""
+    email: ""
+
+colonne: []              # colonne de droite facultative : mêmes blocs que "corps"
+
+tags: []
