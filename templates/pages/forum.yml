@@ -1,0 +1,26 @@
+# Type "forum" : un fil de discussion.
+type: forum
+
+# --- En-tête commun -------------------------------------------------------
+google:                  # résultat affiché dans le faux Google
+  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
+  titre: ""
+  introduction: ""
+icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
+couleur: ""              # couleur principale du site, ex. "#1a73e8"
+
+# --- Contenu ---------------------------------------------------------------
+site:
+  nom: ""
+  logo: ""
+
+fil_ariane: []           # ex. ["Portail", "Électricité", "Alarmes"]
+titre: ""
+resolu: false            # true = préfixe "[Résolu]" devant le titre
+
+messages:                # dans l'ordre chronologique
+  - auteur: ""
+    avatar: ""           # lettre ou emoji (vide = initiale de l'auteur)
+    statut: ""           # ex. "Installateur Pro" (facultatif)
+    date: ""             # ex. "14/05/2026 à 09:12"
+    texte: ""            # plusieurs paragraphes : utiliser "|" et séparer par une ligne vide
