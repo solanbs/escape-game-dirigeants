@@ -6,6 +6,10 @@ dist/
 data/*
 !data/.gitkeep
 
+# Pistes audio du gateway (les fichiers ne sont pas versionnés)
+audio/*
+!audio/.gitkeep
+
 .env
 .env.local
 *.log

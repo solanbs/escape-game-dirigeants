@@ -30,6 +30,7 @@ export function makeConfig(overrides: Partial<GatewayConfig> = {}): GatewayConfi
     version: '1.2.3',
     logLevel: 'debug',
     fakeInput: false,
+    audio: {driver: 'fake', dir: '/audio-test', command: 'mpv'},
     ...overrides,
   }
 }

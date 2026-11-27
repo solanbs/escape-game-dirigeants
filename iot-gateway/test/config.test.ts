@@ -1,3 +1,4 @@
+import path from 'node:path'
 import {describe, expect, it} from 'vitest'
 import {readConfig} from '../src/config.js'
 
@@ -15,6 +16,12 @@ describe('readConfig', () => {
       version: '0.1.0',
       logLevel: 'debug',
       fakeInput: false,
+      audio: {
+        driver: 'fake',
+        dir: path.resolve('audio'),
+        device: undefined,
+        command: 'mpv',
+      },
     })
   })
 
@@ -68,5 +75,29 @@ describe('readConfig', () => {
     for (const value of ['0', 'false', 'TRUE', 'yes', '']) {
       expect(readConfig({IOT_GATEWAY_TOKEN: 't', IOT_FAKE_INPUT: value}).fakeInput).toBe(false)
     }
+  })
+
+  it('lit la configuration audio du gateway', () => {
+    const config = readConfig({
+      IOT_GATEWAY_TOKEN: 't',
+      IOT_AUDIO_DRIVER: ' mpv ',
+      IOT_AUDIO_DIR: '  /audio/pistes  ',
+      IOT_AUDIO_DEVICE: ' alsa/hw:1,0 ',
+      IOT_AUDIO_COMMAND: ' /usr/bin/mpv ',
+    })
+
+    expect(config.audio).toEqual({
+      driver: 'mpv',
+      dir: '/audio/pistes',
+      device: 'alsa/hw:1,0',
+      command: '/usr/bin/mpv',
+    })
+  })
+
+  it('laisse le device audio vide et refuse un driver inconnu', () => {
+    expect(readConfig({IOT_GATEWAY_TOKEN: 't', IOT_AUDIO_DEVICE: '   '}).audio.device).toBeUndefined()
+    expect(() => readConfig({IOT_GATEWAY_TOKEN: 't', IOT_AUDIO_DRIVER: 'bluetooth'})).toThrow(
+      'IOT_AUDIO_DRIVER must be fake or mpv',
+    )
   })
 })
