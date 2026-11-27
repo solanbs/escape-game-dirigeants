@@ -1,5 +1,5 @@
 import {describe, expect, it} from 'vitest'
-import {CUES} from '../../src/iot/cues.js'
+import {CUES} from '../../src/modules/iot/cues.js'
 import type {CueName} from '@escape/shared/iot'
 
 const EXPECTED_CUES: CueName[] = ['alarm', 'alarm-off', 'success', 'failure', 'ambiance']

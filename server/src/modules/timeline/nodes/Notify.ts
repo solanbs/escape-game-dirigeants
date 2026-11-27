@@ -1,5 +1,5 @@
 import type { Role } from '@escape/shared'
-import { defineElement } from '../engine/types.js'
+import { defineNode } from '../types.js'
 
 type Config = {
   to: Role[]
@@ -11,7 +11,7 @@ type Config = {
  *
  * Entrée : send
  */
-export const Notify = defineElement<Config, Record<string, never>>({
+export const Notify = defineNode<Config, Record<string, never>>({
   name: 'Notify',
   outputs: [],
   init: () => ({}),

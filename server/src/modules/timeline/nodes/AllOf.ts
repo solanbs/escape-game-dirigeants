@@ -1,7 +1,7 @@
-import { defineElement, type Ctx, type Handlers } from '../engine/types.js'
+import { defineNode, type Ctx, type Handlers } from '../types.js'
 
 type Config = {
-  /** Noms des entrées à attendre. Chacun devient une entrée de l'élément. */
+  /** Noms des entrées à attendre. Chacun devient une entrée du nœud. */
   of: string[]
 }
 
@@ -17,7 +17,7 @@ type State = {
  * Exemple : config { of: ['root', 'plans'] }
  *   → entrées `root` et `plans`, sortie `done`
  */
-export const AllOf = defineElement<Config, State>({
+export const AllOf = defineNode<Config, State>({
   name: 'AllOf',
   outputs: ['done'],
 

@@ -1,5 +1,5 @@
-import type { TraceEntry } from '../engine/types.js'
-import type { Session, SessionRepo } from '../session/ports.js'
+import type { TraceEntry } from '../timeline/index.js'
+import type { Session, SessionRepo } from '../session/index.js'
 
 /**
  * Stockage en mémoire : perdu au redémarrage.

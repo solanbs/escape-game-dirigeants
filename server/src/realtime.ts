@@ -1,18 +1,18 @@
+/**
+ * Serveur Socket.IO provisoire.
+ *
+ * Il crée le serveur Socket.IO (utilisé aussi par le module IoT, namespace /iot)
+ * et garde l'ancien échange avec la fenêtre de test du front (READY, hello).
+ * Remplacé par le module connections à l'étape 1 de docs/plan-back.md.
+ */
 import type { Server as HttpServer } from 'node:http'
 import { Server } from 'socket.io'
 import { SOCKET_EVENTS } from '@escape/shared'
-import type { ClientEvents, ServerEvents, ServerEventName } from '@escape/shared'
+import type { ClientEvents, ServerEvents } from '@escape/shared'
 import { logger } from './logger.js'
-
-/** Émet un événement typé vers tous les navigateurs connectés. */
-export type Emit = <E extends ServerEventName>(
-  event: E,
-  payload: Parameters<ServerEvents[E]>[0],
-) => void
 
 export type Realtime = {
   io: Server<ClientEvents, ServerEvents>
-  emit: Emit
   close: () => Promise<void>
 }
 
@@ -33,15 +33,8 @@ export function createRealtime(httpServer: HttpServer): Realtime {
     })
   })
 
-  const emit: Emit = (event, payload) => {
-    // Cast local : socket.io ne sait pas inférer un événement génériqué.
-    const broadcast = io.emit.bind(io) as (name: string, data: unknown) => void
-    broadcast(event, payload)
-  }
-
   return {
     io,
-    emit,
     close: () =>
       new Promise<void>((resolve) => {
         io.close(() => resolve())

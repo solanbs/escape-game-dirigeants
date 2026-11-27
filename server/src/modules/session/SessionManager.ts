@@ -4,14 +4,14 @@
  * - garde la session courante (une seule à la fois) et son cycle de vie ;
  * - refuse les actions des joueurs si la partie n'est pas en cours ;
  * - appelle le moteur, sauvegarde, journalise ;
- * - transmet les effets du moteur aux sorties (Socket.IO, MQTT…).
+ * - transmet les effets du moteur aux sorties (tablettes, IoT…).
  *
  * Toutes les entrées du jeu (tablettes, MJ, IoT, timers) passent par `dispatch`.
  */
 import type { Logger } from 'pino'
 import type { Role, SessionInfo, SessionStatus, ViewState } from '@escape/shared'
-import { describeActor, formatTrace } from '../engine/engine.js'
-import type { Effect, Engine, EngineInput, InputResult } from '../engine/types.js'
+import { describeActor, formatTrace } from '../timeline/index.js'
+import type { Effect, Engine, EngineInput, InputResult } from '../timeline/index.js'
 import type { Outputs, Session, SessionRepo } from './ports.js'
 import { makeSessionId } from './sessionId.js'
 
@@ -52,7 +52,7 @@ export class SessionManager {
     return {
       role,
       session: this.info,
-      elements: visible ? this.engine.view(s.state, role) : [],
+      nodes: visible ? this.engine.view(s.state, role) : [],
     }
   }
 
@@ -116,15 +116,15 @@ export class SessionManager {
     try {
       run = this.engine.run(s.state, input)
     } catch (err) {
-      // Bug de scénario ou d'élément : on annule l'action, l'état reste intact.
+      // Bug de scénario ou de type de nœud : on annule l'action, l'état reste intact.
       this.log.error({ err, input }, 'erreur du moteur, action annulée')
       return { ok: false, message: 'Erreur interne' }
     }
 
     const who = describeActor(input.from)
-    const what = `${input.element}.${input.input}`
+    const what = `${input.node}.${input.input}`
 
-    // Refusé avant même d'entrer dans le moteur (droits, élément inconnu…).
+    // Refusé avant même d'entrer dans le moteur (droits, nœud inconnu…).
     if (run.trace.length === 0) {
       this.log.warn({ from: who, command: what }, `refusé : ${run.result.message}`)
       return run.result

@@ -9,79 +9,78 @@
  *                                └──► Chemin des plans ───┴─► (les deux) ──► outil Exfiltration
  *
  * Il montre : un enchaînement séquentiel, deux énigmes en parallèle (AllOf),
- * des outils qui se débloquent, un cue IoT, une notification, et des
- * éléments visibles selon le rôle.
+ * des applications qui se débloquent, un cue IoT, une notification, et des
+ * nœuds visibles selon le rôle.
  */
-import { AllOf, IotCue, Notify, PasswordLock, Tool } from '../elements/index.js'
-import { element, type Scenario } from '../engine/types.js'
+import { AllOf, App, IotCue, Notify, PasswordLock, node, type Scenario } from '../modules/timeline/index.js'
 
 export const demoScenario: Scenario = {
   id: 'demo',
   title: 'Exemple : intrusion chez Carbona Racing Team',
 
-  elements: {
-    // --- Outils passifs, disponibles dès le début pour tout le monde -------
-    browser: element(Tool, {
-      config: { title: 'Navigateur', component: 'FakeGoogle' },
+  nodes: {
+    // --- Applications passives, disponibles dès le début pour tout le monde -------
+    browser: node(App, {
+      config: { title: 'Navigateur', app: 'Browser' },
       visibleTo: ['master', 'ops'],
     }),
-    cracker: element(Tool, {
-      config: { title: 'Cracker de hash', component: 'Cracker' },
+    cracker: node(App, {
+      config: { title: 'Cracker de hash', app: 'Cracker' },
       visibleTo: ['master', 'ops'],
     }),
 
     // --- Étape A : l'alarme ----------------------------------------------------
-    alarmPanel: element(PasswordLock, {
+    alarmPanel: node(PasswordLock, {
       config: { label: "Boîtier d'alarme SuperSecure", answer: 'SuperSecure1234' },
       allow: ['master'], // seul le master peut saisir
       visibleTo: ['master'],
     }),
-    alarmOffCue: element(IotCue, {
+    alarmOffCue: node(IotCue, {
       config: { cue: 'alarm-off' }, // lumières d'ambiance + arrêt de la sirène ; seul le MJ le voit
     }),
-    alarmOffMessage: element(Notify, {
+    alarmOffMessage: node(Notify, {
       config: { to: ['master', 'ops'], message: 'Alarme désactivée. Vous pouvez fouiller les bureaux.' },
     }),
 
     // --- Étape B : la session de Maël (inactive tant que l'alarme sonne) -------
-    maelSession: element(PasswordLock, {
+    maelSession: node(PasswordLock, {
       enabled: false,
       // Format des identifiants (docs/infos.md) : nom + initiale du prénom.
       config: { label: 'Session Windows de Maël Morin', answer: 'morinm:Carbona2024' },
       allow: ['master'],
       visibleTo: ['master'],
     }),
-    shell: element(Tool, {
+    shell: node(App, {
       enabled: false,
-      config: { title: 'Shell distant', component: 'Shell' },
+      config: { title: 'Shell distant', app: 'Shell' },
       visibleTo: ['master'],
     }),
 
     // --- Étape C : deux énigmes en parallèle -----------------------------------
-    rootPassword: element(PasswordLock, {
+    rootPassword: node(PasswordLock, {
       enabled: false,
       config: { label: 'Mot de passe root', answer: 'gtfobins' },
       allow: ['master'],
       visibleTo: ['master'],
     }),
-    plansPath: element(PasswordLock, {
+    plansPath: node(PasswordLock, {
       enabled: false,
       config: { label: 'Chemin des plans aéro', answer: '/srv/aero/plans.zip', caseSensitive: true },
       allow: ['master'],
       visibleTo: ['master'],
     }),
-    readyToExfil: element(AllOf, {
+    readyToExfil: node(AllOf, {
       config: { of: ['root', 'plans'] },
     }),
-    exfil: element(Tool, {
+    exfil: node(App, {
       enabled: false,
-      config: { title: 'Exfiltration', component: 'Exfil' },
+      config: { title: 'Exfiltration', app: 'Exfil' },
       visibleTo: ['master'],
     }),
   },
 
   // C'est ici que se trouve TOUT le déroulé de la partie.
-  wires: [
+  links: [
     ['alarmPanel.solved', 'alarmOffCue.play'],
     ['alarmPanel.solved', 'alarmOffMessage.send'],
     ['alarmPanel.solved', 'maelSession.enable'],

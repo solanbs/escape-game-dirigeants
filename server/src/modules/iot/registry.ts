@@ -1,6 +1,6 @@
 import type {GatewayId, IotDeviceState, IotInputState, IotOutputState} from '@escape/shared/iot'
 import type {IotSnapshot, IotStatus, Unsubscribe} from "./port.js";
-import {logger} from "../logger.js";
+import {logger} from "../../logger.js";
 
 export type GatewayEntry = {
     id: GatewayId

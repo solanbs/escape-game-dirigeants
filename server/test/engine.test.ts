@@ -1,28 +1,28 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'vitest'
-import { createEngine, createRegistry } from '../src/engine/engine.js'
-import { defineElement, element, type Scenario } from '../src/engine/types.js'
-import { AllOf, IotCue, PasswordLock, Tool, registry } from '../src/elements/index.js'
+import { createEngine, createRegistry } from '../src/modules/timeline/index.js'
+import { defineNode, node, type Scenario } from '../src/modules/timeline/index.js'
+import { AllOf, IotCue, PasswordLock, App, registry } from '../src/modules/timeline/index.js'
 import { gm, master, ops } from './helpers.js'
 
 /** Petit scénario : un cadenas qui débloque un outil et joue un cue IoT. */
 const scenario: Scenario = {
   id: 'test',
   title: 'test',
-  elements: {
-    lock: element(PasswordLock, {
+  nodes: {
+    lock: node(PasswordLock, {
       config: { label: 'Code', answer: 'secret' },
       allow: ['master'],
       visibleTo: ['master'],
     }),
-    tool: element(Tool, {
+    tool: node(App, {
       enabled: false,
-      config: { title: 'Outil', component: 'X' },
+      config: { title: 'Outil', app: 'X' },
       visibleTo: ['master', 'ops'],
     }),
-    cue: element(IotCue, { config: { cue: 'success' } }),
+    cue: node(IotCue, { config: { cue: 'success' } }),
   },
-  wires: [
+  links: [
     ['lock.solved', 'tool.enable'],
     ['lock.solved', 'cue.play'],
   ],
@@ -32,12 +32,12 @@ const engine = createEngine(scenario, registry)
 
 describe('validation du scénario', () => {
   it('refuse un type inconnu', () => {
-    const bad: Scenario = { id: 'bad', title: '', elements: { x: { type: 'Nope', config: {} } }, wires: [] }
+    const bad: Scenario = { id: 'bad', title: '', nodes: { x: { type: 'Nope', config: {} } }, links: [] }
     assert.throws(() => createEngine(bad, registry), /type inconnu « Nope »/)
   })
 
-  it('refuse un câble vers une sortie ou une entrée qui n’existe pas', () => {
-    const bad: Scenario = { ...scenario, wires: [['lock.opened', 'tool.enable'], ['lock.solved', 'tool.open']] }
+  it('refuse un lien vers une sortie ou une entrée qui n’existe pas', () => {
+    const bad: Scenario = { ...scenario, links: [['lock.opened', 'tool.enable'], ['lock.solved', 'tool.open']] }
     assert.throws(() => createEngine(bad, registry), (err: Error) => {
       assert.match(err.message, /pas de sortie « opened »/)
       assert.match(err.message, /pas d'entrée « open »/)
@@ -47,9 +47,9 @@ describe('validation du scénario', () => {
 })
 
 describe('propagation des signaux', () => {
-  it('suit les câbles : bon code → outil débloqué + cue IoT', () => {
+  it('suit les liens : bon code → application débloquée + cue IoT', () => {
     const { state, effects, result } = engine.run(engine.init(), {
-      element: 'lock',
+      node: 'lock',
       input: 'submit',
       payload: 'secret',
       from: master,
@@ -62,7 +62,7 @@ describe('propagation des signaux', () => {
 
   it('mauvais code → rien ne se débloque', () => {
     const { state, effects, result } = engine.run(engine.init(), {
-      element: 'lock',
+      node: 'lock',
       input: 'submit',
       payload: 'nope',
       from: master,
@@ -75,12 +75,12 @@ describe('propagation des signaux', () => {
   it("ne modifie jamais l'état reçu (fonction pure)", () => {
     const before = engine.init()
     const copy = structuredClone(before)
-    engine.run(before, { element: 'lock', input: 'submit', payload: 'secret', from: master })
+    engine.run(before, { node: 'lock', input: 'submit', payload: 'secret', from: master })
     assert.deepEqual(before, copy)
   })
 
-  it('détecte une boucle de câbles', () => {
-    const Echo = defineElement<null, null>({
+  it('détecte une boucle de liens', () => {
+    const Echo = defineNode<null, null>({
       name: 'Echo',
       outputs: ['out'],
       init: () => null,
@@ -89,21 +89,21 @@ describe('propagation des signaux', () => {
     const loop: Scenario = {
       id: 'loop',
       title: '',
-      elements: { a: { type: 'Echo', config: null }, b: { type: 'Echo', config: null } },
-      wires: [
+      nodes: { a: { type: 'Echo', config: null }, b: { type: 'Echo', config: null } },
+      links: [
         ['a.out', 'b.in'],
         ['b.out', 'a.in'],
       ],
     }
     const looping = createEngine(loop, createRegistry([Echo]))
-    assert.throws(() => looping.run(looping.init(), { element: 'a', input: 'in', from: gm }), /boucle/)
+    assert.throws(() => looping.run(looping.init(), { node: 'a', input: 'in', from: gm }), /boucle/)
   })
 })
 
 describe('droits', () => {
-  it('une commande forgée par une opé vers un élément réservé au master est refusée', () => {
+  it('une commande forgée par une opé vers un nœud réservé au master est refusée', () => {
     const { result, trace } = engine.run(engine.init(), {
-      element: 'lock',
+      node: 'lock',
       input: 'submit',
       payload: 'secret',
       from: ops,
@@ -112,20 +112,20 @@ describe('droits', () => {
     assert.equal(trace.length, 0)
   })
 
-  it('un joueur ne peut pas activer un élément lui-même', () => {
-    const { result } = engine.run(engine.init(), { element: 'lock', input: 'enable', from: master })
+  it('un joueur ne peut pas activer un nœud lui-même', () => {
+    const { result } = engine.run(engine.init(), { node: 'lock', input: 'enable', from: master })
     assert.equal(result.ok, false)
   })
 
   it('le MJ peut déclencher n’importe quelle entrée', () => {
-    const { state } = engine.run(engine.init(), { element: 'tool', input: 'enable', from: gm })
+    const { state } = engine.run(engine.init(), { node: 'tool', input: 'enable', from: gm })
     assert.equal(state.tool?.enabled, true)
   })
 
-  it('un élément inactif ignore ses entrées', () => {
-    const disabled = engine.run(engine.init(), { element: 'lock', input: 'disable', from: gm }).state
+  it('un nœud inactif ignore ses entrées', () => {
+    const disabled = engine.run(engine.init(), { node: 'lock', input: 'disable', from: gm }).state
     const { result, state } = engine.run(disabled, {
-      element: 'lock',
+      node: 'lock',
       input: 'submit',
       payload: 'secret',
       from: master,
@@ -136,9 +136,9 @@ describe('droits', () => {
 })
 
 describe('vues par rôle', () => {
-  it('chaque rôle ne voit que ses éléments actifs', () => {
+  it('chaque rôle ne voit que ses nœuds actifs', () => {
     const solved = engine.run(engine.init(), {
-      element: 'lock',
+      node: 'lock',
       input: 'submit',
       payload: 'secret',
       from: master,
@@ -156,25 +156,25 @@ describe('vues par rôle', () => {
   })
 })
 
-describe('éléments', () => {
+describe('types de nœuds', () => {
   it('PasswordLock ignore la casse et les espaces, accepte des variantes', () => {
     const e = createEngine(
       {
         id: 'p',
         title: '',
-        elements: { l: element(PasswordLock, { config: { label: '', answer: ['Abc', 'xyz'] }, allow: ['master'] }) },
-        wires: [],
+        nodes: { l: node(PasswordLock, { config: { label: '', answer: ['Abc', 'xyz'] }, allow: ['master'] }) },
+        links: [],
       },
       registry,
     )
-    const submit = (v: string) => e.run(e.init(), { element: 'l', input: 'submit', payload: v, from: master }).result.ok
+    const submit = (v: string) => e.run(e.init(), { node: 'l', input: 'submit', payload: v, from: master }).result.ok
     assert.equal(submit('  aBC '), true)
     assert.equal(submit('XYZ'), true)
     assert.equal(submit('abd'), false)
   })
 
   it('AllOf émet done une seule fois, quand tout est reçu', () => {
-    const Counter = defineElement<null, { n: number }>({
+    const Counter = defineNode<null, { n: number }>({
       name: 'Counter',
       outputs: [],
       init: () => ({ n: 0 }),
@@ -184,16 +184,16 @@ describe('éléments', () => {
       {
         id: 'a',
         title: '',
-        elements: {
-          gate: element(AllOf, { config: { of: ['a', 'b'] } }),
+        nodes: {
+          gate: node(AllOf, { config: { of: ['a', 'b'] } }),
           count: { type: 'Counter', config: null },
         },
-        wires: [['gate.done', 'count.inc']],
+        links: [['gate.done', 'count.inc']],
       },
       createRegistry([AllOf, Counter]),
     )
     let s = e.init()
-    for (const input of ['a', 'a', 'b', 'b']) s = e.run(s, { element: 'gate', input, from: gm }).state
+    for (const input of ['a', 'a', 'b', 'b']) s = e.run(s, { node: 'gate', input, from: gm }).state
     assert.deepEqual(s.count?.data, { n: 1 })
   })
 })

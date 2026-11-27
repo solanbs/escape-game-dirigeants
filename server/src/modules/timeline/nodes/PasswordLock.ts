@@ -1,4 +1,4 @@
-import { defineElement } from '../engine/types.js'
+import { defineNode } from '../types.js'
 
 type Config = {
   /** Texte affiché au-dessus du champ de saisie. */
@@ -20,7 +20,7 @@ type State = {
  * Entrée  : submit(valeur)
  * Sorties : solved (une seule fois), failed (à chaque erreur)
  */
-export const PasswordLock = defineElement<Config, State>({
+export const PasswordLock = defineNode<Config, State>({
   name: 'PasswordLock',
   outputs: ['solved', 'failed'],
 

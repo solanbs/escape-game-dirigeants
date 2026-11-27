@@ -28,7 +28,7 @@ import type {
 import type {Namespace, Server, Socket} from "socket.io";
 import {createRegistry} from "./registry.js";
 import {CUES} from "./cues.js";
-import {logger} from "../logger.js";
+import {logger} from "../../logger.js";
 import {randomUUID} from "node:crypto";
 import type {IotAdminPort} from "./admin-port.js";
 

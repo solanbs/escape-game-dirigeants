@@ -1,5 +1,5 @@
 import type { CueName } from '@escape/shared/iot'
-import { defineElement } from '../engine/types.js'
+import { defineNode } from '../types.js'
 
 type Config = {
   /** Cue IoT à jouer (défini dans server/src/iot/cues.ts : lumières + son). */
@@ -18,7 +18,7 @@ type State = {
  * Le nœud ne parle pas au matériel : il demande un effet `cue`, que la
  * session transmet au module IoT (IotPort.cue).
  */
-export const IotCue = defineElement<Config, State>({
+export const IotCue = defineNode<Config, State>({
   name: 'IotCue',
   outputs: [],
 

@@ -1,8 +1,8 @@
 import { pino } from 'pino'
 import type { Role } from '@escape/shared'
 import type { CueName } from '@escape/shared/iot'
-import type { Actor } from '../src/engine/types.js'
-import type { Outputs } from '../src/session/ports.js'
+import type { Actor } from '../src/modules/timeline/index.js'
+import type { Outputs } from '../src/modules/session/index.js'
 
 export const silentLog = pino({ level: 'silent' })
 

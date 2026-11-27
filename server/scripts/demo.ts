@@ -7,13 +7,13 @@
 import { pino } from 'pino'
 import pretty from 'pino-pretty'
 import type { Role } from '@escape/shared'
-import { createEngine } from '../src/engine/engine.js'
-import type { Actor } from '../src/engine/types.js'
-import { registry } from '../src/elements/index.js'
-import { MemorySessionRepo } from '../src/persistence/MemorySessionRepo.js'
+import { createEngine } from '../src/modules/timeline/index.js'
+import type { Actor } from '../src/modules/timeline/index.js'
+import { registry } from '../src/modules/timeline/index.js'
+import { MemorySessionRepo } from '../src/modules/persistence/index.js'
 import { demoScenario } from '../src/scenarios/demo.js'
-import type { Outputs } from '../src/session/ports.js'
-import { SessionManager } from '../src/session/SessionManager.js'
+import type { Outputs } from '../src/modules/session/index.js'
+import { SessionManager } from '../src/modules/session/index.js'
 
 // Logger synchrone pour que les logs s'affichent dans l'ordre avec les console.log.
 const log = pino(
@@ -40,13 +40,13 @@ function step(title: string) {
   console.log(`\n━━━ ${title}`)
 }
 
-function play(from: Actor, element: string, input: string, payload?: unknown) {
-  const r = game.dispatch({ element, input, payload, from })
+function play(from: Actor, nodeId: string, input: string, payload?: unknown) {
+  const r = game.dispatch({ node: nodeId, input, payload, from })
   console.log(`   ${r.ok ? '✅' : '❌'} ${r.message ?? 'ok'}`)
 }
 
 function show(role: Role) {
-  const ids = game.viewFor(role).elements.map((e) => (e.enabled ? e.id : `(${e.id})`))
+  const ids = game.viewFor(role).nodes.map((e) => (e.enabled ? e.id : `(${e.id})`))
   console.log(`   👁  ${role.padEnd(6)} voit : ${ids.join(', ') || '(rien)'}`)
 }
 
@@ -91,7 +91,7 @@ play(master, 'plansPath', 'submit', '/srv/aero/plans.zip')
 show('master')
 show('ops')
 
-step('Le MJ voit tout (entre parenthèses : éléments inactifs)')
+step('Le MJ voit tout (entre parenthèses : nœuds inactifs)')
 show('gm')
 
 step('Le MJ met en pause : les joueurs sont bloqués, pas le MJ')

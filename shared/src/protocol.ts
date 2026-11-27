@@ -34,9 +34,9 @@ export type SessionInfo = {
 // Commandes (client → serveur)
 // ---------------------------------------------------------------------------
 
-/** Une commande vise toujours « l'entrée X de l'élément Y ». */
+/** Une commande vise toujours « l'entrée X du nœud Y ». */
 export type Command = {
-  element: string
+  node: string
   input: string
   payload?: unknown
 }
@@ -50,10 +50,10 @@ export type CommandResult = {
 // Vues (serveur → client)
 // ---------------------------------------------------------------------------
 
-/** Ce qu'un client voit d'un élément du scénario. */
-export type ElementView = {
+/** Ce qu'un client voit d'un nœud du scénario. */
+export type NodeView = {
   id: string
-  /** Type d'élément (PasswordLock, Tool…) : le front choisit son composant avec. */
+  /** Type de nœud (PasswordLock, App…) : le front choisit son composant avec. */
   type: string
   enabled: boolean
   data: unknown
@@ -63,5 +63,5 @@ export type ElementView = {
 export type ViewState = {
   role: Role
   session: SessionInfo | null
-  elements: ElementView[]
+  nodes: NodeView[]
 }

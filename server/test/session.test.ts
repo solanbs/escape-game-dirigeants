@@ -1,11 +1,11 @@
 import assert from 'node:assert/strict'
 import { beforeEach, describe, it } from 'vitest'
-import { createEngine } from '../src/engine/engine.js'
-import { registry } from '../src/elements/index.js'
-import { MemorySessionRepo } from '../src/persistence/MemorySessionRepo.js'
+import { createEngine } from '../src/modules/timeline/index.js'
+import { registry } from '../src/modules/timeline/index.js'
+import { MemorySessionRepo } from '../src/modules/persistence/index.js'
 import { demoScenario } from '../src/scenarios/demo.js'
-import { GameError, SessionManager } from '../src/session/SessionManager.js'
-import { makeSessionId } from '../src/session/sessionId.js'
+import { GameError, SessionManager } from '../src/modules/session/index.js'
+import { makeSessionId } from '../src/modules/session/index.js'
 import { fakeOutputs, gm, master, ops, silentLog } from './helpers.js'
 
 const engine = createEngine(demoScenario, registry)
@@ -15,9 +15,9 @@ function setup() {
   const repo = new MemorySessionRepo()
   const { outputs, calls } = fakeOutputs()
   const game = new SessionManager(engine, repo, outputs, silentLog, fixedNow)
-  const play = (from: typeof master, element: string, input: string, payload?: unknown) =>
-    game.dispatch({ element, input, payload, from })
-  const visible = (role: 'master' | 'ops' | 'gm') => game.viewFor(role).elements.map((e) => e.id)
+  const play = (from: typeof master, nodeId: string, input: string, payload?: unknown) =>
+    game.dispatch({ node: nodeId, input, payload, from })
+  const visible = (role: 'master' | 'ops' | 'gm') => game.viewFor(role).nodes.map((e) => e.id)
   return { repo, calls, game, play, visible }
 }
 
@@ -61,7 +61,7 @@ describe('cycle de vie', () => {
 
     const restarted = new SessionManager(engine, t.repo, fakeOutputs().outputs, silentLog, fixedNow)
     assert.equal(restarted.info?.id, '2026-11-09_14h30_a')
-    assert.ok(restarted.viewFor('master').elements.some((e) => e.id === 'maelSession'))
+    assert.ok(restarted.viewFor('master').nodes.some((e) => e.id === 'maelSession'))
   })
 })
 

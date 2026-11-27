@@ -6,7 +6,7 @@
  */
 import type { Role, SessionInfo } from '@escape/shared'
 import type { CueName } from '@escape/shared/iot'
-import type { EngineState, TraceEntry } from '../engine/types.js'
+import type { EngineState, TraceEntry } from '../timeline/index.js'
 
 /** Une session = ses infos publiques + l'état du moteur. */
 export type Session = SessionInfo & { state: EngineState }

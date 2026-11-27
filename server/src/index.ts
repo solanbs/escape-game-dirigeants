@@ -1,15 +1,17 @@
+/**
+ * Point d'entrée du serveur : crée les modules et les branche entre eux.
+ * Aucune logique de jeu ici (cf. docs/plan-back.md, étape 0).
+ */
+import { randomUUID } from 'node:crypto'
 import { createServer } from 'node:http'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
 import { pinoHttp } from 'pino-http'
-import type { AnswerRequest } from '@escape/shared'
+import type { IotDesiredState } from '@escape/shared/iot'
 import { logger } from './logger.js'
 import { createRealtime } from './realtime.js'
-import { handleAnswer } from './game.js'
-import {createIot} from "./iot/index.js";
-import {randomUUID} from "node:crypto";
-import {IotDesiredState} from "@escape/shared/iot";
+import { createIot } from './modules/iot/index.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
 const clientDist = join(here, '../../client/dist')
@@ -17,14 +19,22 @@ const clientDist = join(here, '../../client/dist')
 const PORT = Number(process.env.PORT ?? 3000)
 const isProd = process.env.NODE_ENV === 'production'
 
-const app = express()
+// ---------------------------------------------------------------------------
+// Valeurs IoT temporaires, pour tester le gateway.
+// Remplacées par la vraie session à l'étape 7 du plan (raccordement IoT).
+// ---------------------------------------------------------------------------
 
-// temporary session ID and desiredState for iot testing
-let sessionId = randomUUID()
-let desiredState: IotDesiredState = {
-    lights: null,
-    audio: null,
+const sessionId = randomUUID()
+const desiredState: IotDesiredState = {
+  lights: null,
+  audio: null,
 }
+
+// ---------------------------------------------------------------------------
+// HTTP
+// ---------------------------------------------------------------------------
+
+const app = express()
 
 app.use(express.json())
 app.use(
@@ -42,32 +52,18 @@ app.use(
   }),
 )
 
-// ---------------------------------------------------------------------------
-// API
-// ---------------------------------------------------------------------------
-
 app.get('/api/ping', (_req, res) => {
   res.json({ ok: true, uptime: process.uptime() })
 })
 
-app.post('/api/answer', (req, res) => {
-  const body = req.body as Partial<AnswerRequest>
-
-  if (!body?.teamId || !body?.puzzleId || typeof body.value !== 'string') {
-    res.status(400).json({ ok: false, message: 'teamId, puzzleId et value sont requis' })
-    return
-  }
-
-  res.json(handleAnswer(body as AnswerRequest, realtime.emit))
-})
-
 // ---------------------------------------------------------------------------
-// Serveur HTTP + temps réel
+// Temps réel (Socket.IO) + modules
+// realtime.ts sera remplacé par le module connections à l'étape 1.
 // ---------------------------------------------------------------------------
 
 const httpServer = createServer(app)
-export const realtime = createRealtime(httpServer)
-export const iot = createIot(realtime.io, {
+const realtime = createRealtime(httpServer)
+const iot = createIot(realtime.io, {
   getDesiredState: () => desiredState,
   getSessionId: () => sessionId,
 })
@@ -144,5 +140,5 @@ for (const signal of ['SIGINT', 'SIGTERM'] as const) {
       await realtime.close()
       httpServer.close(() => process.exit(0))
     })()
-    })
+  })
 }

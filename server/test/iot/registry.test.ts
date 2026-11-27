@@ -1,7 +1,7 @@
 import {beforeEach, describe, expect, it, vi} from 'vitest'
 import type {IotDeviceState} from '@escape/shared/iot'
-import type {IotStatus} from '../../src/iot/port.js'
-import {createRegistry} from '../../src/iot/registry.js'
+import type {IotStatus} from '../../src/modules/iot/port.js'
+import {createRegistry} from '../../src/modules/iot/registry.js'
 
 vi.mock('../../src/logger.js', () => ({
   logger: {
