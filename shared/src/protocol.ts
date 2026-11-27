@@ -31,6 +31,22 @@ export type SessionInfo = {
 }
 
 // ---------------------------------------------------------------------------
+// Connexion
+// ---------------------------------------------------------------------------
+
+/** Ce qu'une tablette envoie à l'ouverture du socket : `io({ auth })`. */
+export type AuthPayload = { password: string } | { token: string }
+
+/** Envoyé par le serveur juste après une connexion acceptée. */
+export type Welcome = {
+  role: string
+  /** L'écran que le front doit afficher pour ce rôle (config.yaml). */
+  ecran: string
+  /** Jeton de reconnexion : à renvoyer dans `auth` après un redémarrage. */
+  token: string
+}
+
+// ---------------------------------------------------------------------------
 // Commandes (client → serveur)
 // ---------------------------------------------------------------------------
 

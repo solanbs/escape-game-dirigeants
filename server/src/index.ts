@@ -4,24 +4,46 @@
  */
 import { randomUUID } from 'node:crypto'
 import { createServer } from 'node:http'
-import { dirname, join } from 'node:path'
+import { dirname, isAbsolute, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import express from 'express'
 import { pinoHttp } from 'pino-http'
+import { Server } from 'socket.io'
 import type { IotDesiredState } from '@escape/shared/iot'
 import { logger } from './logger.js'
-import { createRealtime } from './realtime.js'
+import { attachConnections, createSeats } from './modules/connections/index.js'
 import { createIot } from './modules/iot/index.js'
+import { loadConfig, ScenarioError, type ScenarioConfig } from './modules/scenario-loader/index.js'
 
 const here = dirname(fileURLToPath(import.meta.url))
-const clientDist = join(here, '../../client/dist')
+/** Racine du dépôt (le même chemin depuis server/src en dev et server/dist en prod). */
+const repoRoot = join(here, '../..')
+const clientDist = join(repoRoot, 'client/dist')
 
 const PORT = Number(process.env.PORT ?? 3000)
 const isProd = process.env.NODE_ENV === 'production'
 
 // ---------------------------------------------------------------------------
+// Dossier de scénario : lu et vérifié avant tout le reste.
+// Une erreur dans un fichier → le serveur refuse de démarrer, avec le fichier à corriger.
+// ---------------------------------------------------------------------------
+
+const scenarioDirSetting = process.env.SCENARIO_DIR ?? 'scenarios/demo'
+const scenarioDir = isAbsolute(scenarioDirSetting) ? scenarioDirSetting : join(repoRoot, scenarioDirSetting)
+
+let config: ScenarioConfig
+try {
+  config = loadConfig(scenarioDir)
+} catch (err) {
+  if (!(err instanceof ScenarioError)) throw err
+  logger.fatal(`scénario invalide, démarrage annulé\n${err.message}`)
+  process.exit(1)
+}
+logger.info({ scenario: scenarioDir, roles: Object.keys(config.roles) }, 'scénario chargé')
+
+// ---------------------------------------------------------------------------
 // Valeurs IoT temporaires, pour tester le gateway.
-// Remplacées par la vraie session à l'étape 7 du plan (raccordement IoT).
+// Remplacées par la vraie session à l'étape 10 du plan (raccordement IoT).
 // ---------------------------------------------------------------------------
 
 const sessionId = randomUUID()
@@ -58,12 +80,15 @@ app.get('/api/ping', (_req, res) => {
 
 // ---------------------------------------------------------------------------
 // Temps réel (Socket.IO) + modules
-// realtime.ts sera remplacé par le module connections à l'étape 1.
+// Namespace principal : les tablettes (connections). Namespace /iot : le gateway (iot).
 // ---------------------------------------------------------------------------
 
 const httpServer = createServer(app)
-const realtime = createRealtime(httpServer)
-const iot = createIot(realtime.io, {
+const io = new Server(httpServer)
+
+attachConnections(io, { config, seats: createSeats(config), log: logger })
+
+const iot = createIot(io, {
   getDesiredState: () => desiredState,
   getSessionId: () => sessionId,
 })
@@ -137,7 +162,7 @@ for (const signal of ['SIGINT', 'SIGTERM'] as const) {
     logger.info({ signal }, 'arrêt en cours')
     void (async () => {
       await iot.port.stop()
-      await realtime.close()
+      await new Promise<void>((resolve) => io.close(() => resolve()))
       httpServer.close(() => process.exit(0))
     })()
   })

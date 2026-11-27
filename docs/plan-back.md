@@ -14,7 +14,8 @@
 | Sessions : cycle de vie, id lisible, logs par session, reprise | ✅ testé |
 | IoT : adaptateur serveur + `iot-gateway` (devices factices) | ✅ testé, pas encore relié à la session |
 | `index.ts` : assemble les modules | ✅ |
-| Connexion des tablettes, lecture des YAML, pages, vues, MJ, journal | ❌ étapes 1 à 7 |
+| Connexion des tablettes par mot de passe de rôle, `config.yaml` (étape 1) | ✅ testé, essayé sur un vrai serveur |
+| Pages, vues, MJ, journal | ❌ étapes 2 à 7 |
 
 **Commandes utiles**
 
@@ -22,10 +23,11 @@
 npm test                                   # tous les tests du serveur
 npm run demo                               # une partie jouée dans le terminal
 npm run dev:server                         # le serveur seul
-npx tsx server/scripts/tablette.ts <mdp>   # une fausse tablette (à partir de l'étape 1)
+npm run tablette -w @escape/server -- ops123          # une fausse tablette (mot de passe d'un rôle)
+npm run tablette -w @escape/server -- --token <jeton>  # reconnexion avec un jeton
 ```
 
-**Encore provisoire dans le code** : `server/src/realtime.ts` (remplacé à l'étape 1), `server/src/scenarios/demo.ts` (étape 4), les valeurs IoT temporaires de `index.ts` (étape 10), les anciens types de `shared/src/index.ts` (étape 12).
+**Encore provisoire dans le code** : `server/src/scenarios/demo.ts` (étape 4), les jetons de reconnexion gardés en mémoire (perdus au redémarrage du serveur, sauvegardés à l'étape 11), les valeurs IoT temporaires de `index.ts` (étape 10), les anciens types de `shared/src/index.ts` (étape 12).
 
 ---
 
@@ -61,7 +63,7 @@ Le **raccordement IoT** (étape 10) peut avancer en parallèle dès la fin de l'
 
 ---
 
-### Étape 1 : connexion par mot de passe de rôle
+### Étape 1 : connexion par mot de passe de rôle ✅ faite
 
 **But** : une tablette se connecte avec le mot de passe d'un rôle ; le serveur lui attribue ce rôle, vérifie qu'il reste de la place, la range dans la salle du rôle et lui donne un jeton de reconnexion.
 
@@ -90,7 +92,9 @@ Le **raccordement IoT** (étape 10) peut avancer en parallèle dès la fin de l'
 - le gateway IoT (`npm run dev:gateway`) se connecte toujours ;
 - tests : `loadConfig`, `seats`.
 
-> ⚠️ À prévenir côté front : sans mot de passe, la fenêtre de test actuelle ne se connecte plus. Le front doit ajouter un écran de connexion.
+> ⚠️ À prévenir côté front : sans mot de passe, la fenêtre de test actuelle ne se connecte plus. Le front doit ajouter un écran de connexion, et **revenir à cet écran si le serveur refuse le jeton** (« jeton inconnu », par exemple après un redémarrage du serveur). La fausse tablette fait de même : elle repasse par son mot de passe.
+
+**Réalisé** : `scenarios/demo/config.yaml` ; module `scenario-loader` (`loadConfig`) ; module `connections` (`seats.ts`, `connections.ts`) ; type `Welcome` ; `realtime.ts` supprimé ; `scripts/tablette.ts` ; le Dockerfile copie `scenarios/`. Tests : `scenario-loader`, `seats`, `connections` (avec de vrais sockets).
 
 ---
 
@@ -295,7 +299,7 @@ activite:
 | `persistence` | `SqliteSessionRepo` (même interface que le repo en mémoire) : tables `sessions` et `journal`, dans `./data`. |
 | `index.ts` | Utiliser SQLite à la place de la mémoire. |
 
-**Terminé quand** : on redémarre le serveur en pleine partie ; la session, l'état, le journal et les comptes à rebours reprennent ; les tablettes se reconnectent avec leur jeton.
+**Terminé quand** : on redémarre le serveur en pleine partie ; la session, l'état, le journal et les comptes à rebours reprennent ; les tablettes se reconnectent avec leur jeton (les jetons sont donc sauvegardés eux aussi).
 
 ---
 

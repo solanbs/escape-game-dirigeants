@@ -42,6 +42,9 @@ COPY --from=build /app/server/dist ./server/dist
 COPY --from=build /app/client/dist ./client/dist
 COPY --from=build /app/iot-gateway/dist ./iot-gateway/dist
 
+# Les scénarios (YAML) sont lus par le serveur au démarrage (SCENARIO_DIR).
+COPY scenarios/ ./scenarios/
+
 EXPOSE 3000
 
 CMD ["node", "server/dist/index.js"]

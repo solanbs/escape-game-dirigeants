@@ -485,6 +485,7 @@ renvoie son jeton     ──── jeton ─────────►  reconnu
 ```
 
 - Une place = une tablette connectée. Une reconnexion avec jeton n'est pas soumise à la limite.
+- Si le serveur refuse le jeton (« jeton inconnu », par exemple après un redémarrage tant que les jetons ne sont pas sauvegardés), la tablette revient à l'écran de connexion.
 - Le rôle vient toujours du serveur (mot de passe ou jeton), jamais d'un champ que la tablette annonce.
 - Le MJ utilise le même écran avec `GM_PASSWORD` ; c'est le module `gm` qui le reconnaît.
 

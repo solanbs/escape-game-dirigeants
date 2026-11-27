@@ -22,7 +22,10 @@ npm run dev:gateway       # dans un autre terminal, si on teste l'IoT
 npm test          # tests du serveur et du gateway
 npm run typecheck # vérification TypeScript de tous les paquets
 npm run demo      # une partie du scénario de démonstration, jouée dans le terminal
+npm run tablette -w @escape/server -- ops123   # une fausse tablette connectée au serveur
 ```
+
+Les mots de passe des rôles du scénario de démonstration sont dans `scenarios/demo/config.yaml`.
 
 ## Lancer avec Docker
 

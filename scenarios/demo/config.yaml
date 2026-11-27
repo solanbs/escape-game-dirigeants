@@ -1,0 +1,14 @@
+# Config du scénario de démonstration : rôles, mots de passe, nombre de joueurs.
+# Le MJ n'est pas ici : ce n'est pas un rôle (son mot de passe est dans .env).
+# Format : docs/architecture.md, section 5.5.
+
+roles:
+  master:
+    mot_de_passe: "master123"
+    ecran: bureau
+    joueurs: { min: 1, max: 1 }
+
+  ops:
+    mot_de_passe: "ops123"
+    ecran: bureau
+    joueurs: { min: 1, max: 6 }
