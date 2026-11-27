@@ -13,6 +13,8 @@ services:
       # Retirer cette ligne (ou mettre json) pour des logs bruts.
       LOG_FORMAT: pretty
       IOT_GATEWAY_TOKEN: ${IOT_GATEWAY_TOKEN}
+      IOT_AUDIO_SMOKE_TEST: ${IOT_AUDIO_SMOKE_TEST:-0}
+      IOT_AUDIO_SMOKE_TRACK: ${IOT_AUDIO_SMOKE_TRACK:-alarm.mp3}
     volumes:
       # Prêt pour la base SQLite et les fichiers persistants.
       - ./data:/app/data
@@ -24,7 +26,7 @@ services:
       target: gateway
     environment:
       NODE_ENV: production
-      LOG_LEVEL: info
+      LOG_LEVEL: ${IOT_GATEWAY_LOG_LEVEL:-info}
       LOG_FORMAT: pretty
       IOT_GATEWAY_TOKEN: ${IOT_GATEWAY_TOKEN}
       IOT_SERVER_URL: http://game:3000
