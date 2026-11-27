@@ -1,0 +1,366 @@
+/*
+ * Apparence du template Linkedin (Linkedin.vue) : profil professionnel.
+ * Couleur : var(--couleur-principale), issue du champ `couleur` du YAML (défaut : bleu).
+ */
+
+.li-site {
+  --li-couleur: var(--couleur-principale, #0a66c2);
+  --li-couleur-claire: color-mix(in srgb, var(--li-couleur) 12%, white);
+  --li-fond: #f4f2ee;
+  --li-carte: #ffffff;
+  --li-texte: rgba(0, 0, 0, 0.9);
+  --li-gris: rgba(0, 0, 0, 0.6);
+  --li-bordure: #e8e8e8;
+
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  background: var(--li-fond);
+  color: var(--li-texte);
+  font-family: -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+}
+
+/* --- barre du réseau ----------------------------------------------------- */
+.li-barre {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: var(--li-carte);
+  border-bottom: 1px solid var(--li-bordure);
+}
+
+.li-barre__inner {
+  max-width: 1128px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.li-barre__gauche {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.li-barre__logo {
+  width: 34px;
+  height: 34px;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  background: var(--li-couleur);
+  font-size: 1.1rem;
+}
+
+.li-barre__recherche {
+  width: 260px;
+  padding: 0.45rem 0.8rem;
+  border-radius: 4px;
+  background: #edf3f8;
+  color: var(--li-gris);
+}
+
+.li-barre__nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.li-barre__nav span {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.72rem;
+  color: var(--li-gris);
+}
+
+.li-barre__nav b {
+  font-size: 1.15rem;
+  font-weight: normal;
+}
+
+/* --- disposition --------------------------------------------------------- */
+.li-page {
+  max-width: 1128px;
+  margin: 1.5rem auto 3rem;
+  padding: 0 1rem;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+.li-principal,
+.li-colonne {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.li-carte {
+  background: var(--li-carte);
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+
+/* --- carte de profil ----------------------------------------------------- */
+.li-banniere {
+  height: 200px;
+  background: linear-gradient(120deg, color-mix(in srgb, var(--li-couleur) 70%, #ffffff), var(--li-couleur));
+  background-size: cover;
+  background-position: center;
+}
+
+.li-profil__corps {
+  padding: 0 1.5rem 1.5rem;
+}
+
+.li-photo {
+  width: 152px;
+  height: 152px;
+  margin-top: -110px;
+  border-radius: 50%;
+  border: 4px solid var(--li-carte);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: var(--li-couleur-claire);
+  color: var(--li-couleur);
+  font-size: 3.5rem;
+  font-weight: 700;
+}
+
+.li-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.li-profil__infos {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 0.8rem;
+}
+
+.li-nom {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.25;
+}
+
+.li-titre {
+  margin: 0.2rem 0 0;
+  font-size: 1rem;
+}
+
+.li-lieu,
+.li-relations {
+  margin: 0.4rem 0 0;
+  color: var(--li-gris);
+}
+
+.li-lien {
+  color: var(--li-couleur);
+  font-weight: 600;
+}
+
+.li-entreprise {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  height: fit-content;
+  max-width: 230px;
+  font-weight: 600;
+}
+
+.li-logo-carre {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 4px;
+  display: grid;
+  place-items: center;
+  background: var(--li-couleur-claire);
+  color: var(--li-couleur);
+  font-weight: 700;
+}
+
+.li-logo-carre--grand {
+  width: 48px;
+  height: 48px;
+  font-size: 1.2rem;
+}
+
+.li-boutons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.li-bouton {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--li-couleur);
+  border-radius: 999px;
+  color: var(--li-couleur);
+  font-weight: 600;
+}
+
+.li-bouton--plein {
+  background: var(--li-couleur);
+  color: #ffffff;
+}
+
+.li-bouton--gris {
+  border-color: var(--li-gris);
+  color: var(--li-gris);
+}
+
+/* --- rubriques ----------------------------------------------------------- */
+.li-rubrique {
+  padding: 1.2rem 1.5rem;
+}
+
+.li-rubrique h2 {
+  margin: 0 0 0.8rem;
+  font-size: 1.25rem;
+}
+
+.li-sous-titre {
+  margin: -0.6rem 0 0.8rem;
+}
+
+.li-texte p {
+  margin: 0 0 0.6rem;
+  line-height: 1.45;
+}
+
+.li-texte p:last-child {
+  margin-bottom: 0;
+}
+
+.li-texte strong {
+  color: var(--li-couleur);
+}
+
+.li-gris {
+  color: var(--li-gris);
+}
+
+/* activité */
+.li-post {
+  padding: 0.9rem 0;
+  border-top: 1px solid var(--li-bordure);
+}
+
+.li-post__entete {
+  margin: 0 0 0.5rem;
+  font-size: 0.85rem;
+  color: var(--li-gris);
+}
+
+.li-post__entete strong {
+  color: var(--li-texte);
+}
+
+.li-post__image {
+  display: block;
+  max-width: 100%;
+  margin-top: 0.6rem;
+  border-radius: 6px;
+}
+
+.li-post__compteurs {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.6rem 0 0;
+  font-size: 0.8rem;
+  color: var(--li-gris);
+}
+
+.li-commentaires {
+  list-style: none;
+  margin: 0.6rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.li-commentaires li {
+  padding: 0.5rem 0.8rem;
+  border-radius: 0 8px 8px 8px;
+  background: #f2f2f2;
+  font-size: 0.85rem;
+}
+
+/* expérience, formation */
+.li-liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.li-element {
+  display: flex;
+  gap: 0.8rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid var(--li-bordure);
+}
+
+.li-element:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+.li-element h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.li-element p {
+  margin: 0.15rem 0 0;
+}
+
+.li-element__description {
+  margin-top: 0.5rem;
+}
+
+/* compétences */
+.li-competences {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.li-competences li {
+  padding: 0.6rem 0;
+  border-top: 1px solid var(--li-bordure);
+  font-weight: 600;
+}
+
+.li-competences li:first-child {
+  border-top: none;
+  padding-top: 0;
+}
+
+/* --- petits écrans ------------------------------------------------------- */
+@media (max-width: 900px) {
+  .li-page {
+    grid-template-columns: 1fr;
+  }
+
+  .li-barre__nav {
+    display: none;
+  }
+
+  .li-profil__infos {
+    flex-direction: column;
+  }
+}

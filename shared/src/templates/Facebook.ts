@@ -3,16 +3,14 @@
 // Décrit le bloc `data:` des YAML de page qui ont `template: Facebook`.
 // ===========================================================================
 
-import type { Publication } from './Communs.js'
+import type { Profil, Publication } from './Communs.js'
 
 export type FacebookData = {
   /** Couleur principale → variable CSS --couleur-principale (défaut : bleu). */
   couleur?: string
 
-  profil: {
-    nom: string // obligatoire : l'en-tête affiche toujours le nom
-    /** Absent = initiale du nom dans un rond. */
-    photo?: string
+  /** nom et photo : voir Profil (Communs.ts). */
+  profil: Profil & {
     /** Absent = dégradé de la couleur principale. */
     couverture?: string
     /** Courte phrase sous le nom et en haut de l'Intro. */

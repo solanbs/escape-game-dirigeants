@@ -15,6 +15,7 @@ import Annonce from '@/templates/Annonce.vue'
 import Facebook from '@/templates/Facebook.vue'
 import Forum from '@/templates/Forum.vue'
 import IndexFile from '@/templates/IndexFile.vue'
+import Linkedin from '@/templates/Linkedin.vue'
 
 export const TEMPLATES = {
   Article,
@@ -23,7 +24,7 @@ export const TEMPLATES = {
   Forum,
   IndexFile,
   // CompanySite,
-  // LinkedInProfile,
+  Linkedin,
 } satisfies Record<string, Component>
 
 /** Nom d'un template connu : 'Article' | 'Annonce' | … */

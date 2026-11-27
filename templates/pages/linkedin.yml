@@ -1,8 +1,8 @@
-# Template LinkedInProfile : profil sur un réseau professionnel.
+# Template Linkedin : profil sur un réseau professionnel.
 
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
-template: LinkedInProfile
+template: Linkedin
 visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
 # when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
 onglet:
