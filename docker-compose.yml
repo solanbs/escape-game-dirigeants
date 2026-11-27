@@ -1,6 +1,8 @@
 services:
   game:
-    build: .
+    build:
+      context: .
+      target: runtime
     image: escape-game:local
     ports:
       - "3000:3000"
@@ -14,4 +16,18 @@ services:
     volumes:
       # Prêt pour la base SQLite et les fichiers persistants.
       - ./data:/app/data
+    restart: unless-stopped
+
+  gateway:
+    build:
+      context: .
+      target: gateway
+    environment:
+      NODE_ENV: production
+      LOG_LEVEL: info
+      LOG_FORMAT: pretty
+      IOT_GATEWAY_TOKEN: ${IOT_GATEWAY_TOKEN}
+      IOT_SERVER_URL: http://game:3000
+    depends_on:
+      - game
     restart: unless-stopped
