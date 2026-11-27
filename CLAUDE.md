@@ -115,7 +115,7 @@ npm run check:docker        # images Docker + démarrage + vérifications (≈ 1
 4. **Contrôle Docker** : `npm run check:docker` → doit finir par « ✅ Docker OK ». Il vérifie :
    - que les images se construisent et que `game` et `gateway` démarrent et restent en marche ;
    - que le serveur répond, charge le scénario et sert le front ;
-   - que le gateway IoT se connecte ;
+   - que le gateway IoT se connecte, et que son bus HTTP (clavier, porte) répond et exige son jeton ;
    - qu'une tablette se connecte avec un mot de passe de rôle et qu'un mauvais mot de passe est refusé ;
    - qu'il n'y a aucune erreur dans les logs du serveur.
 
