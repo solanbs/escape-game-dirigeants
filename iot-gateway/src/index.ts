@@ -1,5 +1,6 @@
 import { createInterface } from 'node:readline'
 import { readConfig } from './config.js'
+import type { FakeDoorSensor, FakeKeypad } from './devices/fake.js'
 import { createDevices } from './devices/index.js'
 import { createGateway } from './gateway.js'
 import { createLogger } from './logger.js'
@@ -54,13 +55,13 @@ if (config.fakeInput) {
   rl.on('line', (line) => {
     const value = line.trim()
 
-    if (value === 'door') {
-      devices.door.toggle()
+    if (value === 'door' && 'toggle' in devices.door) {
+      ;(devices.door as FakeDoorSensor).toggle()
       return
     }
 
-    if (value.startsWith('code:')) {
-      devices.keypad.pushCode(value.slice('code:'.length).trim())
+    if (value.startsWith('code:') && 'pushCode' in devices.keypad) {
+      ;(devices.keypad as FakeKeypad).pushCode(value.slice('code:'.length).trim())
       return
     }
 
