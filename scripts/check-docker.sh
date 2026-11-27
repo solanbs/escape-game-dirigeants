@@ -46,10 +46,10 @@ echo "▶ Vérifications"
 
 # 1. Le serveur répond
 for _ in $(seq 1 60); do
-  curl -sf "$URL/api/ping" >/dev/null 2>&1 && break
+  curl -sf --max-time 5 "$URL/api/ping" >/dev/null 2>&1 && break
   sleep 1
 done
-curl -sf "$URL/api/ping" >/dev/null || fail "le serveur ne répond pas sur $URL/api/ping"
+curl -sf --max-time 5 "$URL/api/ping" >/dev/null || fail "le serveur ne répond pas sur $URL/api/ping"
 ok "le serveur répond (/api/ping)"
 
 # 2. Le scénario est chargé (sinon le serveur aurait refusé de démarrer)
@@ -57,7 +57,7 @@ logs game | grep -q "scénario chargé" || fail "le scénario n'a pas été char
 ok "scénario chargé"
 
 # 3. Le front est servi
-curl -sf "$URL/" | grep -q '<div id="app">' || fail "le front n'est pas servi sur $URL/"
+curl -sf --max-time 5 "$URL/" | grep -q '<div id="app">' || fail "le front n'est pas servi sur $URL/"
 ok "front servi"
 
 # 4. Les conteneurs tournent toujours (pas de redémarrage en boucle)
@@ -76,8 +76,8 @@ logs game | grep -q "Gateway connected" || fail "le gateway IoT ne s'est pas con
 ok "gateway IoT connecté"
 
 # 6. Le bus HTTP des appareils (clavier, porte) répond et exige son jeton
-code_sans=$(curl -s -o /dev/null -w '%{http_code}' "$DEVICES_URL/devices/door-main/state" || true)
-code_avec=$(curl -s -o /dev/null -w '%{http_code}' -H "x-device-token: $IOT_DEVICE_TOKEN" "$DEVICES_URL/devices/inconnu/state" || true)
+code_sans=$(curl -s --max-time 5 -o /dev/null -w '%{http_code}' "$DEVICES_URL/devices/door-main/state" || true)
+code_avec=$(curl -s --max-time 5 -o /dev/null -w '%{http_code}' -H "x-device-token: $IOT_DEVICE_TOKEN" "$DEVICES_URL/devices/inconnu/state" || true)
 [ "$code_sans" = "401" ] || fail "le bus HTTP des appareils ne refuse pas une requête sans jeton (code $code_sans)"
 [ "$code_avec" = "404" ] || fail "le bus HTTP des appareils ne répond pas avec le jeton (code $code_avec)"
 ok "bus HTTP des appareils (clavier, porte) en marche et protégé par jeton"

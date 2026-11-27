@@ -45,7 +45,7 @@ services:
       # Bus HTTP des ESP32 (clavier à code + capteur de porte).
       - "${IOT_DEVICES_HTTP_PORT:-8080}:${IOT_DEVICES_HTTP_PORT:-8080}"
     devices:
-      - /dev/snd:/dev/snd
+      - ${IOT_SOUND_DEVICE:-/dev/snd}:/dev/snd
     # GID du groupe audio de l'hôte (getent group audio). Le conteneur tourne en
     # root dans un premier temps ; ajuster si on descend les privilèges.
     group_add:

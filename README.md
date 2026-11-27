@@ -29,6 +29,8 @@ npm run check:docker # images Docker, démarrage et vérifications : obligatoire
 
 Les mots de passe des rôles du scénario de démonstration sont dans `scenarios/demo/config.yaml`.
 
+La CI GitHub Actions (`.github/workflows/ci.yml`) rejoue `npm run check` et `npm run check:docker` sur chaque push sur `main` et chaque pull request.
+
 ## Lancer avec Docker
 
 ```bash
