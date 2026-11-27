@@ -25,6 +25,7 @@ npm run demo                               # une partie jouée dans le terminal
 npm run dev:server                         # le serveur seul
 npm run tablette -w @escape/server -- ops123          # une fausse tablette (mot de passe d'un rôle)
 npm run tablette -w @escape/server -- --token <jeton>  # reconnexion avec un jeton
+npm run check && npm run check:docker                  # avant chaque push (CLAUDE.md, section 7)
 ```
 
 **Encore provisoire dans le code** : `server/src/scenarios/demo.ts` (étape 4), les jetons de reconnexion gardés en mémoire (perdus au redémarrage du serveur, sauvegardés à l'étape 11), les valeurs IoT temporaires de `index.ts` (étape 10), les anciens types de `shared/src/index.ts` (étape 12).

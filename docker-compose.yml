@@ -5,7 +5,7 @@ services:
       target: runtime
     image: escape-game:local
     ports:
-      - "3000:3000"
+      - "${GAME_PORT:-3000}:3000"
     environment:
       NODE_ENV: production
       # Fuseau horaire : heure des logs, id de session, journal.

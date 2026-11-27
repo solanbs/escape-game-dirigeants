@@ -21,6 +21,8 @@
     "test": "npm run build -w @escape/shared && npm run test -w @escape/server && npm run test -w @escape/iot-gateway",
     "test:gateway": "npm run build -w @escape/shared && npm run test -w @escape/iot-gateway",
     "demo": "npm run build -w @escape/shared && npm run demo -w @escape/server",
+    "check": "npm run typecheck && npm test && npm run build",
+    "check:docker": "bash scripts/check-docker.sh",
     "start": "npm run start -w @escape/server"
   },
   "devDependencies": {
