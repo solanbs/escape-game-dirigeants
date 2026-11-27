@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: blog-technique.fr/pannes-controle-acces
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "🛠️"
 

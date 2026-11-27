@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: astuces-secu-maison.com/codes-alarme-les-plus-courants
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "🔐"
 

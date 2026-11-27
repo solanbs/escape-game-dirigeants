@@ -3,8 +3,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
 template: IndexFile
-visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
-# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+visible: { roles: [master, ops] }  # qui peut ouvrir la page ; ajouter after / before pour « à partir de / jusqu'à »
 onglet:
   icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
@@ -15,8 +14,8 @@ data:
   chemin: ""               # ex. "/manuals/supersecure/2019/"
 
   fichiers:
-    - id: ""               # facultatif ; obligatoire si le fichier a un "when"
-      # when: noeud.sortie # facultatif : fichier visible seulement après cette sortie
+    - id: ""               # facultatif ; obligatoire si le fichier a un "visible"
+      # visible: { after: noeud.sortie }  # facultatif : fichier visible seulement après cette sortie
       nom: ""
       date: ""             # ex. "04-Sep-2019 09:11"
       taille: ""           # ex. "45K"

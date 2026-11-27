@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: supersecure.fr
 template: CompanySite
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "🛡️"
 

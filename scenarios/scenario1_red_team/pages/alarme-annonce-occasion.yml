@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: leboncoin.fr/annonce/centrale-supersecure-v2
 template: Annonce
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "🛒"
 

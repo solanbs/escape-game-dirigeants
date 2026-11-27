@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: science-mag.fr/technologie/portes-magnetiques
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "📚"
 

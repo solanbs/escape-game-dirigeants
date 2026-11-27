@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: carnet-maintenance.fr/securebox-mag-200
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "📄"
 

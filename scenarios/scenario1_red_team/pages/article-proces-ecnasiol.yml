@@ -8,7 +8,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: actu-justice-eco.fr/prudhommes/carbona-racing-team-licenciement-abusif
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "⚖️"
 

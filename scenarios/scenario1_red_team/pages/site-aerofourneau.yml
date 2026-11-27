@@ -10,7 +10,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: aerofourneau-consulting.fr
 template: CompanySite
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "💨"
 

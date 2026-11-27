@@ -10,7 +10,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: support.supersecure.fr/mise-en-service
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "📖"
 

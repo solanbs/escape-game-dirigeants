@@ -3,8 +3,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
 template: Facebook
-visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
-# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+visible: { roles: [master, ops] }  # qui peut ouvrir la page ; ajouter after / before pour « à partir de / jusqu'à »
 onglet:
   icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
@@ -22,8 +21,8 @@ data:
   intro: []                # lignes de la colonne "Intro", ex. ["Habite à …", "Travaille chez …"]
 
   publications:            # de la plus récente à la plus ancienne
-    - id: ""               # facultatif ; obligatoire si la publication a un "when"
-      # when: noeud.sortie # facultatif : publication visible seulement après cette sortie
+    - id: ""               # facultatif ; obligatoire si la publication a un "visible"
+      # visible: { after: noeud.sortie }  # facultatif : publication visible seulement après cette sortie
       date: ""
       texte: ""
       image: ""

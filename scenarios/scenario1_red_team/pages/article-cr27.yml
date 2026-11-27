@@ -7,7 +7,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: endurance-mag.fr/eeps/carbona-cr27
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "🏎️"
 

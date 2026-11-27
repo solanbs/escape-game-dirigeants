@@ -3,8 +3,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
 template: Annonce
-visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
-# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+visible: { roles: [master, ops] }  # qui peut ouvrir la page ; ajouter after / before pour « à partir de / jusqu'à »
 onglet:
   icone: ""  # un emoji, affiché dans l'onglet du navigateur
 

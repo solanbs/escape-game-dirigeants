@@ -7,7 +7,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: carbona-racing.fr/actualites/titre-2026
 template: Article
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "🏁"
 

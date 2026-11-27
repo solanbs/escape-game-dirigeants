@@ -8,7 +8,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: carbona-racing.fr/recrutement
 template: CompanySite
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "🏁"
 

@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: linkedin.com/in/david-ecnasiol
 template: LinkedInProfile
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "💼"
 

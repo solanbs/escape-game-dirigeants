@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: brico-forum.fr/alarmes/code-usine-supersecure-v2-perdu
 template: Forum
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "💬"
 

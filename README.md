@@ -1,20 +1,28 @@
 # Escape game dirigeants
 
-Squelette minimal : un serveur Node (Express + socket.io) qui sert le front Vue
-et porte le moteur de jeu. Le front et le back sont séparés dans le code, pas
-dans le déploiement.
+Escape game de sensibilisation à la cybersécurité. Un serveur Node (Express + Socket.IO) sert le front (Vue 3) et fait tourner le moteur de jeu ; un processus séparé, `iot-gateway`, pilote le matériel.
+
+La documentation est dans [docs/](./docs/README.md).
 
 ## Lancer en développement
 
 ```bash
 npm install
-npm run dev
+cp .env.example .env      # puis ajuster si besoin
+npm run dev               # shared + serveur + front
+npm run dev:gateway       # dans un autre terminal, si on teste l'IoT
 ```
 
-- Front : http://localhost:5173 (Vite, rechargement à chaud)
-- API : http://localhost:3000
+- Front : http://localhost:5173 (Vite, rechargement à chaud ; `/api` et `/socket.io` sont redirigés vers le serveur)
+- Serveur : http://localhost:3000
 
-Vite proxifie `/api` et `/socket.io` vers le serveur : aucune URL en dur, aucun CORS.
+## Vérifier
+
+```bash
+npm test          # tests du serveur et du gateway
+npm run typecheck # vérification TypeScript de tous les paquets
+npm run demo      # une partie du scénario de démonstration, jouée dans le terminal
+```
 
 ## Lancer avec Docker
 
@@ -22,36 +30,17 @@ Vite proxifie `/api` et `/socket.io` vers le serveur : aucune URL en dur, aucun 
 docker compose up --build
 ```
 
-- Site : http://localhost:3000
-
-Le serveur y sert `client/dist` et le WebSocket sur le même port. `./data` est
-monté dans le conteneur pour accueillir la future base SQLite.
+Le serveur sert le front compilé et le WebSocket sur http://localhost:3000. `./data` est monté pour la future base SQLite.
 
 ## Structure
 
 ```
-shared/   types et noms d'événements communs (contrat front ↔ back)
-server/   Express, socket.io, moteur de jeu (game.ts = seul dépositaire des réponses)
-client/   Vue 3 + Vite + TypeScript
-data/     volume persistant (vide pour l'instant)
+docs/          documentation (voir docs/README.md)
+scenarios/     les scénarios : déroulé, pages, recherches, config (YAML)
+templates/     gabarits YAML vierges pour écrire les pages
+shared/        contrats communs au serveur, au front et au gateway
+server/        serveur et moteur de jeu (server/src/modules/)
+client/        front Vue 3 + Vite
+iot-gateway/   processus qui pilote le matériel
+data/          volume persistant
 ```
-
-## Où brancher la suite
-
-| Besoin | Fichier |
-|---|---|
-| Scénario, énigmes, réponses | `server/src/game.ts` |
-| Base SQLite | nouveau `server/src/db.ts` + `./data` déjà monté |
-| Objets connectés (ESP32, relais) | namespace `/iot` dans `server/src/realtime.ts` |
-| Nouvelles routes HTTP | `server/src/index.ts` |
-| État de jeu côté front | `client/src/stores/game.ts` |
-| Fenêtres du faux bureau | `client/src/components/` |
-
-## Vérifier que la chaîne fonctionne
-
-La fenêtre affiche :
-
-- `API /api/ping : ok` → le front parle au back ;
-- `Temps réel : connecté` → socket.io est passé ;
-- le bouton de test envoie `admin` pour `puzzle-1` et doit faire apparaître
-  `énigme résolue` et `iot → relay on` dans le journal.

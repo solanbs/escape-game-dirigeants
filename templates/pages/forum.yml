@@ -3,8 +3,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
 template: Forum
-visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
-# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+visible: { roles: [master, ops] }  # qui peut ouvrir la page ; ajouter after / before pour « à partir de / jusqu'à »
 onglet:
   icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
@@ -21,8 +20,8 @@ data:
   resolu: false            # true = préfixe "[Résolu]" devant le titre
 
   messages:                # dans l'ordre chronologique
-    - id: ""               # facultatif ; obligatoire si le message a un "when"
-      # when: noeud.sortie # facultatif : message visible seulement après cette sortie
+    - id: ""               # facultatif ; obligatoire si le message a un "visible"
+      # visible: { after: noeud.sortie }  # facultatif : message visible seulement après cette sortie
       auteur: ""
       avatar: ""           # lettre ou emoji (vide = initiale de l'auteur)
       statut: ""           # ex. "Installateur Pro" (facultatif)

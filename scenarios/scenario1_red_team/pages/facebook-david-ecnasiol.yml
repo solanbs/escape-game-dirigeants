@@ -9,7 +9,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: facebook.com/david.ecnasiol
 template: Facebook
-visibleTo: [master, ops]
+visible: { roles: [master, ops] }
 onglet:
   icone: "👤"
 

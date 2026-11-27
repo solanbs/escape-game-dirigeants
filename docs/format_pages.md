@@ -13,7 +13,7 @@ scenarios/<nom_du_scenario>/
   assets/          les images des pages
 ```
 
-Pour créer une page, copiez le template du type voulu depuis `templates/pages/` dans `scenarios/<scénario>/pages/`, puis remplissez-le. Des pages complètes servent d'exemples dans `templates/exemples_alarme/`.
+Pour créer une page, copiez le template du type voulu depuis `templates/pages/` dans `scenarios/<scénario>/pages/`, puis remplissez-le. Les pages du scénario Carbona (`scenarios/scenario1_red_team/pages/`) servent d'exemples complets.
 
 ## Un fichier = une enveloppe + un contenu
 
@@ -21,8 +21,7 @@ Pour créer une page, copiez le template du type voulu depuis `templates/pages/`
 # --- Enveloppe : lue par le serveur et le navigateur du jeu
 url: leboncoin.fr/annonce/centrale-supersecure-v2
 template: Annonce
-visibleTo: [master, ops]
-when: alarmPanel.failed          # facultatif
+visible: { roles: [master, ops] }  # qui peut ouvrir la page (et quand : after / before)
 onglet:
   icone: "🛒"
 
@@ -37,14 +36,13 @@ data:
 |---|---|
 | `url` | **identifiant unique de la page**, affiché aussi dans la barre d'adresse. Deux pages ne peuvent pas avoir la même `url`. |
 | `template` | la mise en page à utiliser (tableau ci-dessous) |
-| `visibleTo` | rôles qui peuvent ouvrir la page : `master`, `ops` |
-| `when` | facultatif : la page n'est disponible qu'après cette sortie du scénario (ex. `mailDavid.sent`). Une liste = toutes les sorties requises. |
+| `visible` | qui peut ouvrir la page, et quand. `roles` est obligatoire ; `after` (apparaît après une sortie du scénario, ex. `mailDavid.sent`) et `before` (disparaît après) sont facultatifs. Détails : [architecture.md](architecture.md), section 5.6. |
 | `onglet.icone` | un emoji pour l'onglet du navigateur |
 | `data` | tout le contenu de la page. `data.couleur` donne la couleur principale du site. |
 
-`when` peut aussi se mettre sur un **élément de liste** : un bloc, un message de forum, une publication, un fichier. L'élément n'apparaît qu'après la sortie indiquée. Donnez alors un `id` à cet élément (`id: p3`), pour que l'application l'ajoute sans recharger la page.
+`visible` peut aussi se mettre sur un **élément de liste** (un bloc, un message de forum, une publication, un fichier), par exemple `visible: { after: mailDavid.sent }`. Sans `roles`, l'élément reprend ceux de la page. Donnez alors un `id` à cet élément (`id: p3`), pour que l'application l'ajoute sans recharger la page.
 
-C'est le serveur qui lit `url`, `visibleTo` et `when`, et qui retire les éléments pas encore débloqués avant d'envoyer la page. Le template ne voit que `data`.
+C'est le serveur qui lit `url` et `visible`, et qui retire les éléments non visibles avant d'envoyer la page. Le template ne voit que `data`. Le MJ voit tout : ne le citez jamais dans `roles`.
 
 ## Les templates
 
@@ -52,9 +50,9 @@ C'est le serveur qui lit `url`, `visibleTo` et `when`, et qui retire les éléme
 |---|---|---|---|
 | `Article` | article de journal ou de blog, page de centre d'aide, notice | `article.yml` | `shared/src/templates/Article.ts` |
 | `CompanySite` | site vitrine d'une entreprise ou d'une marque | `site.yml` | à venir |
-| `ForumThread` | fil de discussion | `forum.yml` | à venir |
+| `Forum` | fil de discussion | `forum.yml` | `shared/src/templates/Forum.ts` |
 | `Annonce` | petite annonce de vente | `annonce.yml` | `shared/src/templates/Annonce.ts` |
-| `FileIndex` | listing de fichiers en ligne (« Index of /… ») | `index_fichiers.yml` | à venir |
+| `IndexFile` | listing de fichiers en ligne (« Index of /… ») | `index_fichiers.yml` | `shared/src/templates/IndexFile.ts` |
 | `LinkedInProfile` | profil professionnel | `linkedin.yml` | à venir |
 | `Facebook` | profil personnel | `facebook.yml` | `shared/src/templates/Facebook.ts` |
 
@@ -112,22 +110,30 @@ Un `type` mal orthographié n'affiche rien : vérifiez-le si un bloc manque (un 
 
 ## Le faux Google : `search.yaml`
 
-Le titre et l'extrait d'un résultat Google ne sont **pas** dans la page : ils sont écrits dans la recherche qui le fait apparaître.
+C'est **le seul moteur de recherche du jeu** : les barres de recherche des autres sites (Facebook, articles…) sont décoratives. Le titre et l'extrait d'un résultat ne sont **pas** dans la page : ils sont écrits dans la recherche qui le fait apparaître.
 
 ```yaml
-- query: [david ecnasiol, ecnasiol]       # mots-clés reconnus
+- query: ["carbona proces", "carbona tribunal", "/prud.?hom/"]   # mots-clés reconnus
   results:
-    - url: aerofourneau-consulting.fr      # l'url d'une page
-      title: "Aérofourneau Consulting — la startup de David Ecnasiol"
+    - url: actu-justice-eco.fr/prudhommes/carbona-racing-team-licenciement-abusif   # l'url d'une page
+      title: "Licenciement abusif : un ancien ingénieur de Carbona Racing Team attaque l'écurie"
       snippet: "…"
 ```
 
-Les `url` des résultats doivent correspondre aux `url` des pages. **Changer l'`url` d'une page casse les recherches qui la citent** : mettez `search.yaml` à jour en même temps.
+**Le joueur n'a pas besoin de taper exactement le mot-clé.** Le moteur :
 
-Pour l'instant, le faux Google utilise encore les recherches écrites dans le code (`client/src/data/scenario.ts`) ; il passera à `search.yaml` plus tard.
+- **ignore les majuscules, les accents, les apostrophes et la ponctuation** : écrivez les mots-clés en minuscules et sans accents (`proces`, `prudhommes`) ;
+- **reconnaît un mot-clé si tous ses mots sont dans la recherche, dans n'importe quel ordre** et au milieu d'autres mots : `carbona proces` correspond à « Procès Carbona », « le procès de carbona racing »… ;
+- **accepte des expressions régulières** pour les variantes et fautes de frappe : un mot-clé entre `/…/` (ex. `/prud.?hom/` pour « prudhommes », « prud'hommes », « prudhomes »). Elles s'appliquent à la recherche déjà normalisée (minuscules, sans accents) ;
+- **garde la recherche la plus précise** quand plusieurs correspondent : celle dont le mot-clé reconnu a le plus de mots (`carbona proces` l'emporte sur `carbona`) ; en cas d'égalité, la première du fichier ;
+- **ne montre un résultat que si sa page est visible** pour la tablette (voir `visible`). Une page débloquée en cours de partie apparaît donc dans les résultats au bon moment.
+
+Les `url` des résultats doivent correspondre aux `url` des pages : le serveur refuse de démarrer sinon, ou si une expression régulière est invalide. **Changer l'`url` d'une page oblige à mettre `search.yaml` à jour.**
+
+Pour l'instant, le faux Google utilise encore des résultats écrits dans le code du front (`client/src/data/fakeSite.ts`) ; il passera à `search.yaml` quand le serveur saura y répondre (plan-back.md, étape 9).
 
 ## Ce qui n'est pas dans les pages
 
 - **Les solutions** (code de l'alarme, mot de passe de Maël…) : ce sont les réponses des nœuds `PasswordLock` dans `scenario.yaml`. Elles restent sur le serveur et ne sont jamais envoyées aux tablettes (architecture.md, section 8). Il n'y a pas de fichier `solutions.yml`.
-- **Les indices** que les joueurs doivent trouver (le code d'usine dans l'archive des notices, par exemple) sont du contenu normal : ils sont écrits dans la page. S'ils ne doivent apparaître qu'après une étape, mettez un `when`.
+- **Les indices** que les joueurs doivent trouver (le code d'usine dans l'archive des notices, par exemple) sont du contenu normal : ils sont écrits dans la page. S'ils ne doivent apparaître qu'après une étape, mettez un `visible: { after: … }`.
 - **Le mail de David et le bureau de Maël** : ce sont des nœuds du scénario (`scenario.yaml`), pas des pages.

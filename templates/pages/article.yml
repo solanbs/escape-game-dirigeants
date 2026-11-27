@@ -3,8 +3,7 @@
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
 template: Article
-visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
-# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+visible: { roles: [master, ops] }  # qui peut ouvrir la page ; ajouter after / before pour « à partir de / jusqu'à »
 onglet:
   icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
@@ -30,7 +29,7 @@ data:
   corps:
     # Un élément par bloc, dans l'ordre d'affichage. Supprimer les blocs inutiles,
     # répéter ceux dont on a besoin. Gras dans le texte : **mot**.
-    # Tout bloc accepte aussi "id" et "when" (bloc visible seulement après une sortie).
+    # Tout bloc accepte aussi "id" et "visible" (ex. visible: { after: noeud.sortie }).
     - type: paragraphe
       texte: ""
 
