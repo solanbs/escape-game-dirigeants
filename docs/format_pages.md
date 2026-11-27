@@ -56,7 +56,7 @@ C'est le serveur qui lit `url`, `visibleTo` et `when`, et qui retire les éléme
 | `Annonce` | petite annonce de vente | `annonce.yml` | `shared/src/templates/Annonce.ts` |
 | `FileIndex` | listing de fichiers en ligne (« Index of /… ») | `index_fichiers.yml` | à venir |
 | `LinkedInProfile` | profil professionnel | `linkedin.yml` | à venir |
-| `FacebookProfile` | profil personnel | `facebook.yml` | à venir |
+| `Facebook` | profil personnel | `facebook.yml` | `shared/src/templates/Facebook.ts` |
 
 Le **schéma** est la référence exacte : il liste chaque champ de `data`, en indiquant s'il est obligatoire (sans `?`) ou facultatif (avec `?`). Les blocs sont décrits dans `shared/src/templates/Bloc.ts`. Au démarrage, le serveur refusera un YAML qui ne respecte pas son schéma.
 

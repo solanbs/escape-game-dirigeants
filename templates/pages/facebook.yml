@@ -1,8 +1,8 @@
-# Template FacebookProfile : profil sur un réseau social personnel.
+# Template Facebook : profil sur un réseau social personnel.
 
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
-template: FacebookProfile
+template: Facebook
 visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
 # when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
 onglet:

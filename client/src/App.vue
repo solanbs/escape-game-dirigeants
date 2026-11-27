@@ -1,8 +1,11 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
+import PageArticle from '@/components/PageArticle.vue'
+import PageFacebook from '@/components/PageFacebook.vue'
 import Fenetre from '@/components/Fenetre.vue'
 import BureauWindows from '@/components/BureauWindows.vue'
 import FakeGoogle from '@/components/FakeGoogle.vue'
+import FakeMail from '@/components/FakeMail.vue'
 import FakeSite from '@/components/FakeSite.vue'
 import FakeAlarmeSuperSecure from '@/components/FakeAlarmeSuperSecure.vue'
 import FakeAlarmeAnnonce from '@/components/FakeAlarmeAnnonce.vue'
@@ -19,7 +22,7 @@ import { api } from '@/services/api'
 import { connect, game, testAnswer } from '@/stores/game'
 
 const ouverte = ref(true)
-const page = ref<'jeu' | 'windows' | 'google' | 'site'>('jeu')
+const page = ref<'jeu' | 'windows' | 'google' | 'mail' | 'site'>('jeu')
 const siteId = ref<SiteId>('porte-fonctionnement')
 const ping = ref('en attente…')
 
@@ -48,7 +51,7 @@ onMounted(async () => {
       </button>
       <button
         class="navigation__bouton"
-        :class="{ 'navigation__bouton--actif': page === 'windows' || page === 'google' || page === 'site' }"
+        :class="{ 'navigation__bouton--actif': page === 'windows' || page === 'google' || page === 'mail' || page === 'site' }"
         type="button"
         @click="page = 'windows'"
       >
@@ -84,70 +87,23 @@ onMounted(async () => {
     </button>
     </main>
 
-    <BureauWindows v-else-if="page === 'windows'" @back="page = 'jeu'" @google="page = 'google'" />
+    <BureauWindows v-else-if="page === 'windows'" @back="page = 'jeu'" @google="page = 'google'" @mail="page = 'mail'" />
 
     <FakeGoogle
       v-else-if="page === 'google'"
       @close="page = 'windows'"
+      @open-mail="page = 'mail'"
       @open-site="(id) => { siteId = id; page = 'site' }"
     />
 
-    <FakePorteMagnetiqueFonctionnement
-      v-else-if="siteId === 'porte-fonctionnement'"
-      :site-id="siteId"
-      @back="page = 'google'"
+    <FakeMail
+      v-else-if="page === 'mail'"
+      @close="page = 'windows'"
+      @badge-obtenu="() => {}"
     />
 
-    <FakePorteMagnetiquePannes
-      v-else-if="siteId === 'porte-pannes'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakePorteMagnetiqueLeurre
-      v-else-if="siteId === 'porte-installation'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakePorteMagnetiqueBoite
-      v-else-if="siteId === 'porte-boite-depot'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakeAlarmeSuperSecure
-      v-else-if="siteId === 'alarme-supersecure'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakeAlarmeAnnonce
-      v-else-if="siteId === 'alarme-annonce-occasion'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakeAlarmeArchive
-      v-else-if="siteId === 'alarme-archives-notices'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakeAlarmeForum
-      v-else-if="siteId === 'alarme-forum-entraide'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakeAlarmeGuide
+    <PageArticle
       v-else-if="siteId === 'alarme-guide-demarrage'"
-      :site-id="siteId"
-      @back="page = 'google'"
-    />
-
-    <FakeAlarmeLeurre
-      v-else-if="siteId === 'alarme-leurre-codes'"
       :site-id="siteId"
       @back="page = 'google'"
     />

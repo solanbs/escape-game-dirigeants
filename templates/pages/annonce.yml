@@ -1,8 +1,8 @@
-# Template ClassifiedAd : petite annonce de vente.
+# Template Annonce : petite annonce de vente.
 
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
-template: ClassifiedAd
+template: Annonce
 visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
 # when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
 onglet:
