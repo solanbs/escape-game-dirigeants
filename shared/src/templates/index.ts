@@ -4,5 +4,7 @@
  */
 export type { AnnonceData } from './Annonce.js'
 export type { ArticleData } from './Article.js'
-export type { FacebookData, Publication, Commentaire } from './Facebook.js'
+export type { FacebookData } from './Facebook.js'
+export type { ForumData } from './Forum.js'
+export type { Conditionnel, Publication, Commentaire, Message } from './Communs.js'
 export type { Bloc, BlocParagraphe, ElementListe } from './Bloc.js'

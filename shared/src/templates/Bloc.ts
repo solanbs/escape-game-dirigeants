@@ -5,15 +5,10 @@
 // template arrivera, cette partie déménagera dans un fichier Blocs.ts commun.
 // ===========================================================================
 
-/** Champs que tous les blocs peuvent avoir. */
-type BlocCommun = {
-  id?: string
-  /**
-   * Condition d'apparition : sortie(s) de nœud déjà déclenchée(s).
-   * Lue par le serveur, qui la RETIRE avant d'envoyer la page : le template ne la voit jamais.
-   */
-  when?: string | string[]
-}
+import type { Conditionnel } from './Communs.js'
+
+/** Champs que tous les blocs peuvent avoir : `id` et `when` (voir Communs.ts). */
+type BlocCommun = Conditionnel
 
 // Chaque bloc a un `type` OBLIGATOIRE et toujours écrit en toutes lettres
 // ('paragraphe', 'encadre'…). C'est grâce à lui que TypeScript sait, dans un
