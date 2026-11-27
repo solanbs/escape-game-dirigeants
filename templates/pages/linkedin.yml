@@ -1,42 +1,46 @@
-# Type "linkedin" : profil sur un réseau professionnel.
-type: linkedin
+# Template LinkedInProfile : profil sur un réseau professionnel.
 
-# --- En-tête commun -------------------------------------------------------
-google:                  # résultat affiché dans le faux Google
-  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
-  titre: ""
-  introduction: ""
-icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
-couleur: ""              # couleur principale du site, ex. "#1a73e8"
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
+template: LinkedInProfile
+visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
+# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+onglet:
+  icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
-# --- Contenu ---------------------------------------------------------------
-profil:
-  nom: ""
-  titre: ""              # phrase sous le nom
-  photo: ""
-  banniere: ""
-  localisation: ""
-  relations: ""          # ex. "500+ relations"
-  entreprise_actuelle: ""
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""  # couleur principale du site → variable CSS --couleur-principale
 
-a_propos: ""
+  profil:
+    nom: ""
+    titre: ""              # phrase sous le nom
+    photo: ""
+    banniere: ""
+    localisation: ""
+    relations: ""          # ex. "500+ relations"
+    entreprise_actuelle: ""
 
-experiences:             # de la plus récente à la plus ancienne
-  - poste: ""
-    entreprise: ""
-    debut: ""            # ex. "mars 2021"
-    fin: ""              # vide = "aujourd'hui"
-    lieu: ""
-    description: ""
+  a_propos: ""
 
-formations:
-  - ecole: ""
-    diplome: ""
-    debut: ""
-    fin: ""
+  experiences:             # de la plus récente à la plus ancienne
+    - poste: ""
+      entreprise: ""
+      debut: ""            # ex. "mars 2021"
+      fin: ""              # vide = "aujourd'hui"
+      lieu: ""
+      description: ""
 
-competences: []
+  formations:
+    - ecole: ""
+      diplome: ""
+      debut: ""
+      fin: ""
 
-activite:                # publications récentes
-  - date: ""
-    texte: ""
+  competences: []
+
+  activite:                # publications récentes
+    - id: ""               # facultatif ; obligatoire si la publication a un "when"
+      # when: noeud.sortie # facultatif : publication visible seulement après cette sortie
+      date: ""
+      texte: ""

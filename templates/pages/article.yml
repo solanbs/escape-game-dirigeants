@@ -1,111 +1,114 @@
-# Type "article" : page de journal, de blog ou d'un centre d'aide.
-type: article
+# Template Article : page de journal, de blog ou d'un centre d'aide.
 
-# --- En-tête commun -------------------------------------------------------
-google:                  # résultat affiché dans le faux Google
-  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
+template: Article
+visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
+# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+onglet:
+  icone: ""  # un emoji, affiché dans l'onglet du navigateur
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""  # couleur principale du site → variable CSS --couleur-principale
+
+  site:                    # le journal / blog / portail qui publie l'article
+    nom: ""
+    slogan: ""
+    logo: ""
+    recherche: false       # true = afficher une barre de recherche (décorative)
+    rubriques: []          # menu du site, ex. ["Actualités", "Sport"]
+
+  fil_ariane: []           # ex. ["Accueil", "Justice"]
+  rubrique: ""
   titre: ""
-  introduction: ""
-icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
-couleur: ""              # couleur principale du site, ex. "#1a73e8"
+  chapo: ""                # texte d'introduction sous le titre
+  auteur: ""
+  date: ""
+  temps_lecture: ""        # ex. "4 min"
 
-# --- Contenu ---------------------------------------------------------------
-site:                    # le journal / blog / portail qui publie l'article
-  nom: ""
-  slogan: ""
-  logo: ""
-  recherche: false       # true = afficher une barre de recherche (décorative)
-  rubriques: []          # menu du site, ex. ["Actualités", "Sport"]
+  corps:
+    # Un élément par bloc, dans l'ordre d'affichage. Supprimer les blocs inutiles,
+    # répéter ceux dont on a besoin. Gras dans le texte : **mot**.
+    # Tout bloc accepte aussi "id" et "when" (bloc visible seulement après une sortie).
+    - type: paragraphe
+      texte: ""
 
-fil_ariane: []           # ex. ["Accueil", "Justice"]
-rubrique: ""
-titre: ""
-chapo: ""                # texte d'introduction sous le titre
-auteur: ""
-date: ""
-temps_lecture: ""        # ex. "4 min"
+    - type: intertitre
+      texte: ""
 
-corps:
-  # Un élément par bloc, dans l'ordre d'affichage. Supprimer les blocs inutiles,
-  # répéter ceux dont on a besoin. Gras dans le texte : **mot**.
-  - type: paragraphe
-    texte: ""
+    - type: liste
+      elements:
+        - ""                       # texte simple…
+        - icone: ""                # …ou élément détaillé (tous les champs facultatifs)
+          label: ""
+          texte: ""
+          note: ""
 
-  - type: intertitre
-    texte: ""
+    - type: etapes                 # liste numérotée
+      elements:
+        - titre: ""
+          texte: ""
 
-  - type: liste
-    elements:
-      - ""                       # texte simple…
-      - icone: ""                # …ou élément détaillé (tous les champs facultatifs)
-        label: ""
-        texte: ""
-        note: ""
+    - type: encadre
+      ton: info                    # info | alerte
+      icone: ""
+      titre: ""
+      texte: ""
+      avertissement: ""
+      bouton: ""
 
-  - type: etapes                 # liste numérotée
-    elements:
-      - titre: ""
-        texte: ""
+    - type: citation
+      texte: ""
+      auteur: ""
 
-  - type: encadre
-    ton: info                    # info | alerte
-    icone: ""
-    titre: ""
-    texte: ""
-    avertissement: ""
-    bouton: ""
+    - type: tableau
+      titre: ""
+      colonnes: ["", ""]
+      lignes:
+        - ["", ""]
 
-  - type: citation
-    texte: ""
-    auteur: ""
+    - type: image
+      fichier: ""                  # nom du fichier image
+      legende: ""
 
-  - type: tableau
-    titre: ""
-    colonnes: ["", ""]
-    lignes:
-      - ["", ""]
+    - type: chiffres
+      elements:
+        - valeur: ""
+          label: ""
 
-  - type: image
-    fichier: ""                  # nom du fichier image
-    legende: ""
+    - type: cartes
+      elements:
+        - icone: ""
+          titre: ""
+          texte: ""
 
-  - type: chiffres
-    elements:
-      - valeur: ""
-        label: ""
+    - type: personnes
+      titre: ""
+      liste:
+        - nom: ""
+          poste: ""
+          bio: ""
+          photo: ""
 
-  - type: cartes
-    elements:
-      - icone: ""
-        titre: ""
-        texte: ""
+    - type: actus
+      elements:
+        - date: ""
+          titre: ""
+          extrait: ""
 
-  - type: personnes
-    titre: ""
-    liste:
-      - nom: ""
-        poste: ""
-        bio: ""
-        photo: ""
+    - type: temoignages
+      elements:
+        - texte: ""
+          auteur: ""
 
-  - type: actus
-    elements:
-      - date: ""
-        titre: ""
-        extrait: ""
+    - type: contact
+      titre: ""
+      texte: ""
+      adresse: ""
+      telephone: ""
+      email: ""
 
-  - type: temoignages
-    elements:
-      - texte: ""
-        auteur: ""
+  colonne: []              # colonne de droite facultative : mêmes blocs que "corps"
 
-  - type: contact
-    titre: ""
-    texte: ""
-    adresse: ""
-    telephone: ""
-    email: ""
-
-colonne: []              # colonne de droite facultative : mêmes blocs que "corps"
-
-tags: []
+  tags: []

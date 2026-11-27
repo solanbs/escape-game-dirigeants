@@ -1,29 +1,33 @@
-# Type "facebook" : profil sur un réseau social personnel.
-type: facebook
+# Template FacebookProfile : profil sur un réseau social personnel.
 
-# --- En-tête commun -------------------------------------------------------
-google:                  # résultat affiché dans le faux Google
-  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
-  titre: ""
-  introduction: ""
-icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
-couleur: ""              # couleur principale du site, ex. "#1a73e8"
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
+template: FacebookProfile
+visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
+# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+onglet:
+  icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
-# --- Contenu ---------------------------------------------------------------
-profil:
-  nom: ""
-  photo: ""
-  couverture: ""
-  bio: ""
-  amis: ""               # ex. "312 amis"
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""  # couleur principale du site → variable CSS --couleur-principale
 
-intro: []                # lignes de la colonne "Intro", ex. ["Habite à …", "Travaille chez …"]
+  profil:
+    nom: ""
+    photo: ""
+    couverture: ""
+    bio: ""
+    amis: ""               # ex. "312 amis"
 
-publications:            # de la plus récente à la plus ancienne
-  - date: ""
-    texte: ""
-    image: ""
-    reactions: 0
-    commentaires:
-      - auteur: ""
-        texte: ""
+  intro: []                # lignes de la colonne "Intro", ex. ["Habite à …", "Travaille chez …"]
+
+  publications:            # de la plus récente à la plus ancienne
+    - id: ""               # facultatif ; obligatoire si la publication a un "when"
+      # when: noeud.sortie # facultatif : publication visible seulement après cette sortie
+      date: ""
+      texte: ""
+      image: ""
+      reactions: 0
+      commentaires:
+        - auteur: ""
+          texte: ""
