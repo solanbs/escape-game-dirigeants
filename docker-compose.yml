@@ -36,6 +36,14 @@ services:
       IOT_AUDIO_DRIVER: ${IOT_AUDIO_DRIVER:-mpv}
       IOT_AUDIO_DIR: ${IOT_AUDIO_DIR:-/app/audio}
       IOT_AUDIO_DEVICE: ${IOT_AUDIO_DEVICE:-alsa/default}
+      IOT_DOOR_DRIVER: ${IOT_DOOR_DRIVER:-fake}
+      IOT_KEYPAD_DRIVER: ${IOT_KEYPAD_DRIVER:-fake}
+      IOT_DEVICES_HTTP_HOST: 0.0.0.0
+      IOT_DEVICES_HTTP_PORT: ${IOT_DEVICES_HTTP_PORT:-8080}
+      IOT_DEVICE_TOKEN: ${IOT_DEVICE_TOKEN:-}
+    ports:
+      # Bus HTTP des ESP32 (clavier à code + capteur de porte).
+      - "${IOT_DEVICES_HTTP_PORT:-8080}:${IOT_DEVICES_HTTP_PORT:-8080}"
     devices:
       - /dev/snd:/dev/snd
     # GID du groupe audio de l'hôte (getent group audio). Le conteneur tourne en

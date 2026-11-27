@@ -31,6 +31,9 @@ export function makeConfig(overrides: Partial<GatewayConfig> = {}): GatewayConfi
     logLevel: 'debug',
     fakeInput: false,
     audio: {driver: 'fake', dir: '/audio-test', command: 'mpv'},
+    deviceHttp: {host: '127.0.0.1', port: 8080, token: 'device-token-test'},
+    door: {driver: 'fake'},
+    keypad: {driver: 'fake'},
     ...overrides,
   }
 }

@@ -22,6 +22,13 @@ describe('readConfig', () => {
         device: undefined,
         command: 'mpv',
       },
+      deviceHttp: {
+        host: '0.0.0.0',
+        port: 8080,
+        token: undefined,
+      },
+      door: {driver: 'fake'},
+      keypad: {driver: 'fake'},
     })
   })
 
@@ -98,6 +105,45 @@ describe('readConfig', () => {
     expect(readConfig({IOT_GATEWAY_TOKEN: 't', IOT_AUDIO_DEVICE: '   '}).audio.device).toBeUndefined()
     expect(() => readConfig({IOT_GATEWAY_TOKEN: 't', IOT_AUDIO_DRIVER: 'bluetooth'})).toThrow(
       'IOT_AUDIO_DRIVER must be fake or mpv',
+    )
+  })
+
+  it('lit la configuration du bus HTTP devices', () => {
+    const config = readConfig({
+      IOT_GATEWAY_TOKEN: 't',
+      IOT_DEVICES_HTTP_HOST: ' 127.0.0.1 ',
+      IOT_DEVICES_HTTP_PORT: ' 9090 ',
+      IOT_DEVICE_TOKEN: ' secret-appareils ',
+      IOT_DOOR_DRIVER: ' http ',
+      IOT_KEYPAD_DRIVER: 'http',
+    })
+
+    expect(config.deviceHttp).toEqual({host: '127.0.0.1', port: 9090, token: 'secret-appareils'})
+    expect(config.door).toEqual({driver: 'http'})
+    expect(config.keypad).toEqual({driver: 'http'})
+  })
+
+  it('exige un jeton et un port valide dès qu un driver http est actif', () => {
+    expect(() =>
+      readConfig({IOT_GATEWAY_TOKEN: 't', IOT_DOOR_DRIVER: 'http'}),
+    ).toThrow('IOT_DEVICE_TOKEN is required when a device driver is http')
+    expect(() =>
+      readConfig({IOT_GATEWAY_TOKEN: 't', IOT_KEYPAD_DRIVER: 'http'}),
+    ).toThrow('IOT_DEVICE_TOKEN is required when a device driver is http')
+    expect(() =>
+      readConfig({IOT_GATEWAY_TOKEN: 't', IOT_DEVICES_HTTP_PORT: '70000'}),
+    ).toThrow('IOT_DEVICES_HTTP_PORT must be an integer between 1 and 65535')
+    expect(() => readConfig({IOT_GATEWAY_TOKEN: 't', IOT_DEVICES_HTTP_PORT: 'abc'})).toThrow(
+      'IOT_DEVICES_HTTP_PORT must be an integer between 1 and 65535',
+    )
+  })
+
+  it('refuse un driver de device inconnu', () => {
+    expect(() => readConfig({IOT_GATEWAY_TOKEN: 't', IOT_DOOR_DRIVER: 'gpio'})).toThrow(
+      'IOT_DOOR_DRIVER must be fake or http',
+    )
+    expect(() => readConfig({IOT_GATEWAY_TOKEN: 't', IOT_KEYPAD_DRIVER: 'mqtt'})).toThrow(
+      'IOT_KEYPAD_DRIVER must be fake or http',
     )
   })
 })
