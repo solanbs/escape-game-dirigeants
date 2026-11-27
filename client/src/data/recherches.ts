@@ -1,5 +1,5 @@
 import { load } from 'js-yaml'
-import fichier from '../../../scenarios/scenario1_red_team/search.yaml?raw'
+import fichier from '@scenarios/scenario1_red_team/search.yaml?raw'
 import { idParUrl } from '@/data/pages'
 
 /*

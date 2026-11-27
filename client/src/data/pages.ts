@@ -23,7 +23,7 @@ export type PageFichier = {
   data: unknown
 }
 
-const fichiers = import.meta.glob<string>('../../../scenarios/scenario1_red_team/pages/*.yml', {
+const fichiers = import.meta.glob<string>('@scenarios/scenario1_red_team/pages/*.yml', {
   query: '?raw',
   import: 'default',
   eager: true,
