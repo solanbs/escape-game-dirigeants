@@ -14,14 +14,15 @@ import Article from '@/templates/Article.vue'
 import Annonce from '@/templates/Annonce.vue'
 import Facebook from '@/templates/Facebook.vue'
 import Forum from '@/templates/Forum.vue'
+import IndexFile from '@/templates/IndexFile.vue'
 
 export const TEMPLATES = {
   Article,
   Annonce,
   Facebook,
   Forum,
+  IndexFile,
   // CompanySite,
-  // FileIndex,
   // LinkedInProfile,
 } satisfies Record<string, Component>
 

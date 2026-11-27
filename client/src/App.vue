@@ -8,7 +8,7 @@ import FakeGoogle from '@/components/FakeGoogle.vue'
 import FakeMail from '@/components/FakeMail.vue'
 import FakeSite from '@/components/FakeSite.vue'
 import FakeAlarmeSuperSecure from '@/components/FakeAlarmeSuperSecure.vue'
-import FakeAlarmeAnnonce from '@/components/FakeAlarmeAnnonce.vue'
+import PageAnnonce from '@/components/PageAnnonce.vue'
 import FakeAlarmeArchive from '@/components/FakeAlarmeArchive.vue'
 import FakeAlarmeForum from '@/components/FakeAlarmeForum.vue'
 import FakeAlarmeGuide from '@/components/FakeAlarmeGuide.vue'
@@ -104,6 +104,12 @@ onMounted(async () => {
 
     <PageArticle
       v-else-if="siteId === 'alarme-guide-demarrage'"
+      :site-id="siteId"
+      @back="page = 'google'"
+    />
+
+    <PageAnnonce
+      v-else-if="siteId === 'alarme-annonce-occasion'"
       :site-id="siteId"
       @back="page = 'google'"
     />

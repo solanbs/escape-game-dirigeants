@@ -8,7 +8,7 @@
 
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: notices-pdf-archives.com/manuals/supersecure/2019
-template: FileIndex
+template: IndexFile
 visibleTo: [master, ops]
 onglet:
   icone: "📁"

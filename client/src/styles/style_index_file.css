@@ -1,0 +1,132 @@
+/*
+ * Apparence du template IndexFile (IndexFile.vue) : listing « Index of /… ».
+ * Repris de style_archive.css, avec des classes préfixées « index- ».
+ * Volontairement austère : c'est la page brute d'un serveur web.
+ * var(--couleur-principale) colore les liens (défaut : bleu des liens classiques).
+ */
+
+.index-site {
+  --index-lien: var(--couleur-principale, #0000ee);
+
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 2rem;
+  background: #ffffff;
+  color: #000000;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.index-conteneur {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.index-titre {
+  margin: 0 0 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #cccccc;
+  font-size: 1.5rem;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+/* --- tableau ------------------------------------------------------------- */
+.index-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  margin-bottom: 2rem;
+}
+
+.index-table th {
+  padding: 0.5rem;
+  border-bottom: 1px solid #cccccc;
+}
+
+.index-table td {
+  padding: 0.4rem 0.5rem;
+  white-space: nowrap;
+}
+
+.index-table td:first-child {
+  width: 100%;
+  white-space: normal;
+}
+
+.index-table a {
+  color: var(--index-lien);
+  text-decoration: none;
+}
+
+.index-table a:hover {
+  text-decoration: underline;
+}
+
+.index-icone {
+  margin-right: 0.5rem;
+}
+
+.index-parent {
+  color: #555555;
+}
+
+.index-ligne--avant {
+  background: #f0f8ff;
+}
+
+.index-ligne--avant a {
+  font-weight: bold;
+}
+
+.index-ligne--ouverte {
+  outline: 1px dashed #999999;
+}
+
+/* --- aperçu du fichier --------------------------------------------------- */
+.index-apercu {
+  margin-bottom: 2rem;
+  border: 1px solid #999999;
+  background: #f9f9f9;
+}
+
+.index-apercu__entete {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  background: #eeeeee;
+  border-bottom: 1px solid #999999;
+  font-weight: bold;
+}
+
+.index-apercu__entete button {
+  border: none;
+  background: transparent;
+  font-size: 1.2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.index-apercu__contenu {
+  margin: 0;
+  padding: 1rem;
+  white-space: pre-wrap;
+  line-height: 1.5;
+  color: #333333;
+  font-family: inherit;
+}
+
+.index-apercu__vide {
+  margin: 0;
+  padding: 1rem;
+  color: #666666;
+}
+
+/* --- pied de page façon serveur ------------------------------------------ */
+.index-pied {
+  padding-top: 0.5rem;
+  border-top: 1px solid #cccccc;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: #555555;
+}

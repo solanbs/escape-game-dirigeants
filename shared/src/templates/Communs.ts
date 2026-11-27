@@ -54,3 +54,17 @@ export type Message = Conditionnel & {
   /** Ex. "Installateur Pro". */
   statut?: string
 }
+
+/** Un fichier d'un listing en ligne (template IndexFile). */
+export type Fichier = Conditionnel & {
+  /** Ex. "V2_Master_Manual.txt", ou "../" pour le dossier parent. */
+  nom: string
+  /** Ex. "04-Sep-2019 09:11". */
+  date: string
+  /** Ex. "45K". */
+  taille?: string
+  /** true = ligne surlignée. */
+  mis_en_avant?: boolean
+  /** Texte affiché quand on clique sur le fichier ; absent = aperçu indisponible. */
+  contenu?: string
+}
