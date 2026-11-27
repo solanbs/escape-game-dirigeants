@@ -20,7 +20,7 @@ Pour créer une page, copiez le template du type voulu depuis `templates/pages/`
 ```yaml
 # --- Enveloppe : lue par le serveur et le navigateur du jeu
 url: leboncoin.fr/annonce/centrale-supersecure-v2
-template: ClassifiedAd
+template: Annonce
 visibleTo: [master, ops]
 when: alarmPanel.failed          # facultatif
 onglet:
@@ -53,7 +53,7 @@ C'est le serveur qui lit `url`, `visibleTo` et `when`, et qui retire les éléme
 | `Article` | article de journal ou de blog, page de centre d'aide, notice | `article.yml` | `shared/src/templates/Article.ts` |
 | `CompanySite` | site vitrine d'une entreprise ou d'une marque | `site.yml` | à venir |
 | `ForumThread` | fil de discussion | `forum.yml` | à venir |
-| `ClassifiedAd` | petite annonce de vente | `annonce.yml` | `shared/src/templates/ClassifiedAd.ts` |
+| `Annonce` | petite annonce de vente | `annonce.yml` | `shared/src/templates/Annonce.ts` |
 | `FileIndex` | listing de fichiers en ligne (« Index of /… ») | `index_fichiers.yml` | à venir |
 | `LinkedInProfile` | profil professionnel | `linkedin.yml` | à venir |
 | `FacebookProfile` | profil personnel | `facebook.yml` | à venir |

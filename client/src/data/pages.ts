@@ -14,7 +14,7 @@ import { load } from 'js-yaml'
 /** Un fichier de page : l'enveloppe (lue par le navigateur) + le contenu (pour le template). */
 export type PageFichier = {
   url: string
-  /** Nom du template qui affiche `data` (ClassifiedAd, Article…). */
+  /** Nom du template qui affiche `data` (Annonce, Article…). */
   template: string
   visibleTo?: string[]
   when?: string | string[]

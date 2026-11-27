@@ -1,16 +1,16 @@
 <script setup lang="ts">
 /*
- * Template ClassifiedAd : petite annonce de vente.
+ * Template Annonce : petite annonce de vente.
  *
  * Ne fait QUE de la mise en page : tout le texte vient de `data`, c'est-à-dire
- * du bloc `data:` d'un YAML de page qui a `template: ClassifiedAd`.
+ * du bloc `data:` d'un YAML de page qui a `template: Annonce`.
  * Pas de barre de navigateur ici : c'est le navigateur du jeu qui l'affiche.
  */
 import '@/styles/style_leboncoin.css'
-import type { ClassifiedAdData } from '@escape/shared'
+import type { AnnonceData } from '@escape/shared'
 import { enGras, paragraphes } from '@/data/texte'
 
-defineProps<{ data: ClassifiedAdData }>()
+defineProps<{ data: AnnonceData }>()
 </script>
 
 <template>

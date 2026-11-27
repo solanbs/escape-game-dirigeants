@@ -6,23 +6,23 @@
  * TOUTES les pages :
  *   1. trouver la page à afficher (ici dans pages.ts, demain via page:watch) ;
  *   2. dessiner la barre du navigateur (onglets + adresse) à partir de l'enveloppe ;
- *   3. passer `data` au template qui fait la mise en page (ici ClassifiedAd).
+ *   3. passer `data` au template qui fait la mise en page (ici Annonce).
  *
- * Le template ClassifiedAd.vue, lui, est définitif.
+ * Le template Annonce.vue, lui, est définitif.
  */
 import '@/styles/style_google.css'
-import type { ClassifiedAdData } from '@escape/shared'
+import type { AnnonceData } from '@escape/shared'
 import type { SiteId } from '@/data/fakeSite'
 import { pageAvecTemplate } from '@/data/pages'
-import ClassifiedAd from '@/templates/ClassifiedAd.vue'
+import Annonce from '@/templates/Annonce.vue'
 
 const props = defineProps<{ siteId: SiteId }>()
 defineEmits<{ back: [] }>()
 
 // 1. Trouver la page (scenarios/scenario1_red_team/pages/<siteId>.yml)
-const page = pageAvecTemplate(props.siteId, 'ClassifiedAd')
+const page = pageAvecTemplate(props.siteId, 'Annonce')
 // La vérification du template garantit la forme de `data` (le serveur validera le YAML).
-const data = page?.data as ClassifiedAdData | undefined
+const data = page?.data as AnnonceData | undefined
 
 // Domaine affiché dans l'onglet : début de l'url (« leboncoin.fr/annonce/… » → « leboncoin.fr »)
 const domaine = page?.url.split('/')[0] ?? ''
@@ -63,6 +63,6 @@ const domaine = page?.url.split('/')[0] ?? ''
     </div>
 
     <!-- 3. Le contenu du site : le template reçoit uniquement `data` -->
-    <ClassifiedAd :data="data" />
+    <Annonce :data="data" />
   </div>
 </template>
