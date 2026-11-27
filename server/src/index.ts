@@ -72,6 +72,45 @@ export const iot = createIot(realtime.io, {
   getSessionId: () => sessionId,
 })
 
+// Test manuel : IOT_AUDIO_SMOKE_TEST=1 joue une piste 5 s après la connexion du gateway.
+if (process.env.IOT_AUDIO_SMOKE_TEST === '1') {
+  const smokeTrack = process.env.IOT_AUDIO_SMOKE_TRACK ?? 'alarm.mp3'
+  let scheduled = false
+
+  const unsubscribe = iot.port.onGatewayStatus((status) => {
+    if (!status.online || scheduled) return
+    scheduled = true
+    unsubscribe()
+
+    logger.info({track: smokeTrack}, 'smoke audio: gateway connecté, lecture dans 5s')
+
+    setTimeout(() => {
+      void iot.admin.playAudio(smokeTrack, {volume: 60, loop: false}).then(
+        (result) => logger.info({result}, 'smoke audio: résultat'),
+        (err) => logger.error({err}, 'smoke audio: erreur'),
+      )
+    }, 5000)
+
+    setTimeout(() => {
+      logger.info({snapshot: iot.port.getSnapshot()}, 'smoke audio: état à +7s')
+    }, 7000)
+
+    setTimeout(() => {
+      logger.info({snapshot: iot.port.getSnapshot()}, 'smoke audio: état à +10s')
+    }, 10000)
+
+    // La fin de lecture n'émet pas de STATE : un stop force la remontée de l'état final.
+    setTimeout(() => {
+      void iot.admin.stopAudio().then((result) => {
+        logger.info({result}, 'smoke audio: stop')
+        setTimeout(() => {
+          logger.info({snapshot: iot.port.getSnapshot()}, 'smoke audio: état après stop')
+        }, 500)
+      })
+    }, 20000)
+  })
+}
+
 // ---------------------------------------------------------------------------
 // Front statique (production uniquement : en dev, c'est Vite qui sert le front)
 // ---------------------------------------------------------------------------
