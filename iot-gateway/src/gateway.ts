@@ -20,6 +20,12 @@ type PendingCode = {
   resolve: (ack: IotEventAck) => void
   reject: (error: Error) => void
   timer: NodeJS.Timeout
+}
+
+export type Gateway = {
+  start(): Promise<void>
+  stop(): Promise<void>
+}
 
 export type GatewayDeps = {
   config: GatewayConfig
