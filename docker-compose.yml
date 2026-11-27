@@ -28,6 +28,17 @@ services:
       LOG_FORMAT: pretty
       IOT_GATEWAY_TOKEN: ${IOT_GATEWAY_TOKEN}
       IOT_SERVER_URL: http://game:3000
+      IOT_AUDIO_DRIVER: ${IOT_AUDIO_DRIVER:-mpv}
+      IOT_AUDIO_DIR: ${IOT_AUDIO_DIR:-/app/audio}
+      IOT_AUDIO_DEVICE: ${IOT_AUDIO_DEVICE:-alsa/default}
+    devices:
+      - /dev/snd:/dev/snd
+    # GID du groupe audio de l'hôte (getent group audio). Le conteneur tourne en
+    # root dans un premier temps ; ajuster si on descend les privilèges.
+    group_add:
+      - "29"
+    volumes:
+      - ./audio:/app/audio:ro
     depends_on:
       - game
     restart: unless-stopped

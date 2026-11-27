@@ -1,6 +1,6 @@
 import { createInterface } from 'node:readline'
 import { readConfig } from './config.js'
-import { createFakeDevices } from './devices/fake.js'
+import { createDevices } from './devices/index.js'
 import { createGateway } from './gateway.js'
 import { createLogger } from './logger.js'
 import { createState } from './state.js'
@@ -10,7 +10,7 @@ type ShutdownReason = NodeJS.Signals | 'error'
 
 const config = readConfig()
 const logger = createLogger(config.logLevel)
-const devices = createFakeDevices()
+const devices = createDevices(config, logger)
 const state = createState(devices)
 const transport = createSocketTransport(config, logger)
 const gateway = createGateway({ config, transport, devices, state, logger })
