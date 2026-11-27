@@ -1,0 +1,240 @@
+/*
+ * Apparence du template Article (Article.vue) : en-tête du site, fil d'Ariane,
+ * titre, infos, chapo, tags, colonne de droite.
+ * Les blocs du corps ont leur propre CSS : style_blocs.css.
+ *
+ * Repris de style_porte_magnetique_fonctionnement.css (classes kb-…),
+ * avec var(--couleur-principale) à la place des couleurs fixes.
+ */
+
+.article-site {
+  --article-couleur: var(--couleur-principale, #2980b9);
+  --article-bordure: #e1e5e8;
+  --article-texte-doux: #6c7a89;
+
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: #f4f7f9;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* --- en-tête du site ----------------------------------------------------- */
+.article-header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--article-bordure);
+  border-top: 4px solid var(--article-couleur);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.article-header__inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.article-header__marque {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.article-header__logo {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.article-header__nom {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: #2c3e50;
+}
+
+.article-header__nom strong {
+  color: var(--article-couleur);
+}
+
+.article-header__slogan {
+  font-size: 0.85rem;
+  color: var(--article-texte-doux);
+}
+
+.article-header__recherche {
+  display: flex;
+  align-items: center;
+  width: 300px;
+  max-width: 100%;
+  background: #f4f7f9;
+  border: 1px solid #dcdcdc;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.article-header__recherche input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  padding: 0.5rem 1rem;
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.article-header__recherche button {
+  border: none;
+  background: transparent;
+  padding: 0.5rem;
+  cursor: default;
+}
+
+.article-header__rubriques {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.article-header__rubriques a {
+  color: #2c3e50;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.article-header__rubriques a:hover {
+  color: var(--article-couleur);
+}
+
+/* --- disposition : article seul, ou article + colonne -------------------- */
+.article-page {
+  width: 100%;
+  max-width: 1100px;
+  box-sizing: border-box;
+  margin: 2rem auto 4rem;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+}
+
+/* Sans colonne, l'article reste à une largeur confortable à lire. */
+.article-page:not(.article-page--avec-colonne) {
+  max-width: 860px;
+}
+
+.article-page--avec-colonne {
+  grid-template-columns: 1fr 300px;
+}
+
+.article-principal {
+  min-width: 0;
+  background: #ffffff;
+  padding: 2.5rem;
+  border: 1px solid var(--article-bordure);
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+/* --- fil d'Ariane -------------------------------------------------------- */
+.article-fil {
+  margin-bottom: 1.5rem;
+  font-size: 0.85rem;
+  color: var(--article-texte-doux);
+}
+
+.article-fil > span:not(.article-fil__sep):not(.article-fil__courant) {
+  color: var(--article-couleur);
+}
+
+.article-fil__sep {
+  margin: 0 0.4rem;
+}
+
+/* --- l'article ----------------------------------------------------------- */
+.article__rubrique {
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--article-couleur);
+}
+
+.article__titre {
+  margin: 0 0 1rem;
+  font-size: 1.8rem;
+  line-height: 1.3;
+  color: #1a242f;
+}
+
+.article__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.5rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--article-bordure);
+  font-size: 0.85rem;
+  color: #888888;
+}
+
+.article__meta strong {
+  color: #555555;
+}
+
+.article__chapo {
+  margin: 0 0 2rem;
+  padding-left: 1rem;
+  border-left: 4px solid var(--article-couleur);
+  font-size: 1.1rem;
+  line-height: 1.6;
+  color: #444444;
+}
+
+.article__tags {
+  list-style: none;
+  margin: 2.5rem 0 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid var(--article-bordure);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.article__tags li {
+  padding: 0.25rem 0.7rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--article-couleur) 10%, white);
+  color: var(--article-couleur);
+  font-size: 0.8rem;
+}
+
+/* --- colonne de droite --------------------------------------------------- */
+.article-colonne {
+  min-width: 0;
+}
+
+.article-colonne .blocs {
+  gap: 2rem;
+}
+
+/* --- petits écrans : la colonne passe sous l'article --------------------- */
+@media (max-width: 850px) {
+  .article-page--avec-colonne {
+    grid-template-columns: 1fr;
+  }
+
+  .article-principal {
+    padding: 1.5rem;
+  }
+}

@@ -4,6 +4,7 @@
  */
 
 export * from './protocol.js'
+export * from './templates/index.js'
 
 // ---------------------------------------------------------------------------
 // Modèles

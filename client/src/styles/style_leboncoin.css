@@ -12,7 +12,7 @@
   padding: 0 1rem;
 }
 .lbc-header {
-  background-color: #ff6e14;
+  background-color: var(--couleur-principale, #ff6e14);
   padding: 1rem 0;
 }
 .header-inner {
@@ -72,7 +72,7 @@
 }
 .ad-details { padding: 2rem; }
 .ad-details h1 { margin: 0 0 1rem; font-size: 1.5rem; }
-.ad-price { color: #ff6e14; font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
+.ad-price { color: var(--couleur-principale, #ff6e14); font-size: 2rem; font-weight: 900; margin-bottom: 0.5rem; }
 .ad-date { color: #72818c; font-size: 0.85rem; margin-bottom: 2rem; }
 .ad-description { line-height: 1.6; color: #333; }
 .seller-card {
@@ -105,5 +105,5 @@
   margin-top: 1rem;
   cursor: pointer;
 }
-.btn-contact { background: #ff6e14; color: white; }
-.btn-phone { background: white; color: #ff6e14; border: 1px solid #ff6e14; }
+.btn-contact { background: var(--couleur-principale, #ff6e14); color: white; }
+.btn-phone { background: white; color: var(--couleur-principale, #ff6e14); border: 1px solid var(--couleur-principale, #ff6e14); }

@@ -1,15 +1,36 @@
 <script setup lang="ts">
-import '@/styles/style_leboncoin.css'
+/*
+ * PROVISOIRE : joue le rôle du « navigateur du jeu » pour une seule page.
+ *
+ * Il fait les trois choses que fera le futur navigateur (apps/Browser) pour
+ * TOUTES les pages :
+ *   1. trouver la page à afficher (ici dans pages.ts, demain via page:watch) ;
+ *   2. dessiner la barre du navigateur (onglets + adresse) à partir de l'enveloppe ;
+ *   3. passer `data` au template qui fait la mise en page (ici ClassifiedAd).
+ *
+ * Le template ClassifiedAd.vue, lui, est définitif.
+ */
 import '@/styles/style_google.css'
-import { sites, type SiteId } from '@/data/fakeSite'
+import type { ClassifiedAdData } from '@escape/shared'
+import type { SiteId } from '@/data/fakeSite'
+import { pageAvecTemplate } from '@/data/pages'
+import ClassifiedAd from '@/templates/ClassifiedAd.vue'
 
 const props = defineProps<{ siteId: SiteId }>()
 defineEmits<{ back: [] }>()
-const site = sites[props.siteId]
+
+// 1. Trouver la page (scenarios/scenario1_red_team/pages/<siteId>.yml)
+const page = pageAvecTemplate(props.siteId, 'ClassifiedAd')
+// La vérification du template garantit la forme de `data` (le serveur validera le YAML).
+const data = page?.data as ClassifiedAdData | undefined
+
+// Domaine affiché dans l'onglet : début de l'url (« leboncoin.fr/annonce/… » → « leboncoin.fr »)
+const domaine = page?.url.split('/')[0] ?? ''
 </script>
 
 <template>
-  <div class="browser-window browser-window--maximized fake-site-browser">
+  <div v-if="page && data" class="browser-window browser-window--maximized fake-site-browser">
+    <!-- 2. Barre du navigateur : identique pour toutes les pages, remplie par l'enveloppe -->
     <div class="browser-tabs">
       <button class="browser-tab" type="button" @click="$emit('back')">
         <span class="browser-tab__logo">G</span>
@@ -17,8 +38,8 @@ const site = sites[props.siteId]
         <span class="browser-tab__close" aria-hidden="true">×</span>
       </button>
       <button class="browser-tab browser-tab--active" type="button">
-        <span class="browser-tab__logo browser-tab__logo--site">🛒</span>
-        <span>{{ site.domaine }}</span>
+        <span class="browser-tab__logo browser-tab__logo--site">{{ page.onglet?.icone }}</span>
+        <span>{{ domaine }}</span>
         <span class="browser-tab__close" aria-hidden="true">×</span>
       </button>
       <button class="browser-tab__new" type="button" aria-label="Nouvel onglet">+</button>
@@ -35,60 +56,13 @@ const site = sites[props.siteId]
       <button type="button" aria-label="Actualiser">↻</button>
       <div class="browser-address">
         <span>🔒</span>
-        <span>{{ site.domaine }}</span>
+        <span>{{ page.url }}</span>
       </div>
       <button type="button" aria-label="Favoris">☆</button>
       <button type="button" aria-label="Menu">⋮</button>
     </div>
 
-    <main class="lbc-site">
-      <header class="lbc-header">
-        <div class="lbc-container header-inner">
-          <div class="lbc-logo">LeBonCoin <span>Pro</span></div>
-          <div class="lbc-search">
-            <input type="text" value="Alarme SuperSecure" disabled />
-            <button>Rechercher</button>
-          </div>
-        </div>
-      </header>
-
-      <div class="lbc-container ad-layout">
-        <div class="ad-main">
-          <!-- Placeholder pour la photo du boîtier -->
-          <div class="ad-image-gallery">
-            <div class="ad-main-image">
-              <span class="image-placeholder">📷 Photo du boîtier SuperSecure V2</span>
-            </div>
-          </div>
-
-          <div class="ad-details">
-            <h1>Centrale d'alarme professionnelle SuperSecure (Modèle V2)</h1>
-            <div class="ad-price">150 €</div>
-            <div class="ad-date">Publié le 12/09/2026 à 14h30</div>
-
-            <h2>Description</h2>
-            <div class="ad-description">
-              <p>Suite à la cessation d'activité de notre boutique, je revends cette centrale d'alarme de la marque SuperSecure.</p>
-              <p>Il s'agit de la fameuse version V2 (celle avec le clavier en façade et le liseré bleu). Le matériel est robuste et fonctionne parfaitement. Idéal pour sécuriser un petit entrepôt ou des bureaux.</p>
-              <p><strong>Attention :</strong> Je n'ai plus la boîte d'origine ni le manuel papier. Il faudra fouiller sur internet ou dans les archives de la marque pour retrouver le code de déverrouillage d'usine pour la réinitialiser. Le boîtier est actuellement verrouillé.</p>
-              <p>Remise en main propre privilégiée.</p>
-            </div>
-          </div>
-        </div>
-
-        <aside class="ad-sidebar">
-          <div class="seller-card">
-            <div class="seller-avatar">M</div>
-            <div class="seller-info">
-              <strong>Marc_Bordeaux33</strong>
-              <span>Particulier</span>
-              <div class="seller-rating">⭐⭐⭐⭐⭐ (14 avis)</div>
-            </div>
-            <button class="btn-contact">Envoyer un message</button>
-            <button class="btn-phone">Voir le numéro</button>
-          </div>
-        </aside>
-      </div>
-    </main>
+    <!-- 3. Le contenu du site : le template reçoit uniquement `data` -->
+    <ClassifiedAd :data="data" />
   </div>
 </template>
