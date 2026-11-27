@@ -1,0 +1,48 @@
+# Petite annonce : centrale d'alarme SuperSecure V2 d'occasion.
+# Étape 4 : montre le boîtier et rend sa marque identifiable.
+# Contenu repris de l'ancienne version de FakeAlarmeAnnonce.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Vends Centrale SuperSecure V2 - Très bon état
+#   extrait : Annonce de vente d'un boîtier d'alarme d'occasion.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: leboncoin.fr/annonce/centrale-supersecure-v2
+template: Annonce
+visibleTo: [master, ops]
+onglet:
+  icone: "🛒"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#ff6e14"
+
+  site:
+    nom: LeBonCoin Pro
+    logo: ""
+    recherche: Alarme SuperSecure
+
+  titre: Centrale d'alarme professionnelle SuperSecure (Modèle V2)
+  prix: 150 €
+  date: 12/09/2026 à 14h30
+  lieu: ""
+
+  image:
+    fichier: ""
+    legende: 📷 Photo du boîtier SuperSecure V2
+
+  description: |
+    Suite à la cessation d'activité de notre boutique, je revends cette centrale d'alarme de la marque SuperSecure.
+
+    Il s'agit de la fameuse version V2 (celle avec le clavier en façade et le liseré bleu). Le matériel est robuste et fonctionne parfaitement. Idéal pour sécuriser un petit entrepôt ou des bureaux.
+
+    **Attention :** Je n'ai plus la boîte d'origine ni le manuel papier. Il faudra fouiller sur internet ou dans les archives de la marque pour retrouver le code de déverrouillage d'usine pour la réinitialiser. Le boîtier est actuellement verrouillé.
+
+    Remise en main propre privilégiée.
+
+  vendeur:
+    nom: Marc_Bordeaux33
+    avatar: M
+    type: Particulier
+    note: 5
+    nombre_avis: 14

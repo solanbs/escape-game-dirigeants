@@ -1,0 +1,78 @@
+# Notice de la boîte de dépôt SecureBox MAG-200 (la boîte morte de David).
+# Étape 3 : alimentation 12V + voyant ; sans courant, la porte se déverrouille.
+# Contenu repris de FakePorteMagnetiqueBoite.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Notice de la boîte de dépôt
+#   extrait : Une notice fictive mentionne une alimentation et un voyant à recouper.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: carnet-maintenance.fr/securebox-mag-200
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "📄"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#2e7d32"
+
+  site:
+    nom: Carnet maintenance             # la page d'origine n'avait pas de nom de site
+    slogan: ""
+    logo: ""
+    recherche: false
+    rubriques: []
+
+  fil_ariane: []
+  rubrique: Manuel Utilisateur - PDF Web Viewer
+  titre: "SecureBox MAG-200 : Boîte de dépôt sécurisée"
+  chapo: ""
+  auteur: ""
+  date: ""
+  temps_lecture: ""
+
+  corps:
+    - type: intertitre
+      texte: 1. Présentation du matériel
+
+    - type: paragraphe
+      texte: >
+        La SecureBox MAG-200 est une solution de stockage temporaire équipée
+        d'un verrouillage électromagnétique à haute rétention (force
+        d'arrachement de 150 kg).
+
+    - type: intertitre
+      texte: 2. Caractéristiques et Alimentation
+
+    - type: encadre
+      ton: info
+      icone: "🔌"
+      titre: "Schéma d'alimentation (Port DC-IN) :"
+      texte: >
+        L'appareil nécessite une alimentation continue stricte. Le bloc
+        d'alimentation 12V fourni doit être connecté au port situé à l'arrière
+        de la boîte. **Attention :** Cet appareil fonctionne en mode "Sécurité
+        Positive" (Fail-Safe).
+      avertissement: ""
+      bouton: ""
+
+    - type: intertitre
+      texte: 3. Signification du Voyant d'état (LED)
+
+    - type: liste
+      elements:
+        - icone: "🔴"
+          label: "Voyant Rouge fixe :"
+          texte: Boîte sous tension et verrouillée. L'électro-aimant est actif.
+        - icone: "🟢"
+          label: "Voyant Vert clignotant :"
+          texte: Code d'accès valide saisi, ouverture temporaire autorisée (5 secondes).
+        - icone: "⚫"
+          label: "Voyant Éteint (Aucune lumière) :"
+          texte: Absence d'alimentation électrique.
+          note: "Note : En cas de coupure d'alimentation, le champ magnétique s'annule immédiatement et la porte se déverrouille librement."
+
+  colonne: []
+
+  tags: []

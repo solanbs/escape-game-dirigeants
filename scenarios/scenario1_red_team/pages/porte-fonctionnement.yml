@@ -1,0 +1,111 @@
+# Base de connaissances : fonctionnement d'une porte à verrouillage électromagnétique.
+# Étape 3 (boîte) : explique que sans alimentation, le verrou est libéré (Sécurité Positive).
+# Contenu repris de FakePorteMagnetiqueFonctionnement.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Comment ça marche ? Les portes magnétiques
+#   extrait : Un article de vulgarisation expliquant le principe d'un électro-aimant.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: science-mag.fr/technologie/portes-magnetiques
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "📚"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#2980b9"
+
+  site:
+    nom: Support & Documentation **SecurTech**
+    slogan: ""
+    logo: "🛡️"
+    recherche: true
+    rubriques: []
+
+  fil_ariane: [Accueil, Matériel de verrouillage, Série MAG (Ventouses), Fonctionnement et Sécurité Positive]
+  rubrique: ""
+  titre: Principes de fonctionnement du verrouillage électromagnétique
+  chapo: >
+    Ce document technique détaille le fonctionnement physique des ventouses
+    électromagnétiques de la série MAG et leur comportement selon les normes
+    d'évacuation incendie (EN 13637).
+  auteur: ""
+  date: Mise à jour il y a 14 jours
+  temps_lecture: ""
+
+  corps:
+    - type: intertitre
+      texte: 1. Le principe de l'électro-aimant
+
+    - type: paragraphe
+      texte: >
+        Les ventouses électromagnétiques n'ont aucun composant mécanique mobile
+        (pas de pêne ni de cylindre). Le verrouillage est assuré par une bobine
+        de cuivre logée dans le corps de la ventouse. **C'est le passage du
+        courant électrique continu (12V ou 24V DC) qui génère le champ
+        magnétique.** Ce champ attire violemment la contre-plaque (armature)
+        fixée sur l'ouvrant de la porte.
+
+    - type: encadre
+      ton: info
+      icone: ""
+      titre: "Note d'installation :"
+      texte: >
+        Pour garantir une force de maintien optimale (jusqu'à 600 kg/6000N), la
+        contre-plaque ne doit jamais être fixée rigidement. Un léger jeu
+        mécanique (fourni par la rondelle de caoutchouc) est nécessaire pour un
+        alignement parfait avec l'aimant.
+      avertissement: ""
+      bouton: ""
+
+    - type: intertitre
+      texte: 2. La "Sécurité Positive" (Fail-Safe)
+
+    - type: paragraphe
+      texte: >
+        Contrairement aux gâches électriques à émission (qui ont besoin de
+        courant pour s'ouvrir), la norme impose que les ventouses fonctionnent
+        en mode Fail-Safe (à manque de tension).
+
+    - type: paragraphe
+      texte: >
+        La conséquence physique est immédiate : **sans alimentation électrique,
+        il n'y a plus de champ magnétique.** En cas de coupure de courant
+        volontaire (via un déclencheur manuel vert), d'une coupure du
+        disjoncteur, ou d'une panne secteur, le verrouillage est instantanément
+        annulé et la porte devient libre pour permettre l'évacuation.
+
+    - type: intertitre
+      texte: 3. Tableau récapitulatif des états
+
+    - type: tableau
+      titre: ""
+      colonnes: [Alimentation Électrique, État du champ magnétique, État de la porte]
+      lignes:
+        - ["**Sous tension (12/24V)**", Actif (Force 300 à 600kg), Verrouillée]
+        - ["**Hors tension (0V)**", Nul (0 kg), Libre / Ouverte]
+
+  colonne:
+    - type: intertitre
+      texte: Articles liés
+
+    - type: liste
+      elements:
+        - Câblage TCP/IP des contrôleurs de porte
+        - Résoudre l'erreur "Défaut de contact" sur le voyant LED
+        - Comment utiliser la clé de réarmement du boîtier vert
+        - Schéma électrique d'une porte double battant
+
+    - type: encadre
+      ton: info
+      icone: ""
+      titre: Besoin d'assistance ?
+      texte: >
+        Si la coupure d'alimentation ne suffit pas à réinitialiser votre
+        système, contactez notre équipe technique de niveau 2.
+      avertissement: ""
+      bouton: Ouvrir un ticket
+
+  tags: []

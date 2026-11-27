@@ -82,6 +82,6 @@ informations sensibles sont fictifs et propres au jeu.
 
 ## Points restant à définir
 
-- [ ] Nom de l'entreprise ciblée.
+- [X] Nom de l'entreprise ciblée : Carbona Racing Team.
 - [ ] Contenu et déclenchement de l'échange de mails avec David.
 - [ ] Document trouvé dans les poubelles qui aide David dans son procès.

@@ -1,0 +1,130 @@
+# Site officiel de l'entreprise ciblée.
+# Étape 1 (OSINT) : confirmer l'entreprise et son activité.
+# Seule la direction apparaît : les 6 autres employés de l'organigramme
+# servent à la partie physique et ne doivent pas être trouvables ici.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Carbona Racing Team – Écurie d'endurance
+#   extrait : Écurie d'endurance bordelaise, triple championne EEPS. Bureau d'études aéro, soufflerie, prototypes CR-26 et CR-27.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: carbona-racing.fr
+template: CompanySite
+visibleTo: [master, ops]
+onglet:
+  icone: "🏁"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#c8102e"
+
+  entete:
+    nom: Carbona Racing Team
+    slogan: L'air est notre piste.
+    logo: "🏁"
+    telephone: ""
+    menu: [Accueil, L'écurie, Palmarès, Actualités, Contact]
+    bouton: ""
+
+  bandeau:
+    surtitre: ""
+    titre: Carbona Racing Team
+    texte: >
+      Depuis 2009, Carbona Racing Team conçoit, construit et fait courir ses
+      propres prototypes d'endurance. Notre force : un bureau d'études
+      aérodynamique intégré, où chaque surface de nos voitures est dessinée,
+      simulée et testée en soufflerie.
+    bouton: ""
+    image: ""
+
+  corps:
+    - type: chiffres
+      elements:
+        - valeur: "17"
+          label: saisons en compétition
+        - valeur: "3"
+          label: titres consécutifs
+        - valeur: "85"
+          label: collaborateurs
+        - valeur: "2"
+          label: prototypes engagés
+
+    - type: intertitre
+      texte: Notre histoire
+
+    - type: paragraphe
+      texte: >
+        Carbona Racing Team naît en 2009 dans un petit atelier bordelais, autour
+        de Sébastien Friand, ingénieur passionné d'endurance, et d'une poignée
+        de mécaniciens. Dès sa deuxième saison, l'écurie décroche sa première
+        victoire.
+
+    - type: paragraphe
+      texte: >
+        Depuis 2024, l'écurie domine le championnat avec trois titres
+        consécutifs, portée par une aérodynamique que ses concurrents peinent
+        à égaler. Carbona aligne aujourd'hui deux prototypes en European
+        Endurance Prototype Series et emploie 85 personnes dans ses locaux
+        bordelais, qui réunissent atelier, bureau d'études et soufflerie.
+
+    - type: intertitre
+      texte: L'aérodynamique, notre signature
+
+    - type: paragraphe
+      texte: >
+        Tout ce qui touche à l'air est conçu en interne. Nos plans
+        aérodynamiques sont le fruit de plusieurs années de recherche et
+        constituent le cœur de notre avantage sur la piste.
+
+    - type: paragraphe
+      texte: >
+        La CR-27, attendue pour la saison 2027, est en cours de développement.
+        Son concept aérodynamique entièrement repensé doit permettre à l'écurie
+        de rester au sommet du championnat.
+
+    - type: intertitre
+      texte: Nos valeurs
+
+    - type: liste
+      elements:
+        - "Performance : chaque dixième se gagne à l'atelier."
+        - "Esprit d'équipe : on gagne et on perd ensemble."
+        - "Discrétion : nos innovations ne quittent pas nos murs."
+
+    - type: personnes
+      titre: Direction
+      liste:
+        - nom: Sébastien Friand
+          poste: Président-directeur général et fondateur
+          bio: Ingénieur de formation, il fonde l'écurie en 2009 et la dirige depuis.
+          photo: ""
+        - nom: Marie Nade
+          poste: Directrice générale déléguée
+          bio: Elle supervise les opérations sportives et industrielles de l'écurie depuis 2018.
+          photo: ""
+        - nom: Tom Hatte
+          poste: Directeur administratif et financier
+          bio: Il a rejoint Carbona en 2021 pour accompagner la croissance de l'écurie.
+          photo: ""
+
+    - type: actus
+      elements:
+        - date: "19/10/2026"
+          titre: Champions pour la troisième fois consécutive !
+          extrait: >
+            La victoire de la n°8 à Portimão offre à Carbona Racing Team un
+            troisième titre EEPS d'affilée.
+        - date: "02/06/2026"
+          titre: "CR-27 : Carbona veut creuser encore l'écart"
+          extrait: >
+            Double championne en titre, l'écurie bordelaise prépare déjà une
+            CR-27 au concept aérodynamique inédit pour 2027.
+
+    - type: contact
+      titre: ""
+      texte: "Presse : presse@carbona-racing.fr"
+      adresse: 18 rue des Stands, 33300 Bordeaux
+      telephone: 05 36 49 27 26   # plage ARCEP réservée à la fiction
+      email: contact@carbona-racing.fr
+
+  pied_de_page: © 2027 Carbona Racing Team SAS – Tous droits réservés

@@ -1,0 +1,61 @@
+# Blog technique : pannes de contrôle d'accès.
+# Étape 3 (boîte) : suggère qu'une coupure d'alimentation peut changer l'état du verrou.
+# Contenu repris de FakePorteMagnetiquePannes.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Pannes de contrôle d'accès
+#   extrait : Un guide fictif pour observer les indices d'une panne dans le scénario.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: blog-technique.fr/pannes-controle-acces
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🛠️"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#0f172a"
+
+  site:
+    nom: Blog technique                # la page d'origine n'avait pas de nom de site
+    slogan: Carnet technique du scénario
+    logo: ""
+    recherche: false
+    rubriques: []
+
+  fil_ariane: []
+  rubrique: Diagnostic fictif
+  titre: "Pannes de contrôle d'accès : les premiers indices"
+  chapo: >
+    Une porte magnétique associe un lecteur, un voyant, une alimentation et un
+    dispositif de sortie autorisée. Un changement d'état peut donc venir d'une
+    panne électrique ou d'un défaut signalé par le système.
+  auteur: ""
+  date: ""
+  temps_lecture: 3 min
+
+  corps:
+    - type: intertitre
+      texte: Les contrôles à observer
+
+    - type: etapes
+      elements:
+        - titre: "Voyant :"
+          texte: noter sa couleur et la comparer au tableau de mission.
+        - titre: "Alimentation :"
+          texte: vérifier uniquement l'indication affichée dans la simulation.
+        - titre: "Journal :"
+          texte: relever l'heure et le message associé à l'anomalie.
+
+    - type: encadre
+      ton: info
+      icone: "💡"
+      titre: Indice du jeu
+      texte: Une coupure d'alimentation simulée peut modifier l'état du verrou dans l'énigme.
+      avertissement: ""
+      bouton: ""
+
+  colonne: []
+
+  tags: []

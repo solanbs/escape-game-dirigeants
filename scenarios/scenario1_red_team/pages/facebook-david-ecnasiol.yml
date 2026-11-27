@@ -1,0 +1,74 @@
+# Profil Facebook de David Ecnasiol.
+# Page de remplissage pour les recherches : rien d'utile à l'enquête,
+# hormis un post montrant sa rancœur envers Carbona Racing Team.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : David Ecnasiol | Facebook
+#   extrait : David Ecnasiol est sur Facebook. Rejoignez Facebook pour communiquer avec David Ecnasiol.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: facebook.com/david.ecnasiol
+template: Facebook
+visibleTo: [master, ops]
+onglet:
+  icone: "👤"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#1877f2"
+
+  profil:
+    nom: David Ecnasiol
+    photo: ""
+    couverture: ""
+    bio: "Ingénieur aéro 🚴‍♂️ Bordeaux"
+    amis: "312 amis"
+
+  intro:
+    - Fondateur chez Aérofourneau Consulting
+    - A travaillé chez Carbona Racing Team
+    - Habite à Bordeaux
+
+  publications:            # de la plus récente à la plus ancienne
+    # Post de rancœur envers Carbona (lendemain du licenciement du 17/10/2026)
+    - date: "18/10/2026"
+      texte: >
+        8 ans à donner mes soirées et mes week-ends à Carbona. Pour finir
+        escorté jusqu'au parking comme un voleur. Je n'oublierai pas. 😤
+      image: ""
+      reactions: 118
+      commentaires:
+        - auteur: Marion L.
+          texte: C'est honteux. Courage David.
+        - auteur: David Ecnasiol
+          texte: Merci. Ils ne s'en tireront pas comme ça.
+
+    - date: "14/09/2026"
+      texte: >
+        Premier essai de cannelés maison. Verdict : les pâtissiers bordelais
+        n'ont rien à craindre 😅
+      image: ""            # photo à produire : plaque de cannelés un peu trop cuits
+      reactions: 42
+      commentaires:
+        - auteur: Julien P.
+          texte: Ils ont l'air… croustillants 😂
+
+    - date: "26/07/2026"
+      texte: >
+        Sortie vélo dimanche jusqu'au Cap Ferret. 110 km, des jambes en béton
+        mais quelle vue ! 🚴‍♂️🌊
+      image: ""            # photo à produire : vélo posé face au bassin d'Arcachon
+      reactions: 57
+      commentaires: []
+
+    - date: "03/05/2026"
+      texte: Anniversaire de ma sœur, toute la famille réunie. Ça fait du bien de se poser un peu ❤️
+      image: ""            # photo à produire : table de jardin avec un gâteau
+      reactions: 64
+      commentaires: []
+
+    - date: "31/12/2025"
+      texte: Bonne année à tous ! Que 2026 vous apporte tout ce que vous souhaitez 🥂
+      image: ""
+      reactions: 33
+      commentaires: []

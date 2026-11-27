@@ -1,0 +1,91 @@
+# Site de la startup de David Ecnasiol.
+# Étape 1 (OSINT) : donne l'adresse mail de David.
+# Cohérent avec l'article du procès : conseil en aérodynamique,
+# aucun client dans la course automobile.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Aérofourneau Consulting – Conseil en aérodynamique
+#   extrait : Conseil en aérodynamique pour l'industrie : traînée, refroidissement, simulation CFD. Basé à Bordeaux.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: aerofourneau-consulting.fr
+template: CompanySite
+visibleTo: [master, ops]
+onglet:
+  icone: "💨"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#f97316"
+
+  entete:
+    nom: Aérofourneau Consulting
+    slogan: Faire passer l'air là où il faut.
+    logo: "💨"
+    telephone: ""
+    menu: [Accueil, Services, À propos, Contact]
+    bouton: ""
+
+  bandeau:
+    surtitre: ""
+    titre: Le conseil en aérodynamique pour l'industrie
+    texte: >
+      Aérofourneau Consulting aide les industriels à mieux maîtriser l'air :
+      réduction de la traînée, refroidissement, ventilation. Une expertise
+      issue de plusieurs années de bureau d'études en sport automobile, mise
+      au service de projets du quotidien.
+    bouton: ""
+    image: ""
+
+  corps:
+    - type: cartes
+      elements:
+        - icone: "💨"
+          titre: Optimisation aérodynamique
+          texte: Réduction de la traînée pour vélos, véhicules utilitaires et remorques.
+        - icone: "❄️"
+          titre: Refroidissement et ventilation
+          texte: Conception de conduits et d'entrées d'air pour moteurs, batteries et électronique.
+        - icone: "🖥️"
+          titre: Simulation CFD
+          texte: Études numériques des écoulements, de l'avant-projet à la validation.
+        - icone: "🎓"
+          titre: Formation
+          texte: Formations sur mesure en aérodynamique pour les bureaux d'études.
+
+    - type: encadre
+      ton: info
+      icone: ""
+      titre: ""
+      texte: >
+        Aérofourneau Consulting ne travaille avec aucune écurie de sport
+        automobile. Nos clients viennent exclusivement de l'industrie et de la
+        mobilité.
+      avertissement: ""
+      bouton: ""
+
+    - type: liste
+      elements:
+        - Cycles Garonne (vélos électriques)
+        - Agri-Méca Landes (machines agricoles)
+        - Navettes Électriques de l'Estuaire (transport urbain)
+
+    - type: personnes
+      titre: ""
+      liste:
+        - nom: David Ecnasiol
+          poste: Fondateur et ingénieur aérodynamicien
+          bio: >
+            Ingénieur en mécanique des fluides, David a passé huit ans dans le
+            bureau d'études d'une écurie d'endurance avant de fonder Aérofourneau
+            Consulting.
+          photo: ""
+
+    - type: contact
+      titre: Parlons de votre projet
+      texte: Je réponds personnellement à chaque message. – David
+      adresse: Bordeaux
+      telephone: ""
+      email: david.ecnasiol@aerofourneau-consulting.fr
+
+  pied_de_page: © 2027 Aérofourneau Consulting – SASU

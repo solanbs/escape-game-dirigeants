@@ -1,0 +1,77 @@
+# Page leurre : prestataire d'installation de contrôle d'accès.
+# Étape 3 (boîte) : résultat plausible, sans détail exploitable.
+# Contenu repris de FakePorteMagnetiqueLeurre.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Installer un contrôle d'accès
+#   extrait : Une page leurre fictive présentant une installation sans détail exploitable.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: guide-installation.fr/controle-acces-biometrique-rfid
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🛠️"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#1e3a8a"
+
+  site:
+    nom: Pro-Sécurité Intégration
+    slogan: Devis sur mesure
+    logo: ""
+    recherche: false
+    rubriques: []
+
+  fil_ariane: []
+  rubrique: Prestation de service
+  titre: Installation de contrôle d'accès biométrique et RFID
+  chapo: >
+    Sécurisez vos locaux avec une solution fictive de contrôle d'accès
+    centralisée, présentée ici uniquement comme un leurre du scénario.
+  auteur: ""
+  date: ""
+  temps_lecture: ""
+
+  corps:
+    - type: intertitre
+      texte: Notre protocole d'installation
+
+    - type: paragraphe
+      texte: >
+        Une installation réelle doit être étudiée et réalisée par des
+        professionnels habilités. Cette page se limite aux éléments généraux à
+        observer dans l'escape game.
+
+    - type: encadre
+      ton: info
+      icone: ""
+      titre: Page leurre du scénario
+      texte: >
+        Les composants et les caractéristiques affichés sont fictifs et ne
+        doivent pas être utilisés pour configurer un système réel.
+      avertissement: ""
+      bouton: ""
+
+    - type: intertitre
+      texte: Spécifications techniques des relais
+
+    - type: paragraphe
+      texte: >
+        Le scénario invite à identifier le lecteur, le voyant et l'alimentation
+        sur une illustration. Aucune adresse réseau ni procédure de raccordement
+        n'est fournie.
+
+    - type: liste
+      elements:
+        - label: "Observation :"
+          texte: repérer les composants indiqués dans le scénario.
+        - label: "Recoupement :"
+          texte: comparer le voyant avec le tableau de mission.
+        - label: "Simulation :"
+          texte: poursuivre uniquement dans l'interface du jeu.
+
+  colonne: []
+
+  tags: []

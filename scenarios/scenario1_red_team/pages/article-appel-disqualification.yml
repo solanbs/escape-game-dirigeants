@@ -1,0 +1,51 @@
+# Article leurre sur un procès de Carbona : appel contre une disqualification.
+# Étape 1 (OSINT) : résultat plausible, ne mentionne pas David.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Fond plat non conforme : l'appel de Carbona rejeté
+#   extrait : La cour d'appel du championnat confirme la disqualification de la n°8 aux 4 Heures de Barcelone.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: endurance-mag.fr/eeps/carbona-appel-rejete-barcelone-2025
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🏎️"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#111827"
+
+  site:
+    nom: Endurance Mag
+    slogan: "Toute l'endurance, tour après tour"
+    logo: ""
+    recherche: false
+    rubriques: [EEPS, Technique, Interviews]
+
+  fil_ariane: []
+  rubrique: Réglementation
+  titre: "Fond plat non conforme : l'appel de Carbona rejeté"
+  chapo: >
+    La cour d'appel du championnat confirme la disqualification de la n°8
+    aux 4 Heures de Barcelone.
+  auteur: Paul Enta
+  date: "22/05/2025"
+  temps_lecture: ""
+
+  corps:
+    - type: paragraphe
+      texte: >
+        En cause : une usure excessive du patin de fond plat, relevée lors des
+        vérifications techniques d'après-course. Carbona Racing Team plaidait
+        une erreur de mesure, mais les commissaires n'ont pas été convaincus.
+
+    - type: paragraphe
+      texte: >
+        La n°8 perd sa quatrième place et les points qui allaient avec. Une
+        sanction qui coûte quelques points à l'écurie bordelaise en ce début
+        de saison.
+
+  colonne: []
+
+  tags: []

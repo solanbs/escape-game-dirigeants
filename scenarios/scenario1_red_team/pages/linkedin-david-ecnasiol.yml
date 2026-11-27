@@ -1,0 +1,65 @@
+# Profil LinkedIn de David Ecnasiol.
+# Étape 1 (OSINT) : recoupe le lien David ↔ Carbona ↔ Aérofourneau.
+# Parties jouées mi-janvier 2027 : les dates des posts sont relatives à cette date.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : David Ecnasiol – Fondateur – Aérofourneau Consulting | LinkedIn
+#   extrait : Bordeaux · Fondateur @ Aérofourneau Consulting | Ingénieur aérodynamicien · Expérience : Carbona Racing Team
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: linkedin.com/in/david-ecnasiol
+template: LinkedInProfile
+visibleTo: [master, ops]
+onglet:
+  icone: "💼"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#0a66c2"
+
+  profil:
+    nom: David Ecnasiol
+    titre: Fondateur @ Aérofourneau Consulting | Ingénieur aérodynamicien
+    photo: ""
+    banniere: ""
+    localisation: Bordeaux
+    relations: ""
+    entreprise_actuelle: Aérofourneau Consulting
+
+  a_propos: ""
+
+  experiences:             # de la plus récente à la plus ancienne
+    - poste: Fondateur
+      entreprise: Aérofourneau Consulting
+      debut: sept. 2025
+      fin: ""
+      lieu: Bordeaux
+      description: ""
+    - poste: Ingénieur aérodynamicien
+      entreprise: Carbona Racing Team
+      debut: "2018"
+      fin: oct. 2026
+      lieu: Bordeaux
+      description: ""
+
+  formations:
+    - ecole: École d'ingénieurs
+      diplome: Mécanique des fluides
+      debut: ""
+      fin: ""
+
+  competences: [CFD, Aérodynamique, Essais en soufflerie]
+
+  activite:                # publications récentes
+    - id: traces-ecrites
+      date: 2 sem.
+      texte: >
+        Un conseil à tous les salariés : gardez des traces écrites de tout.
+        Un accord oral, ça ne vaut pas grand-chose le jour où les choses
+        tournent mal. 📝
+    - id: lancement-aerofourneau
+      date: 1 an
+      texte: >
+        Nouvelle aventure ! Je lance Aérofourneau Consulting, un cabinet de
+        conseil en aérodynamique pour l'industrie et la mobilité. Hâte de
+        mettre mon expérience au service de nouveaux projets. 💨

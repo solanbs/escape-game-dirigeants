@@ -1,0 +1,45 @@
+# Forum de bricolage : code usine SuperSecure V2 perdu.
+# Étape 4 : indice partiel, oriente vers « V2_Master_Manual » dans les archives de notices.
+# Contenu repris de FakeAlarmeForum.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Code usine SuperSecure V2 perdu !
+#   extrait : Discussion entre utilisateurs cherchant à réinitialiser le mot de passe d'une ancienne centrale.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: brico-forum.fr/alarmes/code-usine-supersecure-v2-perdu
+template: ForumThread
+visibleTo: [master, ops]
+onglet:
+  icone: "💬"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#f38020"
+
+  site:
+    nom: Brico-Forum
+    logo: "🛠️"
+
+  fil_ariane: [Portail, Électricité, Alarmes & Domotique]
+  titre: Code usine SuperSecure V2 perdu !
+  resolu: true
+
+  messages:
+    - auteur: DedeBricol
+      avatar: D
+      statut: ""
+      date: 14/05/2026 à 09:12
+      texte: >
+        Bonjour à tous, j'ai racheté une centrale SuperSecure modèle V2
+        d'occasion. Je veux la réinitialiser mais je suis bloqué au code usine.
+        J'ai essayé 0000, 1234, 1111... rien ne passe ! Quelqu'un a l'astuce ?
+
+    - auteur: SecuPro
+      avatar: S
+      statut: Installateur Pro
+      date: 14/05/2026 à 10:45
+      texte: |
+        Salut Dede. Laisse tomber les codes génériques, la V2 a été conçue pour éviter ça. Le code de déverrouillage est spécifique à cette série.
+
+        Le seul moyen c'est de retrouver le mémo d'installation de 2019. Cherche **"V2_Master_Manual"** dans les bases de données de notices en ligne ou d'archives PDF. Le code est dedans.

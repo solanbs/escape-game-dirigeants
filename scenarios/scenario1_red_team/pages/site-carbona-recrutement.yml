@@ -1,0 +1,51 @@
+# Page leurre « Offres d'emploi » du site de Carbona Racing Team.
+# L'offre d'ingénieur aérodynamicien « suite à un départ » est un clin d'œil à David.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Recrutement – Carbona Racing Team
+#   extrait : Découvrez nos offres d'emploi.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: carbona-racing.fr/recrutement
+template: CompanySite
+visibleTo: [master, ops]
+onglet:
+  icone: "🏁"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#c8102e"
+
+  entete:
+    nom: Carbona Racing Team
+    slogan: L'air est notre piste.
+    logo: "🏁"
+    telephone: ""
+    menu: [Accueil, L'écurie, Palmarès, Actualités, Contact]
+    bouton: ""
+
+  bandeau:
+    surtitre: ""
+    titre: Offres d'emploi
+    texte: ""
+    bouton: ""
+    image: ""
+
+  corps:
+    - type: cartes
+      elements:
+        - icone: ""
+          titre: Ingénieur aérodynamicien (H/F) – CDI
+          texte: Poste à pourvoir suite à un départ. Basé à Bordeaux.
+        - icone: ""
+          titre: Mécanicien piste (H/F) – CDD saison 2027
+          texte: Basé à Bordeaux.
+
+    - type: contact
+      titre: ""
+      texte: ""
+      adresse: 18 rue des Stands, 33300 Bordeaux
+      telephone: ""
+      email: contact@carbona-racing.fr
+
+  pied_de_page: © 2027 Carbona Racing Team SAS – Tous droits réservés

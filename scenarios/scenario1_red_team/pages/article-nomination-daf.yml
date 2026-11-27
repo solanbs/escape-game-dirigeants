@@ -1,0 +1,42 @@
+# Actualité : arrivée du directeur financier. Rôle : leurre.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Carbona Racing Team recrute un directeur financier
+#   extrait : Tom Hatte rejoint l'écurie bordelaise pour accompagner sa croissance.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: bordeaux-eco.fr/entreprises/carbona-racing-team-daf
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "📰"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#0f766e"
+
+  site:
+    nom: Bordeaux Éco
+    slogan: "L'économie girondine au quotidien"
+    logo: ""
+    recherche: false
+    rubriques: [Entreprises, Industrie, Nominations]
+
+  fil_ariane: []
+  rubrique: ""
+  titre: Carbona Racing Team recrute un directeur financier
+  chapo: Tom Hatte rejoint l'écurie bordelaise pour accompagner sa croissance.
+  auteur: Sam Oussa
+  date: "15/03/2021"
+  temps_lecture: ""
+
+  corps:
+    - type: paragraphe
+      texte: >
+        Passé par plusieurs PME industrielles de la région, Tom Hatte aura pour
+        mission de structurer les fonctions financières d'une écurie qui a
+        doublé ses effectifs en cinq ans.
+
+  colonne: []
+
+  tags: []

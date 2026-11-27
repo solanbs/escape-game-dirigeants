@@ -1,0 +1,51 @@
+# Profil Facebook leurre : un homonyme de David Ecnasiol, retraité à Lyon.
+# Étape 1 (OSINT) : visiblement pas la bonne personne, force à recouper.
+#
+# Résultat Google validé, à reporter dans search.yaml (même forme que le vrai profil) :
+#   titre   : David Ecnasiol | Facebook
+#   extrait : David Ecnasiol est sur Facebook. Rejoignez Facebook pour communiquer avec David Ecnasiol.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: facebook.com/david.ecnasiol.69
+template: Facebook
+visibleTo: [master, ops]
+onglet:
+  icone: "👤"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#1877f2"
+
+  profil:
+    nom: David Ecnasiol
+    photo: ""
+    couverture: ""
+    bio: Retraité, Lyon 🎣
+    amis: ""
+
+  intro:
+    - Retraité
+    - Habite à Lyon
+
+  publications:            # de la plus récente à la plus ancienne
+    - date: "02/01/2027"
+      texte: Premier week-end de l'année avec les petits-enfants. La maison est bien calme depuis qu'ils sont repartis 😄
+      image: ""            # photo à produire : deux enfants devant un sapin
+      reactions: 23
+      commentaires: []
+
+    - date: "20/09/2026"
+      texte: >
+        Belle prise ce matin au bord de la Saône ! Un brochet de 4 kg, il
+        m'a fallu vingt minutes pour le sortir 🎣
+      image: ""            # photo à produire : un brochet tenu à bout de bras
+      reactions: 31
+      commentaires:
+        - auteur: Gérard M.
+          texte: Bravo David, tu nous gardes une place la prochaine fois ?
+
+    - date: "14/06/2026"
+      texte: Les tomates commencent enfin à rougir au potager 🍅
+      image: ""            # photo à produire : un potager avec des plants de tomates
+      reactions: 18
+      commentaires: []

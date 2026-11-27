@@ -1,0 +1,44 @@
+# Actualité du site Carbona : le titre 2026. Rôle : contexte.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Champions pour la troisième fois consécutive !
+#   extrait : La victoire de la n°8 à Portimão offre à Carbona Racing Team un troisième titre EEPS d'affilée.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: carbona-racing.fr/actualites/titre-2026
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🏁"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#c8102e"
+
+  site:
+    nom: Carbona Racing Team – Actualités
+    slogan: "L'air est notre piste."
+    logo: ""
+    recherche: false
+    rubriques: [Accueil, L'écurie, Actualités, Contact]
+
+  fil_ariane: []
+  rubrique: ""
+  titre: Champions pour la troisième fois consécutive !
+  chapo: >
+    La victoire de la n°8 à Portimão offre à Carbona Racing Team un troisième
+    titre EEPS d'affilée.
+  auteur: Service communication
+  date: "19/10/2026"
+  temps_lecture: ""
+
+  corps:
+    - type: paragraphe
+      texte: >
+        Quatre victoires sur cinq courses : la CR-26 aura dominé la saison 2026
+        de bout en bout. Une performance que Sébastien Friand dédie « à tout le
+        bureau d'études aéro, sans qui rien de tout ça ne serait possible ».
+
+  colonne: []
+
+  tags: []

@@ -1,0 +1,66 @@
+# Blog leurre : les codes d'alarme les plus courants.
+# Étape 4 : résultats plausibles mais non concluants (aucun ne marche sur la V2).
+# Contenu repris de FakeAlarmeLeurre.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Les 10 codes d'alarme les plus courants à éviter
+#   extrait : Article de prévention listant les mots de passe par défaut les plus utilisés par les fabricants et les utilisateurs.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: astuces-secu-maison.com/codes-alarme-les-plus-courants
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🔐"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#d32f2f"
+
+  site:
+    nom: Astuces Sécurité Maison
+    slogan: ""
+    logo: ""
+    recherche: false
+    rubriques: []
+
+  fil_ariane: []
+  rubrique: ""
+  titre: Les 10 codes d'alarme les plus courants (à changer d'urgence !)
+  chapo: >
+    Vous venez d'emménager ou d'acheter une alarme d'occasion ? Les
+    installateurs laissent très souvent le code maître par défaut. Voici les
+    combinaisons qui ouvriront votre porte aux cambrioleurs si vous ne les
+    modifiez pas :
+  auteur: ""
+  date: ""
+  temps_lecture: ""
+
+  corps:
+    - type: liste
+      elements:
+        - label: "1234"
+          texte: "Le grand classique. Utilisé sur 60% des alarmes bon marché."
+        - label: "0000"
+          texte: "L'ancien standard. (Souvent utilisé sur les toutes premières générations de SuperSecure, mais abandonné depuis)."
+        - label: "2580"
+          texte: "La ligne droite du milieu sur un clavier numérique."
+        - label: "1111 et 9999"
+          texte: "Les extrêmes de facilité."
+        - label: "L'année de naissance"
+          texte: "La pire idée pour votre sécurité."
+
+    - type: encadre
+      ton: alerte
+      icone: ""
+      titre: "Notre conseil :"
+      texte: >
+        Si votre clavier affiche "Erreur" avec ces codes, c'est que votre
+        système utilise un code sécurisé unique fourni sur la notice
+        constructeur.
+      avertissement: ""
+      bouton: ""
+
+  colonne: []
+
+  tags: []

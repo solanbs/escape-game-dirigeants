@@ -1,0 +1,72 @@
+# Article sur le procès de David Ecnasiol.
+# Étape 1 (OSINT) : le seul article de procès qui nomme David.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Licenciement abusif : un ancien ingénieur de Carbona Racing Team attaque l'écurie aux prud'hommes
+#   extrait : Licencié pour faute grave, David Ecnasiol conteste les accusations de concurrence déloyale portées par son ancien employeur. L'audience est prévue en septembre.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: actu-justice-eco.fr/prudhommes/carbona-racing-team-licenciement-abusif
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "⚖️"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#7f1d1d"
+
+  site:
+    nom: Actu Justice Éco
+    slogan: "L'actualité juridique des entreprises"
+    logo: ""
+    recherche: false
+    rubriques: [Prud'hommes, Commerce, Social, Pénal]
+
+  fil_ariane: []
+  rubrique: Prud'hommes
+  titre: "Licenciement abusif : un ancien ingénieur de Carbona Racing Team attaque l'écurie aux prud'hommes"
+  chapo: >
+    Licencié pour faute grave, David Ecnasiol conteste les accusations de
+    concurrence déloyale portées par son ancien employeur. L'audience est
+    prévue en septembre.
+  auteur: Sarah Clette
+  date: "08/01/2027"
+  temps_lecture: ""
+
+  corps:
+    - type: paragraphe
+      texte: >
+        David Ecnasiol, ancien ingénieur aérodynamicien de Carbona Racing Team,
+        a saisi le conseil de prud'hommes de Bordeaux. Licencié pour faute grave
+        en octobre 2026, il estime avoir été écarté sans motif réel et sérieux.
+
+    - type: paragraphe
+      texte: >
+        L'écurie reproche à son ancien salarié d'avoir fondé, alors qu'il était
+        encore en poste, Aérofourneau, une société de conseil en aérodynamique.
+        Selon la direction, cette activité ferait directement concurrence à son
+        bureau d'études et constituerait un manquement à l'obligation de loyauté.
+
+    - type: paragraphe
+      texte: >
+        « Aérofourneau ne travaille pour aucune écurie. Mes clients n'ont rien à
+        voir avec la course automobile », affirme l'ingénieur. Son avocat
+        dénonce un « prétexte » pour se séparer d'un salarié sans lui verser
+        d'indemnités.
+
+    - type: paragraphe
+      texte: >
+        David Ecnasiol réclame la requalification de son licenciement et des
+        dommages et intérêts. Il reconnaît toutefois que son dossier repose en
+        grande partie sur sa parole : « Il me manque des preuves écrites. »
+
+    - type: paragraphe
+      texte: >
+        Contactée, la direction de Carbona Racing Team n'a pas souhaité
+        commenter une procédure en cours. L'audience est fixée au
+        14 septembre 2027.
+
+  colonne: []
+
+  tags: []

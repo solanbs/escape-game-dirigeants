@@ -1,0 +1,64 @@
+# Profil LinkedIn de Sébastien Friand, PDG de Carbona Racing Team.
+# Simple vitrine : confirme son rôle de dirigeant, aucun indice.
+# Parties jouées mi-janvier 2027 : les dates des posts sont relatives à cette date.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Sébastien Friand – PDG – Carbona Racing Team | LinkedIn
+#   extrait : Bordeaux · PDG & fondateur @ Carbona Racing Team | Endurance · 500+ relations
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: linkedin.com/in/sebastien-friand
+template: LinkedInProfile
+visibleTo: [master, ops]
+onglet:
+  icone: "💼"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#0a66c2"
+
+  profil:
+    nom: Sébastien Friand
+    titre: PDG & fondateur @ Carbona Racing Team | Endurance
+    photo: ""
+    banniere: ""
+    localisation: Bordeaux
+    relations: 500+ relations
+    entreprise_actuelle: Carbona Racing Team
+
+  a_propos: ""
+
+  experiences:             # de la plus récente à la plus ancienne
+    - poste: PDG et fondateur
+      entreprise: Carbona Racing Team
+      debut: "2009"
+      fin: ""
+      lieu: Bordeaux
+      description: ""
+    - poste: Ingénieur moteur
+      entreprise: Écurie de course
+      debut: "2003"
+      fin: "2008"
+      lieu: ""
+      description: ""
+
+  formations:
+    - ecole: École d'ingénieurs
+      diplome: Motorisation
+      debut: ""
+      fin: ""
+
+  competences: [Management, Sport automobile, Stratégie]
+
+  activite:                # publications récentes
+    - id: titre-2026
+      date: 3 mois
+      texte: >
+        Troisième titre consécutif en European Endurance Prototype Series ! 🏆
+        Merci à toutes les équipes de Carbona Racing Team pour cette saison
+        exceptionnelle. Rendez-vous en 2027 avec la CR-27.
+    - id: bienvenue-tom-hatte
+      date: 5 ans
+      texte: >
+        Bienvenue à Tom Hatte, qui rejoint Carbona Racing Team en tant que
+        directeur administratif et financier. Ravi de t'avoir à bord, Tom !

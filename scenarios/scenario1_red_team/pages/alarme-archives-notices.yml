@@ -1,0 +1,61 @@
+# Archive de notices en ligne (« Index of ») : contient le code d'usine de la V2.
+# Étape 4 : le code 4729 est écrit en clair dans V2_Master_Manual.txt (choix du 27/11/2026).
+# Contenu repris de FakeAlarmeArchive.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Archive technique : SuperSecure Gamme 2019
+#   extrait : Répertoire web en accès libre archivant d'anciennes documentations et manuels numérisés.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: notices-pdf-archives.com/manuals/supersecure/2019
+template: FileIndex
+visibleTo: [master, ops]
+onglet:
+  icone: "📁"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""
+
+  chemin: /manuals/supersecure/2019/
+
+  fichiers:
+    - nom: ../
+      date: "-"
+      taille: "-"
+      mis_en_avant: false
+      contenu: ""
+
+    - nom: V1_Setup_Guide.pdf
+      date: 12-May-2018 14:22
+      taille: 1.2M
+      mis_en_avant: false
+      contenu: ""
+
+    - nom: V2_Master_Manual.txt
+      date: 04-Sep-2019 09:11
+      taille: 45K
+      mis_en_avant: true
+      contenu: |
+        ==================================================
+        SUPERSECURE - CENTRALE D'ALARME MODÈLE V2
+        MÉMO D'INSTALLATION RAPIDE POUR TECHNICIENS
+        ==================================================
+
+        1. Câblage des capteurs filaires (Bornier A à D)
+        2. Mise sous tension secteur (220V)
+        3. Armement de la batterie de secours.
+
+        ATTENTION - SÉCURITÉ INITIALE :
+        Toutes les centrales V2 quittent l'usine avec un verrouillage actif pour éviter la reconfiguration par des tiers lors du transport.
+        Pour accéder au panneau de contrôle lors de la première installation, vous devez saisir le code d'usine par défaut.
+
+        --> CODE USINE SÉRIE V2 : 4729
+
+        Note : Ce code doit impérativement être écrasé lors du premier paramétrage réseau.
+
+    - nom: V3_Network_Config.pdf
+      date: 21-Nov-2021 16:45
+      taille: 3.4M
+      mis_en_avant: false
+      contenu: ""

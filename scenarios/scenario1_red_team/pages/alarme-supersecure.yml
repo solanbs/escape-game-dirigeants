@@ -1,0 +1,63 @@
+# Site officiel du fabricant de l'alarme SuperSecure.
+# Étape 4 : avertit qu'il faut changer le code d'usine, et qu'un agent intervient en 15 minutes.
+# Contenu repris de FakeAlarmeSuperSecure.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : SuperSecure : La référence de l'alarme professionnelle
+#   extrait : Systèmes de sécurité haute performance avec intervention sur site.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: supersecure.fr
+template: CompanySite
+visibleTo: [master, ops]
+onglet:
+  icone: "🛡️"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#0f2c59"
+
+  entete:
+    nom: SUPERSECURE
+    slogan: ""
+    logo: "🛡️"
+    telephone: 0800 112 112
+    menu: [Accueil, Équipements, Télésurveillance, Support Technique]
+    bouton: Espace Client
+
+  bandeau:
+    surtitre: ""
+    titre: La dissuasion absolue.
+    texte: >
+      La référence en protection professionnelle. Une détection infaillible
+      reliée à notre centre de commandement.
+    bouton: ""
+    image: ""
+
+  corps:
+    - type: encadre
+      ton: alerte
+      icone: "⚠️"
+      titre: "Rappel de sécurité majeur :"
+      texte: >
+        Afin de garantir l'intégrité de vos locaux, il est impératif de modifier
+        le code d'usine figurant sur la notice lors de la première mise sous
+        tension de votre centrale V2.
+
+    - type: chiffres
+      elements:
+        - valeur: 24/7
+          label: Télésurveillance active
+        - valeur: 15 min
+          label: Délai d'intervention garanti
+
+    - type: cartes
+      elements:
+        - icone: "🚨"
+          titre: Levée de doute immédiate
+          texte: Nos opérateurs analysent les flux vidéo dès le déclenchement des sirènes.
+        - icone: "🚔"
+          titre: Intervention Physique
+          texte: En cas d'intrusion confirmée, un agent motorisé sécurise le site en moins de 15 minutes.
+
+  pied_de_page: ""

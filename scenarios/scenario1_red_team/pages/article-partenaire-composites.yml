@@ -1,0 +1,43 @@
+# Actualité du site Carbona : partenariat composites. Rôle : leurre.
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Carbona prolonge son partenariat composites jusqu'en 2028
+#   extrait : L'écurie renouvelle son accord avec son fournisseur historique de pièces en fibre de carbone.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: carbona-racing.fr/actualites/partenaire-composites
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🏁"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#c8102e"
+
+  site:
+    nom: Carbona Racing Team – Actualités
+    slogan: "L'air est notre piste."
+    logo: ""
+    recherche: false
+    rubriques: [Accueil, L'écurie, Actualités, Contact]
+
+  fil_ariane: []
+  rubrique: ""
+  titre: Carbona prolonge son partenariat composites jusqu'en 2028
+  chapo: >
+    L'écurie renouvelle son accord avec son fournisseur historique de pièces en
+    fibre de carbone.
+  auteur: Service communication
+  date: "12/01/2026"
+  temps_lecture: ""
+
+  corps:
+    - type: paragraphe
+      texte: >
+        L'accord couvre la fourniture des pièces composites de la CR-26 et de la
+        future CR-27.
+
+  colonne: []
+
+  tags: []

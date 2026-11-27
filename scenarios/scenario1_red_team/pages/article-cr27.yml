@@ -1,0 +1,58 @@
+# Actualité : la CR-27. Rôle : contexte (pourquoi voler les plans aéro).
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : CR-27 : Carbona veut creuser encore l'écart
+#   extrait : Double championne en titre, l'écurie bordelaise prépare déjà une CR-27 au concept aérodynamique inédit pour 2027.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: endurance-mag.fr/eeps/carbona-cr27
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🏎️"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#111827"
+
+  site:
+    nom: Endurance Mag
+    slogan: "Toute l'endurance, tour après tour"
+    logo: ""
+    recherche: false
+    rubriques: [EEPS, Technique, Interviews]
+
+  fil_ariane: []
+  rubrique: ""
+  titre: "CR-27 : Carbona veut creuser encore l'écart"
+  chapo: >
+    Double championne en titre, l'écurie bordelaise prépare déjà une CR-27 au
+    concept aérodynamique inédit pour 2027.
+  auteur: Paul Enta
+  date: "02/06/2026"
+  temps_lecture: ""
+
+  corps:
+    - type: paragraphe
+      texte: >
+        Depuis 2024, aucune écurie n'arrive à suivre Carbona Racing Team dans les
+        courbes rapides. Le secret, selon les observateurs du paddock : une
+        aérodynamique que ses concurrents peinent à comprendre, et encore plus à
+        copier.
+
+    - type: paragraphe
+      texte: >
+        Avec la CR-27, le bureau d'études promet un fond plat entièrement
+        repensé. « Ces plans représentent des années de travail. Ils sont notre
+        bien le plus précieux », confie Sébastien Friand, PDG et fondateur de
+        l'écurie.
+
+    - type: paragraphe
+      texte: >
+        Chez Vortex Motorsport, éternel deuxième, on ne cache pas son
+        agacement : « Ils ont une longueur d'avance sur l'aéro. Il faudra bien
+        qu'on la comble d'une manière ou d'une autre. »
+
+  colonne: []
+
+  tags: []

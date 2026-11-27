@@ -1,0 +1,59 @@
+# Centre d'aide SuperSecure : première mise en service de la centrale V2.
+# Étape 4 : indique que le code d'usine est dans le fichier V2_Master_Manual.txt
+# des archives de 2019, sans donner le code.
+# Contenu repris de FakeAlarmeGuide.vue.
+#
+# Résultat Google (repris de fakeSite.ts), à reporter dans search.yaml :
+#   titre   : Première mise en service de votre alarme
+#   extrait : Guide pour faire l'installation de votre nouvelle alarme.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: support.supersecure.fr/mise-en-service
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "📖"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#3b82f6"
+
+  site:
+    nom: Centre d'aide SuperSecure
+    slogan: Base de connaissances et manuels d'installation
+    logo: ""
+    recherche: false
+    rubriques: []
+
+  fil_ariane: [Accueil, Matériel, Série V2, Mise en service]
+  rubrique: ""
+  titre: "Première mise en service : Initialisation du système V2"
+  chapo: >
+    Pour des raisons de sécurité évidentes, la centrale SuperSecure V2 vous est
+    livrée verrouillée. Une initialisation matérielle est requise lors du
+    premier branchement.
+  auteur: ""
+  date: ""
+  temps_lecture: ""
+
+  corps:
+    - type: etapes
+      elements:
+        - titre: Alimentation
+          texte: >
+            Raccordez la centrale au secteur 220V et enclenchez la batterie de
+            secours. Le clavier s'allume.
+        - titre: Code d'usine (Master Code)
+          texte: >
+            **Où trouver le code d'usine ?** Il n'est pas imprimé sur la boîte ni
+            sur l'appareil. Vous devez consulter le document texte nommé
+            **V2_Master_Manual.txt** fourni sur le support numérique d'origine, ou
+            disponible dans les archives de documentations techniques de 2019.
+        - titre: Modification
+          texte: >
+            Saisissez le code d'usine. Le voyant passe au vert. Vous devez
+            immédiatement définir votre propre code à 4 chiffres.
+
+  colonne: []
+
+  tags: []

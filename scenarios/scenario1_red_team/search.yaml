@@ -1,0 +1,151 @@
+# Recherches du faux Google (format : docs/format_pages.md).
+#
+# Mots-clés en minuscules et sans accents. Les recherches les plus précises sont
+# placées AVANT les plus générales (« carbona proces » avant « carbona ») :
+# à confirmer avec le moteur (première recherche qui correspond ? ou la plus précise ?).
+# Les titres et extraits sont ceux validés en commentaire de chaque page.
+# La page d'archive (code 4729) ne sort que sur le nom du fichier : à revoir plus tard.
+
+
+# --- Étape 1 — OSINT sur l'entreprise et David Ecnasiol ---------------------
+
+- query: ["carbona proces", "carbona tribunal", "carbona prud'hommes", "carbona prudhommes"]
+  results:
+    - url: endurance-mag.fr/eeps/carbona-appel-rejete-barcelone-2025
+      title: "Fond plat non conforme : l'appel de Carbona rejeté"
+      snippet: "La cour d'appel du championnat confirme la disqualification de la n°8 aux 4 Heures de Barcelone."
+    - url: actu-justice-eco.fr/prudhommes/carbona-racing-team-licenciement-abusif
+      title: "Licenciement abusif : un ancien ingénieur de Carbona Racing Team attaque l'écurie aux prud'hommes"
+      snippet: "Licencié pour faute grave, David Ecnasiol conteste les accusations de concurrence déloyale portées par son ancien employeur. L'audience est prévue en septembre."
+
+- query: ["carbona recrutement", "carbona emploi", "carbona offre"]
+  results:
+    - url: carbona-racing.fr/recrutement
+      title: "Recrutement – Carbona Racing Team"
+      snippet: "Découvrez nos offres d'emploi."
+
+- query: ["david ecnasiol linkedin", "ecnasiol linkedin"]
+  results:
+    - url: linkedin.com/in/david-ecnasiol
+      title: "David Ecnasiol – Fondateur – Aérofourneau Consulting | LinkedIn"
+      snippet: "Bordeaux · Fondateur @ Aérofourneau Consulting | Ingénieur aérodynamicien · Expérience : Carbona Racing Team"
+    - url: carbona-racing.fr/recrutement
+      title: "Recrutement – Carbona Racing Team"
+      snippet: "Découvrez nos offres d'emploi."
+
+- query: ["david ecnasiol", "ecnasiol"]
+  results:
+    - url: aerofourneau-consulting.fr
+      title: "Aérofourneau Consulting – Conseil en aérodynamique"
+      snippet: "Conseil en aérodynamique pour l'industrie : traînée, refroidissement, simulation CFD. Basé à Bordeaux."
+    - url: linkedin.com/in/david-ecnasiol
+      title: "David Ecnasiol – Fondateur – Aérofourneau Consulting | LinkedIn"
+      snippet: "Bordeaux · Fondateur @ Aérofourneau Consulting | Ingénieur aérodynamicien · Expérience : Carbona Racing Team"
+    - url: facebook.com/david.ecnasiol.69
+      title: "David Ecnasiol | Facebook"
+      snippet: "David Ecnasiol est sur Facebook. Rejoignez Facebook pour communiquer avec David Ecnasiol."
+    - url: facebook.com/david.ecnasiol
+      title: "David Ecnasiol | Facebook"
+      snippet: "David Ecnasiol est sur Facebook. Rejoignez Facebook pour communiquer avec David Ecnasiol."
+
+- query: ["aerofourneau"]
+  results:
+    - url: aerofourneau-consulting.fr
+      title: "Aérofourneau Consulting – Conseil en aérodynamique"
+      snippet: "Conseil en aérodynamique pour l'industrie : traînée, refroidissement, simulation CFD. Basé à Bordeaux."
+    - url: linkedin.com/in/david-ecnasiol
+      title: "David Ecnasiol – Fondateur – Aérofourneau Consulting | LinkedIn"
+      snippet: "Bordeaux · Fondateur @ Aérofourneau Consulting | Ingénieur aérodynamicien · Expérience : Carbona Racing Team"
+
+- query: ["sebastien friand", "friand"]
+  results:
+    - url: linkedin.com/in/sebastien-friand
+      title: "Sébastien Friand – PDG – Carbona Racing Team | LinkedIn"
+      snippet: "Bordeaux · PDG & fondateur @ Carbona Racing Team | Endurance · 500+ relations"
+    - url: endurance-mag.fr/eeps/carbona-cr27
+      title: "CR-27 : Carbona veut creuser encore l'écart"
+      snippet: "Double championne en titre, l'écurie bordelaise prépare déjà une CR-27 au concept aérodynamique inédit pour 2027."
+
+- query: ["tom hatte"]
+  results:
+    - url: bordeaux-eco.fr/entreprises/carbona-racing-team-daf
+      title: "Carbona Racing Team recrute un directeur financier"
+      snippet: "Tom Hatte rejoint l'écurie bordelaise pour accompagner sa croissance."
+
+- query: ["carbona racing team", "carbona racing", "carbona"]
+  results:
+    - url: carbona-racing.fr
+      title: "Carbona Racing Team – Écurie d'endurance"
+      snippet: "Écurie d'endurance bordelaise, triple championne EEPS. Bureau d'études aéro, soufflerie, prototypes CR-26 et CR-27."
+    - url: carbona-racing.fr/actualites/titre-2026
+      title: "Champions pour la troisième fois consécutive !"
+      snippet: "La victoire de la n°8 à Portimão offre à Carbona Racing Team un troisième titre EEPS d'affilée."
+    - url: endurance-mag.fr/eeps/carbona-cr27
+      title: "CR-27 : Carbona veut creuser encore l'écart"
+      snippet: "Double championne en titre, l'écurie bordelaise prépare déjà une CR-27 au concept aérodynamique inédit pour 2027."
+    - url: eeps-racing.com/equipes/carbona-racing-team
+      title: "Carbona Racing Team – Fiche équipe | EEPS"
+      snippet: "Classement, résultats et palmarès de Carbona Racing Team en European Endurance Prototype Series."
+    - url: actu-justice-eco.fr/prudhommes/carbona-racing-team-licenciement-abusif
+      title: "Licenciement abusif : un ancien ingénieur de Carbona Racing Team attaque l'écurie aux prud'hommes"
+      snippet: "Licencié pour faute grave, David Ecnasiol conteste les accusations de concurrence déloyale portées par son ancien employeur. L'audience est prévue en septembre."
+    - url: carbona-racing.fr/actualites/partenaire-composites
+      title: "Carbona prolonge son partenariat composites jusqu'en 2028"
+      snippet: "L'écurie renouvelle son accord avec son fournisseur historique de pièces en fibre de carbone."
+
+
+# --- Étape 3 — La boîte de dépôt (porte magnétique) -------------------------
+
+- query: ["boite de depot", "securebox", "mag-200", "mag 200"]
+  results:
+    - url: carnet-maintenance.fr/securebox-mag-200
+      title: "Notice de la boîte de dépôt"
+      snippet: "Une notice fictive mentionne une alimentation et un voyant à recouper."
+    - url: science-mag.fr/technologie/portes-magnetiques
+      title: "Comment ça marche ? Les portes magnétiques"
+      snippet: "Un article de vulgarisation expliquant le principe d'un électro-aimant."
+
+- query: ["porte magnetique", "ventouse", "verrou electromagnetique"]
+  results:
+    - url: science-mag.fr/technologie/portes-magnetiques
+      title: "Comment ça marche ? Les portes magnétiques"
+      snippet: "Un article de vulgarisation expliquant le principe d'un électro-aimant."
+    - url: blog-technique.fr/pannes-controle-acces
+      title: "Pannes de contrôle d'accès"
+      snippet: "Un guide fictif pour observer les indices d'une panne dans le scénario."
+    - url: guide-installation.fr/controle-acces-biometrique-rfid
+      title: "Installer un contrôle d'accès"
+      snippet: "Une page leurre fictive présentant une installation sans détail exploitable."
+
+
+# --- Étape 4 — L'alarme SuperSecure -----------------------------------------
+
+- query: ["v2_master_manual", "master manual", "archive notice supersecure"]
+  results:
+    - url: notices-pdf-archives.com/manuals/supersecure/2019
+      title: "Archive technique : SuperSecure Gamme 2019"
+      snippet: "Répertoire web en accès libre archivant d'anciennes documentations et manuels numérisés."
+
+- query: ["supersecure code", "code alarme", "code usine"]
+  results:
+    - url: support.supersecure.fr/mise-en-service
+      title: "Première mise en service de votre alarme"
+      snippet: "Guide pour faire l'installation de votre nouvelle alarme."
+    - url: brico-forum.fr/alarmes/code-usine-supersecure-v2-perdu
+      title: "Code usine SuperSecure V2 perdu !"
+      snippet: "Discussion entre utilisateurs cherchant à réinitialiser le mot de passe d'une ancienne centrale."
+    - url: astuces-secu-maison.com/codes-alarme-les-plus-courants
+      title: "Les 10 codes d'alarme les plus courants à éviter"
+      snippet: "Article de prévention listant les mots de passe par défaut les plus utilisés par les fabricants et les utilisateurs."
+
+- query: ["alarme supersecure", "supersecure"]
+  results:
+    - url: supersecure.fr
+      title: "SuperSecure : La référence de l'alarme professionnelle"
+      snippet: "Systèmes de sécurité haute performance avec intervention sur site."
+    - url: leboncoin.fr/annonce/centrale-supersecure-v2
+      title: "Vends Centrale SuperSecure V2 - Très bon état"
+      snippet: "Annonce de vente d'un boîtier d'alarme d'occasion."
+    - url: support.supersecure.fr/mise-en-service
+      title: "Première mise en service de votre alarme"
+      snippet: "Guide pour faire l'installation de votre nouvelle alarme."

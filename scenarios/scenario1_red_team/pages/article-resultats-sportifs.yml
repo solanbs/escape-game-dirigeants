@@ -1,0 +1,88 @@
+# Résultats sportifs de Carbona Racing Team. Rôle : contexte / leurre.
+# Montre la domination de l'écurie grâce à son aéro : c'est ce qui rend
+# les plans de la CR-27 si précieux pour un concurrent (Vortex Motorsport).
+#
+# Résultat Google validé, à reporter dans search.yaml :
+#   titre   : Carbona Racing Team – Fiche équipe | EEPS
+#   extrait : Classement, résultats et palmarès de Carbona Racing Team en European Endurance Prototype Series.
+
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: eeps-racing.com/equipes/carbona-racing-team
+template: Article
+visibleTo: [master, ops]
+onglet:
+  icone: "🏆"
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: "#1d4ed8"
+
+  site:
+    nom: European Endurance Prototype Series
+    slogan: ""
+    logo: ""
+    recherche: false
+    rubriques: [Calendrier, Équipes, Classements]
+
+  fil_ariane: []
+  rubrique: ""
+  titre: European Endurance Prototype Series – Carbona Racing Team
+  chapo: Fiche officielle de l'équipe Carbona Racing Team
+  auteur: ""
+  date: Saison 2026
+  temps_lecture: ""
+
+  corps:
+    - type: liste
+      elements:
+        - label: Pays
+          texte: France
+        - label: Base
+          texte: Bordeaux
+        - label: Directeur
+          texte: Sébastien Friand
+        - label: Voitures
+          texte: n°7 – CR-26, n°8 – CR-26
+        - label: Première saison
+          texte: "2010"
+        - label: Titres
+          texte: 3 (2024, 2025, 2026)
+
+    - type: tableau
+      titre: Classement 2026
+      colonnes: [Position, Équipe, Points]
+      lignes:
+        - ["1", Carbona Racing Team, "156"]
+        - ["2", Vortex Motorsport, "121"]
+        - ["3", Albatros Endurance, "104"]
+        - ["4", Kestrel Racing, "71"]
+        - ["5", Team Lumen, "52"]
+
+    - type: tableau
+      titre: Courses 2026
+      colonnes: [Course, Date, n°7, n°8]
+      lignes:
+        - [4 Heures de Barcelone, 12/04/2026, 1re, 4e]
+        - [4 Heures du Castellet, 17/05/2026, 2e, 3e]
+        - [4 Heures d'Imola, 05/07/2026, 1re, 5e]
+        - [6 Heures de Spa, 20/09/2026, 1re, 2e]
+        - [4 Heures de Portimão, 18/10/2026, 3e, 1re]
+
+    - type: tableau
+      titre: Historique
+      colonnes: [Saison, Classement, Victoires]
+      lignes:
+        - ["2022", 4e, "0"]
+        - ["2023", 2e, "2"]
+        - ["2024", 1er, "3"]
+        - ["2025", 1er, "4"]
+        - ["2026", 1er, "4"]
+
+    - type: paragraphe
+      texte: >
+        Carbona Racing Team décroche un troisième titre consécutif. Vortex
+        Motorsport termine deuxième pour la troisième année de suite.
+
+  colonne: []
+
+  tags: []
