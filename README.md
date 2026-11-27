@@ -30,10 +30,14 @@ Les mots de passe des rôles du scénario de démonstration sont dans `scenarios
 ## Lancer avec Docker
 
 ```bash
+cp .env.example .env      # docker compose y lit IOT_GATEWAY_TOKEN, IOT_AUDIO_DRIVER…
 docker compose up --build
 ```
 
-Le serveur sert le front compilé et le WebSocket sur http://localhost:3000. `./data` est monté pour la future base SQLite.
+- `game` : le serveur sert le front compilé et le WebSocket sur http://localhost:3000, avec le scénario indiqué par `SCENARIO_DIR` (par défaut `scenarios/demo`).
+- `gateway` : le processus IoT. Sans enceinte branchée, mettre `IOT_AUDIO_DRIVER=fake` dans `.env`.
+- Les conteneurs sont à l'heure de Paris (`TZ`), pour les logs et les ids de session.
+- `./data` est monté pour la future base SQLite.
 
 ## Structure
 

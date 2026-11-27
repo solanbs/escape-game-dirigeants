@@ -21,6 +21,8 @@ COPY shared/ shared/
 COPY server/ server/
 COPY client/ client/
 COPY iot-gateway/ iot-gateway/
+# Le front lit encore les pages YAML au build (provisoire, cf. client/src/data/pages.ts).
+COPY scenarios/ scenarios/
 
 RUN npm run build && npm run build:gateway
 

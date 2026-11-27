@@ -8,6 +8,8 @@ services:
       - "3000:3000"
     environment:
       NODE_ENV: production
+      # Fuseau horaire : heure des logs, id de session, journal.
+      TZ: ${TZ:-Europe/Paris}
       PORT: 3000
       LOG_LEVEL: info
       # Retirer cette ligne (ou mettre json) pour des logs bruts.
@@ -26,6 +28,7 @@ services:
       target: gateway
     environment:
       NODE_ENV: production
+      TZ: ${TZ:-Europe/Paris}
       LOG_LEVEL: ${IOT_GATEWAY_LOG_LEVEL:-info}
       LOG_FORMAT: pretty
       IOT_GATEWAY_TOKEN: ${IOT_GATEWAY_TOKEN}
