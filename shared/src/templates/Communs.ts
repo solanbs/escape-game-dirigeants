@@ -55,6 +55,17 @@ export type Message = Conditionnel & {
   statut?: string
 }
 
+/**
+ * Ce que tous les profils de réseau social ont en commun (Facebook, LinkedIn).
+ * Chaque template l'étend avec ses propres champs, ex. :
+ *   profil: Profil & { bio?: string; amis?: string }
+ */
+export type Profil = {
+  nom: string // obligatoire : l'en-tête affiche toujours le nom
+  /** Photo de profil (chemin dans assets/) ; absent = initiale du nom dans un rond. */
+  photo?: string
+}
+
 /** Un fichier d'un listing en ligne (template IndexFile). */
 export type Fichier = Conditionnel & {
   /** Ex. "V2_Master_Manual.txt", ou "../" pour le dossier parent. */
@@ -67,4 +78,24 @@ export type Fichier = Conditionnel & {
   mis_en_avant?: boolean
   /** Texte affiché quand on clique sur le fichier ; absent = aperçu indisponible. */
   contenu?: string
+}
+
+/** Un poste dans la rubrique « Expérience ». */
+export type Experience = Conditionnel & {
+  poste: string
+  entreprise: string
+  /** Ex. "mars 2021". */
+  debut?: string
+  /** Absent = « aujourd'hui ». */
+  fin?: string
+  lieu?: string
+  description?: string
+}
+
+/** Une ligne de la rubrique « Formation ». */
+export type Formation = Conditionnel & {
+  ecole: string
+  diplome?: string
+  debut?: string
+  fin?: string
 }

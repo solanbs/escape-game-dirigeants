@@ -16,14 +16,14 @@ export type PageFichier = {
   url: string
   /** Nom du template qui affiche `data` (Annonce, Article…). */
   template: string
-  visibleTo?: string[]
-  when?: string | string[]
+  /** Qui voit la page et quand (roles, after, before) : lu par le serveur, ignoré ici. */
+  visible?: unknown
   onglet?: { icone?: string }
   /** Contenu transmis tel quel au template ; son type dépend de `template`. */
   data: unknown
 }
 
-const fichiers = import.meta.glob<string>('../../../scenarios/scenario1_red_team/pages/*.yml', {
+const fichiers = import.meta.glob<string>('@scenarios/scenario1_red_team/pages/*.yml', {
   query: '?raw',
   import: 'default',
   eager: true,
@@ -40,6 +40,16 @@ for (const [chemin, contenu] of Object.entries(fichiers)) {
   } catch (erreur) {
     console.error(`[pages] ${id}.yml illisible :`, erreur)
   }
+}
+
+/**
+ * url → id (nom du fichier). Les résultats du faux Google (search.yaml) désignent
+ * les pages par leur url ; l'application les ouvre encore par leur id.
+ */
+export const idParUrl: Record<string, string> = {}
+for (const [id, page] of Object.entries(pages)) {
+  if (idParUrl[page.url]) console.warn(`[pages] url en double : ${page.url} (${idParUrl[page.url]}.yml et ${id}.yml)`)
+  idParUrl[page.url] = id
 }
 
 /** Renvoie la page si elle existe et utilise le template attendu, sinon undefined (avec un avertissement). */

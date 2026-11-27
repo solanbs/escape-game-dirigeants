@@ -7,6 +7,9 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // Dossier des scénarios (YAML des pages, search.yaml), à la racine du dépôt.
+      // Calculé depuis ce fichier : ne dépend ni du dossier de lancement ni du fichier qui importe.
+      '@scenarios': fileURLToPath(new URL('../scenarios', import.meta.url)),
     },
   },
   // Le paquet partagé est un workspace : on le laisse hors du pré-bundle

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 import '@/styles/style_google.css'
 import type { FacebookData } from '@escape/shared'
-import type { SiteId } from '@/data/fakeSite'
 import { pageAvecTemplate } from '@/data/pages'
 import Facebook from '@/templates/Facebook.vue'
 
-const props = defineProps<{ siteId: SiteId }>()
+const props = defineProps<{ siteId: string }>()
 defineEmits<{ back: [] }>()
 
 // 1. Trouver la page (scenarios/scenario1_red_team/pages/<siteId>.yml)

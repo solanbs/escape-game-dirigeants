@@ -253,7 +253,7 @@ Le format complet, les templates disponibles et les blocs sont décrits dans [fo
 
 ```yaml
 url: linkedin.com/in/david-ecnasiol        # identifiant unique (barre d'adresse)
-template: LinkedInProfile                  # mise en page côté front
+template: Linkedin                         # mise en page côté front
 visible: { roles: [master, ops] }          # qui peut ouvrir la page, et quand
 onglet: { icone: "💼" }
 data:                                      # contenu transmis au template

@@ -53,7 +53,7 @@ C'est le serveur qui lit `url` et `visible`, et qui retire les éléments non vi
 | `Forum` | fil de discussion | `forum.yml` | `shared/src/templates/Forum.ts` |
 | `Annonce` | petite annonce de vente | `annonce.yml` | `shared/src/templates/Annonce.ts` |
 | `IndexFile` | listing de fichiers en ligne (« Index of /… ») | `index_fichiers.yml` | `shared/src/templates/IndexFile.ts` |
-| `LinkedInProfile` | profil professionnel | `linkedin.yml` | à venir |
+| `Linkedin` | profil professionnel | `linkedin.yml` | `shared/src/templates/Linkedin.ts` |
 | `Facebook` | profil personnel | `facebook.yml` | `shared/src/templates/Facebook.ts` |
 
 Le **schéma** est la référence exacte : il liste chaque champ de `data`, en indiquant s'il est obligatoire (sans `?`) ou facultatif (avec `?`). Les blocs sont décrits dans `shared/src/templates/Bloc.ts`. Au démarrage, le serveur refusera un YAML qui ne respecte pas son schéma.

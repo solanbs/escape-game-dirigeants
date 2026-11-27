@@ -8,7 +8,7 @@
 
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: linkedin.com/in/sebastien-friand
-template: LinkedInProfile
+template: Linkedin
 visible: { roles: [master, ops] }
 onglet:
   icone: "💼"

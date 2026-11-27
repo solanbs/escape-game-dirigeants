@@ -13,6 +13,7 @@
     "@escape/shared": "*",
     "js-yaml": "^4.1.0",
     "socket.io-client": "^4.8.1",
+    "vitest": "5.1.2",
     "vue": "^3.5.13"
   },
   "devDependencies": {
@@ -21,6 +22,6 @@
     "@vitejs/plugin-vue": "^5.2.1",
     "typescript": "^5.7.2",
     "vite": "^6.0.5",
-    "vue-tsc": "^2.1.10"
+    "vue-tsc": "^3.3.14"
   }
 }
