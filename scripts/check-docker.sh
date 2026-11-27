@@ -1,0 +1,85 @@
+#!/usr/bin/env bash
+# Vérification Docker obligatoire avant chaque push (voir CLAUDE.md).
+#
+#   npm run check:docker
+#
+# Construit les images, démarre game + gateway dans un projet Compose isolé
+# (escape-check, port 3999 par défaut), vérifie que tout démarre et répond,
+# puis arrête tout. Code de sortie 0 = OK, 1 = échec (avec les logs utiles).
+set -euo pipefail
+
+cd "$(dirname "$0")/.."
+
+PROJECT=escape-check
+export GAME_PORT="${CHECK_PORT:-3999}"
+export IOT_GATEWAY_TOKEN="${IOT_GATEWAY_TOKEN:-check-docker-token}"
+export IOT_AUDIO_DRIVER=fake
+PASSWORD="${CHECK_PASSWORD:-ops123}"   # mot de passe ops de scenarios/demo/config.yaml
+URL="http://localhost:${GAME_PORT}"
+
+compose() { docker compose -p "$PROJECT" "$@"; }
+logs() { compose logs --no-color "$@" 2>/dev/null | sed 's/\x1b\[[0-9;]*m//g'; }
+
+ok()   { echo "  ✅ $1"; }
+fail() {
+  echo "  ❌ $1"
+  echo
+  echo "----- logs game -----";    logs game    | tail -40
+  echo "----- logs gateway -----"; logs gateway | tail -20
+  exit 1
+}
+
+cleanup() { compose down --remove-orphans >/dev/null 2>&1 || true; }
+trap cleanup EXIT
+
+echo "▶ Construction et démarrage (projet $PROJECT, port $GAME_PORT)…"
+compose up -d --build >/dev/null 2>&1 || { compose up -d --build; fail "docker compose up --build a échoué"; }
+
+echo "▶ Vérifications"
+
+# 1. Le serveur répond
+for _ in $(seq 1 60); do
+  curl -sf "$URL/api/ping" >/dev/null 2>&1 && break
+  sleep 1
+done
+curl -sf "$URL/api/ping" >/dev/null || fail "le serveur ne répond pas sur $URL/api/ping"
+ok "le serveur répond (/api/ping)"
+
+# 2. Le scénario est chargé (sinon le serveur aurait refusé de démarrer)
+logs game | grep -q "scénario chargé" || fail "le scénario n'a pas été chargé"
+ok "scénario chargé"
+
+# 3. Le front est servi
+curl -sf "$URL/" | grep -q '<div id="app">' || fail "le front n'est pas servi sur $URL/"
+ok "front servi"
+
+# 4. Les conteneurs tournent toujours (pas de redémarrage en boucle)
+for service in game gateway; do
+  state=$(compose ps --format '{{.Service}} {{.State}}' | awk -v s="$service" '$1 == s { print $2 }')
+  [ "$state" = "running" ] || fail "le conteneur $service n'est pas en marche (état : ${state:-absent})"
+done
+ok "conteneurs game et gateway en marche"
+
+# 5. Le gateway IoT est connecté au serveur
+for _ in $(seq 1 20); do
+  logs game | grep -q "Gateway connected" && break
+  sleep 1
+done
+logs game | grep -q "Gateway connected" || fail "le gateway IoT ne s'est pas connecté"
+ok "gateway IoT connecté"
+
+# 6. Une tablette se connecte avec un mot de passe de rôle, une autre est refusée
+tablet() { SERVER_URL="$URL" timeout 8 npx tsx server/scripts/tablette.ts "$1" 2>&1 || true; }
+tablet "$PASSWORD" | grep -q "connectée" || fail "une tablette n'arrive pas à se connecter avec « $PASSWORD »"
+ok "tablette connectée avec un mot de passe de rôle"
+tablet "mauvais-mot-de-passe-check" | grep -q "refusée" || fail "un mauvais mot de passe n'est pas refusé"
+ok "mauvais mot de passe refusé"
+
+# 7. Aucune erreur dans les logs du serveur
+if logs game | grep -qE "(ERROR|FATAL):"; then
+  fail "des erreurs apparaissent dans les logs du serveur"
+fi
+ok "aucune erreur dans les logs du serveur"
+
+echo
+echo "✅ Docker OK : on peut pousser."

@@ -2,7 +2,7 @@
 
 Escape game de sensibilisation à la cybersécurité. Un serveur Node (Express + Socket.IO) sert le front (Vue 3) et fait tourner le moteur de jeu ; un processus séparé, `iot-gateway`, pilote le matériel.
 
-La documentation est dans [docs/](./docs/README.md).
+La documentation est dans [docs/](./docs/README.md). Les règles de travail communes (architecture à respecter, vérifications avant chaque push) sont dans [CLAUDE.md](./CLAUDE.md).
 
 ## Lancer en développement
 
@@ -23,6 +23,8 @@ npm test          # tests du serveur et du gateway
 npm run typecheck # vérification TypeScript de tous les paquets
 npm run demo      # une partie du scénario de démonstration, jouée dans le terminal
 npm run tablette -w @escape/server -- ops123   # une fausse tablette connectée au serveur
+npm run check        # typecheck + tests + build
+npm run check:docker # images Docker, démarrage et vérifications : obligatoire avant chaque push
 ```
 
 Les mots de passe des rôles du scénario de démonstration sont dans `scenarios/demo/config.yaml`.
