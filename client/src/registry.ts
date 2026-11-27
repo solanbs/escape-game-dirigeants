@@ -16,6 +16,7 @@ import Facebook from '@/templates/Facebook.vue'
 import Forum from '@/templates/Forum.vue'
 import IndexFile from '@/templates/IndexFile.vue'
 import Linkedin from '@/templates/Linkedin.vue'
+import Site from '@/templates/Site.vue'
 
 export const TEMPLATES = {
   Article,
@@ -23,7 +24,7 @@ export const TEMPLATES = {
   Facebook,
   Forum,
   IndexFile,
-  // CompanySite,
+  Site,
   Linkedin,
 } satisfies Record<string, Component>
 

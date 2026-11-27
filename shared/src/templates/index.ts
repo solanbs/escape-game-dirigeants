@@ -8,6 +8,7 @@ export type { FacebookData } from './Facebook.js'
 export type { ForumData } from './Forum.js'
 export type { IndexFileData } from './IndexFile.js'
 export type { LinkedinData } from './Linkedin.js'
+export type { SiteData } from './Site.js'
 export type {
   Conditionnel, Profil, Publication, Commentaire, Message, Fichier, Experience, Formation,
 } from './Communs.js'

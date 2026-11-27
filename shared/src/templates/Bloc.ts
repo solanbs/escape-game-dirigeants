@@ -1,8 +1,7 @@
 // ===========================================================================
 // Les blocs
 // ---------------------------------------------------------------------------
-// Ils seront aussi utilisés par CompanySite (même liste `corps:`) : quand ce
-// template arrivera, cette partie déménagera dans un fichier Blocs.ts commun.
+// Utilisés par les templates Article et Site (liste `corps:`), affichés par Blocs.vue.
 // ===========================================================================
 
 import type { Conditionnel } from './Communs.js'

@@ -2,7 +2,7 @@
  * Apparence des blocs (Blocs.vue). Une section par type de bloc, dans l'ordre du template.
  *
  * Couleur : tout part de --couleur-principale, définie par le template parent
- * (Article.vue, CompanySite.vue) à partir du champ `couleur` du YAML.
+ * (Article.vue, Site.vue) à partir du champ `couleur` du YAML.
  * Les teintes claires (fonds d'encadré, de tableau…) en sont dérivées avec color-mix().
  *
  * Exception volontaire : l'encadré « alerte » reste rouge quel que soit le site,

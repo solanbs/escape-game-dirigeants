@@ -99,3 +99,20 @@ export type Formation = Conditionnel & {
   debut?: string
   fin?: string
 }
+
+export type Entete = Conditionnel & {
+  nom: string
+  slogan?: string
+  logo?: string // emoji ou nom de fichier image
+  telephone?: string
+  menu?: string[] // ex. ["Accueil", "Produits", "Contact"]
+  bouton?: string // ex. "S'inscrire"
+}
+
+export type Bandeau = Conditionnel & {
+  surtitre?: string
+  titre: string
+  texte: string
+  bouton?: string // ex. "En savoir plus"
+  image?: string // ex. "/page.html" ou "https://example.com"
+}

@@ -49,7 +49,7 @@ C'est le serveur qui lit `url` et `visible`, et qui retire les éléments non vi
 | `template` | À utiliser pour | Modèle à copier | Schéma |
 |---|---|---|---|
 | `Article` | article de journal ou de blog, page de centre d'aide, notice | `article.yml` | `shared/src/templates/Article.ts` |
-| `CompanySite` | site vitrine d'une entreprise ou d'une marque | `site.yml` | à venir |
+| `Site` | site vitrine d'une entreprise ou d'une marque | `site.yml` | `shared/src/templates/Site.ts` |
 | `Forum` | fil de discussion | `forum.yml` | `shared/src/templates/Forum.ts` |
 | `Annonce` | petite annonce de vente | `annonce.yml` | `shared/src/templates/Annonce.ts` |
 | `IndexFile` | listing de fichiers en ligne (« Index of /… ») | `index_fichiers.yml` | `shared/src/templates/IndexFile.ts` |
@@ -72,7 +72,7 @@ Le **schéma** est la référence exacte : il liste chaque champ de `data`, en i
 - **Champ inutile** : supprimez-le, ou laissez-le vide (`""`). Il ne s'affiche pas.
 - **Indentation** : des espaces, jamais de tabulations. Tout le contenu est décalé de deux espaces sous `data:`.
 
-## Les blocs (templates `Article` et `CompanySite`)
+## Les blocs (templates `Article` et `Site`)
 
 Le contenu d'un article ou d'un site est une liste de blocs dans `data.corps` (et `data.colonne` pour la colonne de droite d'un article). Chaque bloc commence par `- type:`. On peut répéter un bloc ou l'omettre ; ils s'affichent dans l'ordre où ils sont écrits.
 

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 /*
  * Affiche une liste de blocs (le `corps:` ou la `colonne:` d'un YAML).
- * Utilisé par Article.vue, et plus tard par CompanySite.vue.
+ * Utilisé par Article.vue et Site.vue.
  *
  * Pour ajouter un type de bloc : une branche `v-else-if` dans le template
  * ci-dessous, et ses règles CSS dans style_blocs.css.

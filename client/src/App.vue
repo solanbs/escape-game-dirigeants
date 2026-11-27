@@ -4,7 +4,6 @@ import Fenetre from '@/components/Fenetre.vue'
 import BureauWindows from '@/components/BureauWindows.vue'
 import FakeGoogle from '@/components/FakeGoogle.vue'
 import FakeMail from '@/components/FakeMail.vue'
-import FakeAlarmeSuperSecure from '@/components/FakeAlarmeSuperSecure.vue'
 import PageAnnonce from '@/components/PageAnnonce.vue'
 import PageArticle from '@/components/PageArticle.vue'
 import PageFacebook from '@/components/PageFacebook.vue'
@@ -12,6 +11,7 @@ import PageFictive from '@/components/PageFictive.vue'
 import PageForum from '@/components/PageForum.vue'
 import PageIndexFile from '@/components/PageIndexFile.vue'
 import PageLinkedin from '@/components/PageLinkedin.vue'
+import PageSite from '@/components/PageSite.vue'
 import { pages } from '@/data/pages'
 import { api } from '@/services/api'
 import { connect, game, testAnswer } from '@/stores/game'
@@ -27,7 +27,7 @@ const ping = ref('en attente…')
 /**
  * Enveloppe à utiliser pour chaque template (champ `template:` des YAML).
  * Pour un nouveau template : créer son enveloppe Page<Nom>.vue et l'ajouter ici.
- * Un template absent de cette table (ex. CompanySite) est affiché par PageFictive,
+ * Un template absent de cette table (faute de frappe…) est affiché par PageFictive,
  * qui montre un message « template inconnu » au lieu d'un écran vide.
  */
 const ENVELOPPES: Record<string, Component> = {
@@ -37,6 +37,7 @@ const ENVELOPPES: Record<string, Component> = {
   Forum: PageForum,
   IndexFile: PageIndexFile,
   Linkedin: PageLinkedin,
+  Site: PageSite,
 }
 
 const enveloppe = computed(() => ENVELOPPES[pages[siteId.value]?.template ?? ''])
@@ -160,13 +161,6 @@ onMounted(async () => {
     </main>
 
     <!-- Pages fictives -->
-    <!-- SuperSecure : template CompanySite pas encore écrit, on garde l'ancienne page. -->
-    <FakeAlarmeSuperSecure
-      v-else-if="siteId === 'alarme-supersecure'"
-      site-id="alarme-supersecure"
-      @back="page = origine"
-    />
-
     <!-- :key force une nouvelle enveloppe à chaque page (sinon deux articles de suite
          réutiliseraient la même, sans recharger le contenu). -->
     <component
@@ -177,7 +171,7 @@ onMounted(async () => {
       @back="page = origine"
     />
 
-    <!-- Template sans enveloppe (CompanySite…) ou page introuvable : message explicite. -->
+    <!-- Template sans enveloppe ou page introuvable : message explicite. -->
     <PageFictive v-else :key="siteId" :site-id="siteId" @back="page = origine" />
   </div>
 </template>

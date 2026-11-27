@@ -8,7 +8,7 @@
 
 # --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
 url: supersecure.fr
-template: CompanySite
+template: Site
 visible: { roles: [master, ops] }
 onglet:
   icone: "🛡️"

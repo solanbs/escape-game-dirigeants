@@ -1,0 +1,220 @@
+/*
+ * Apparence du template Site (Site.vue) : site vitrine d'entreprise.
+ * Inspiré de style_supersecure.css (en-tête collant, bandeau en dégradé).
+ * Les blocs du corps ont leur propre CSS : style_blocs.css.
+ * Couleur : var(--couleur-principale), issue du champ `couleur` du YAML.
+ */
+
+.site {
+  --site-couleur: var(--couleur-principale, #0f2c59);
+  --site-couleur-sombre: color-mix(in srgb, var(--site-couleur) 70%, #000000);
+  --site-texte: #333333;
+  --site-texte-doux: #6c757d;
+
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  background: #f5f6f8;
+  color: var(--site-texte);
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* --- en-tête ------------------------------------------------------------- */
+.site-entete {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  padding: 1rem 2rem;
+  background: #ffffff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.06);
+}
+
+.site-entete__marque {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.site-entete__logo {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.site-entete__nom {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  color: var(--site-couleur);
+}
+
+.site-entete__slogan {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: var(--site-texte-doux);
+}
+
+.site-entete__menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.site-entete__menu a {
+  padding-bottom: 0.2rem;
+  border-bottom: 2px solid transparent;
+  color: var(--site-texte);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.site-entete__menu a:hover,
+.site-entete__menu .site-entete__menu--actif {
+  color: var(--site-couleur);
+  border-bottom-color: var(--site-couleur);
+}
+
+.site-entete__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.site-entete__tel {
+  font-weight: 600;
+  color: var(--site-couleur);
+}
+
+/* --- boutons ------------------------------------------------------------- */
+.site-bouton {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  background: var(--site-couleur);
+  color: #ffffff;
+  font-weight: 600;
+  cursor: default;
+}
+
+.site-bouton--clair {
+  margin-top: 1.5rem;
+  background: #ffffff;
+  color: var(--site-couleur);
+}
+
+/* --- bandeau ------------------------------------------------------------- */
+.site-bandeau {
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, var(--site-couleur) 0%, var(--site-couleur-sombre) 100%);
+  background-size: cover;
+  background-position: center;
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Avec une image : voile sombre pour garder le texte lisible. */
+.site-bandeau--image {
+  box-shadow: inset 0 0 0 100vmax rgba(0, 0, 0, 0.45);
+}
+
+.site-bandeau__contenu {
+  max-width: 780px;
+  margin: 0 auto;
+}
+
+.site-bandeau__surtitre {
+  margin: 0 0 0.6rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.site-bandeau h1 {
+  margin: 0 0 1rem;
+  font-size: 2.4rem;
+  line-height: 1.2;
+}
+
+.site-bandeau__texte {
+  margin: 0 0 0.6rem;
+  font-size: 1.1rem;
+  line-height: 1.6;
+  opacity: 0.92;
+}
+
+/* --- corps --------------------------------------------------------------- */
+.site-corps {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* Un peu plus d'air entre les blocs d'une page vitrine que dans un article. */
+.site-corps .blocs {
+  gap: 2rem;
+}
+
+.site-corps .bloc-intertitre {
+  font-size: 1.6rem;
+  text-align: center;
+}
+
+/* --- pied de page -------------------------------------------------------- */
+.site-pied {
+  padding: 2rem;
+  background: #1f2329;
+  color: #c4c8ce;
+  text-align: center;
+}
+
+.site-pied__marque {
+  margin-bottom: 0.8rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.site-pied__menu {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.2rem;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+}
+
+.site-pied__texte {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #8b9098;
+}
+
+/* --- petits écrans ------------------------------------------------------- */
+@media (max-width: 700px) {
+  .site-entete {
+    position: static;
+    padding: 1rem;
+  }
+
+  .site-bandeau {
+    padding: 2.5rem 1rem;
+  }
+
+  .site-bandeau h1 {
+    font-size: 1.8rem;
+  }
+
+  .site-corps {
+    padding: 2rem 1rem;
+  }
+}
