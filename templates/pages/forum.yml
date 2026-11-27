@@ -1,26 +1,30 @@
-# Type "forum" : un fil de discussion.
-type: forum
+# Template ForumThread : un fil de discussion.
 
-# --- En-tête commun -------------------------------------------------------
-google:                  # résultat affiché dans le faux Google
-  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
+template: ForumThread
+visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
+# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+onglet:
+  icone: ""  # un emoji, affiché dans l'onglet du navigateur
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""  # couleur principale du site → variable CSS --couleur-principale
+
+  site:
+    nom: ""
+    logo: ""
+
+  fil_ariane: []           # ex. ["Portail", "Électricité", "Alarmes"]
   titre: ""
-  introduction: ""
-icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
-couleur: ""              # couleur principale du site, ex. "#1a73e8"
+  resolu: false            # true = préfixe "[Résolu]" devant le titre
 
-# --- Contenu ---------------------------------------------------------------
-site:
-  nom: ""
-  logo: ""
-
-fil_ariane: []           # ex. ["Portail", "Électricité", "Alarmes"]
-titre: ""
-resolu: false            # true = préfixe "[Résolu]" devant le titre
-
-messages:                # dans l'ordre chronologique
-  - auteur: ""
-    avatar: ""           # lettre ou emoji (vide = initiale de l'auteur)
-    statut: ""           # ex. "Installateur Pro" (facultatif)
-    date: ""             # ex. "14/05/2026 à 09:12"
-    texte: ""            # plusieurs paragraphes : utiliser "|" et séparer par une ligne vide
+  messages:                # dans l'ordre chronologique
+    - id: ""               # facultatif ; obligatoire si le message a un "when"
+      # when: noeud.sortie # facultatif : message visible seulement après cette sortie
+      auteur: ""
+      avatar: ""           # lettre ou emoji (vide = initiale de l'auteur)
+      statut: ""           # ex. "Installateur Pro" (facultatif)
+      date: ""             # ex. "14/05/2026 à 09:12"
+      texte: ""            # plusieurs paragraphes : utiliser "|" et séparer par une ligne vide

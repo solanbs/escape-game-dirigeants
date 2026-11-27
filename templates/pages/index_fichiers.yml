@@ -1,26 +1,25 @@
-# Type "index_fichiers" : listing de fichiers en ligne ("Index of /...").
-type: index_fichiers
+# Template FileIndex : listing de fichiers en ligne ("Index of /...").
 
-# --- En-tête commun -------------------------------------------------------
-google:                  # résultat affiché dans le faux Google
-  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
-  titre: ""
-  introduction: ""
-icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
-couleur: ""              # couleur principale du site, ex. "#1a73e8"
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
+template: FileIndex
+visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
+# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+onglet:
+  icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
-# --- Contenu ---------------------------------------------------------------
-chemin: ""               # ex. "/manuals/supersecure/2019/"
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""  # couleur principale du site → variable CSS --couleur-principale
 
-fichiers:
-  - nom: ""
-    date: ""             # ex. "04-Sep-2019 09:11"
-    taille: ""           # ex. "45K"
-    mis_en_avant: false  # true = ligne surlignée
-    contenu: ""          # texte de l'aperçu (vide = fichier non consultable). Utiliser "|"
-                         # pour plusieurs lignes. Le repère {code_alarme} est remplacé par
-                         # le code de solutions.yml après validation, par "masquage" avant.
+  chemin: ""               # ex. "/manuals/supersecure/2019/"
 
-masquage: ""             # texte affiché à la place du code avant validation
-indication: ""           # phrase sous l'aperçu
-bouton_validation: ""    # texte du bouton qui révèle le code
+  fichiers:
+    - id: ""               # facultatif ; obligatoire si le fichier a un "when"
+      # when: noeud.sortie # facultatif : fichier visible seulement après cette sortie
+      nom: ""
+      date: ""             # ex. "04-Sep-2019 09:11"
+      taille: ""           # ex. "45K"
+      mis_en_avant: false  # true = ligne surlignée
+      contenu: ""          # texte de l'aperçu (vide = fichier non consultable).
+                           # Utiliser "|" pour plusieurs lignes.

@@ -1,12 +1,12 @@
 /**
- * Template ClassifiedAd : petite annonce de vente.
+ * Template Annonce : petite annonce de vente.
  *
- * Décrit le bloc `data:` des YAML de page qui ont `template: ClassifiedAd`.
- * Le serveur valide les YAML contre ce type ; ClassifiedAd.vue en tire ses props.
+ * Décrit le bloc `data:` des YAML de page qui ont `template: Annonce`.
+ * Le serveur valide les YAML contre ce type ; Annonce.vue en tire ses props.
  *
  * Convention de texte : **mot** = gras ; une ligne vide sépare deux paragraphes.
  */
-export type ClassifiedAdData = {
+export type AnnonceData = {
   /** Couleur principale du site → variable CSS --couleur-principale. */
   couleur?: string
 

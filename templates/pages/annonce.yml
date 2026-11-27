@@ -1,34 +1,36 @@
-# Type "annonce" : petite annonce de vente.
-type: annonce
+# Template ClassifiedAd : petite annonce de vente.
 
-# --- En-tête commun -------------------------------------------------------
-google:                  # résultat affiché dans le faux Google
-  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
+template: ClassifiedAd
+visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
+# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+onglet:
+  icone: ""  # un emoji, affiché dans l'onglet du navigateur
+
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""  # couleur principale du site → variable CSS --couleur-principale
+
+  site:
+    nom: ""
+    logo: ""
+    recherche: ""          # texte pré-rempli dans la barre de recherche
+
   titre: ""
-  introduction: ""
-icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
-couleur: ""              # couleur principale du site, ex. "#1a73e8"
+  prix: ""                 # ex. "150 €"
+  date: ""                 # ex. "12/09/2026 à 14h30"
+  lieu: ""
 
-# --- Contenu ---------------------------------------------------------------
-site:
-  nom: ""
-  logo: ""
-  recherche: ""          # texte pré-rempli dans la barre de recherche
+  image:
+    fichier: ""            # vide = cadre gris avec la légende
+    legende: ""
 
-titre: ""
-prix: ""                 # ex. "150 €"
-date: ""                 # ex. "12/09/2026 à 14h30"
-lieu: ""
+  description: ""          # plusieurs paragraphes : utiliser "|" et séparer par une ligne vide
 
-image:
-  fichier: ""            # vide = cadre gris avec la légende
-  legende: ""
-
-description: ""          # plusieurs paragraphes : utiliser "|" et séparer par une ligne vide
-
-vendeur:
-  nom: ""
-  avatar: ""             # lettre ou emoji
-  type: ""               # ex. "Particulier", "Professionnel"
-  note: 5                # nombre d'étoiles, de 0 à 5
-  nombre_avis: 0
+  vendeur:
+    nom: ""
+    avatar: ""             # lettre ou emoji
+    type: ""               # ex. "Particulier", "Professionnel"
+    note: 5                # nombre d'étoiles, de 0 à 5
+    nombre_avis: 0

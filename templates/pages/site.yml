@@ -1,109 +1,112 @@
-# Type "site" : site vitrine (entreprise, marque, prestataire).
-type: site
+# Template CompanySite : site vitrine (entreprise, marque, prestataire).
 
-# --- En-tête commun -------------------------------------------------------
-google:                  # résultat affiché dans le faux Google
-  domaine: ""            # ex. "exemple.fr" (affiché aussi dans la barre d'adresse)
-  titre: ""
-  introduction: ""
-icone_onglet: ""         # un emoji, affiché dans l'onglet du navigateur
-couleur: ""              # couleur principale du site, ex. "#1a73e8"
+# --- Enveloppe : lue par le serveur et le navigateur du jeu ------------------
+url: ""  # identifiant unique de la page + barre d'adresse, ex. "actu-justice.fr/prudhommes/carbona"
+template: CompanySite
+visibleTo: [master, ops]  # rôles qui peuvent ouvrir la page
+# when: noeud.sortie      # facultatif : page disponible seulement après cette sortie du scénario
+onglet:
+  icone: ""  # un emoji, affiché dans l'onglet du navigateur
 
-# --- Contenu ---------------------------------------------------------------
-entete:
-  nom: ""
-  slogan: ""
-  logo: ""               # emoji ou nom de fichier image
-  telephone: ""
-  menu: []               # ex. ["Accueil", "Produits", "Contact"]
-  bouton: ""             # texte du bouton d'appel à l'action (vide = pas de bouton)
+# --- Contenu : transmis tel quel au template --------------------------------
+data:
+  couleur: ""  # couleur principale du site → variable CSS --couleur-principale
 
-bandeau:                 # grande zone en haut de page
-  surtitre: ""
-  titre: ""
-  texte: ""
-  bouton: ""
-  image: ""
-
-corps:
-  # Un élément par bloc, dans l'ordre d'affichage. Supprimer les blocs inutiles,
-  # répéter ceux dont on a besoin. Gras dans le texte : **mot**.
-  - type: paragraphe
-    texte: ""
-
-  - type: intertitre
-    texte: ""
-
-  - type: liste
-    elements:
-      - ""                       # texte simple…
-      - icone: ""                # …ou élément détaillé (tous les champs facultatifs)
-        label: ""
-        texte: ""
-        note: ""
-
-  - type: etapes                 # liste numérotée
-    elements:
-      - titre: ""
-        texte: ""
-
-  - type: encadre
-    ton: info                    # info | alerte
-    icone: ""
-    titre: ""
-    texte: ""
-    avertissement: ""
-    bouton: ""
-
-  - type: citation
-    texte: ""
-    auteur: ""
-
-  - type: tableau
-    titre: ""
-    colonnes: ["", ""]
-    lignes:
-      - ["", ""]
-
-  - type: image
-    fichier: ""                  # nom du fichier image
-    legende: ""
-
-  - type: chiffres
-    elements:
-      - valeur: ""
-        label: ""
-
-  - type: cartes
-    elements:
-      - icone: ""
-        titre: ""
-        texte: ""
-
-  - type: personnes
-    titre: ""
-    liste:
-      - nom: ""
-        poste: ""
-        bio: ""
-        photo: ""
-
-  - type: actus
-    elements:
-      - date: ""
-        titre: ""
-        extrait: ""
-
-  - type: temoignages
-    elements:
-      - texte: ""
-        auteur: ""
-
-  - type: contact
-    titre: ""
-    texte: ""
-    adresse: ""
+  entete:
+    nom: ""
+    slogan: ""
+    logo: ""               # emoji ou nom de fichier image
     telephone: ""
-    email: ""
+    menu: []               # ex. ["Accueil", "Produits", "Contact"]
+    bouton: ""             # texte du bouton d'appel à l'action (vide = pas de bouton)
 
-pied_de_page: ""
+  bandeau:                 # grande zone en haut de page
+    surtitre: ""
+    titre: ""
+    texte: ""
+    bouton: ""
+    image: ""
+
+  corps:
+    # Un élément par bloc, dans l'ordre d'affichage. Supprimer les blocs inutiles,
+    # répéter ceux dont on a besoin. Gras dans le texte : **mot**.
+    # Tout bloc accepte aussi "id" et "when" (bloc visible seulement après une sortie).
+    - type: paragraphe
+      texte: ""
+
+    - type: intertitre
+      texte: ""
+
+    - type: liste
+      elements:
+        - ""                       # texte simple…
+        - icone: ""                # …ou élément détaillé (tous les champs facultatifs)
+          label: ""
+          texte: ""
+          note: ""
+
+    - type: etapes                 # liste numérotée
+      elements:
+        - titre: ""
+          texte: ""
+
+    - type: encadre
+      ton: info                    # info | alerte
+      icone: ""
+      titre: ""
+      texte: ""
+      avertissement: ""
+      bouton: ""
+
+    - type: citation
+      texte: ""
+      auteur: ""
+
+    - type: tableau
+      titre: ""
+      colonnes: ["", ""]
+      lignes:
+        - ["", ""]
+
+    - type: image
+      fichier: ""                  # nom du fichier image
+      legende: ""
+
+    - type: chiffres
+      elements:
+        - valeur: ""
+          label: ""
+
+    - type: cartes
+      elements:
+        - icone: ""
+          titre: ""
+          texte: ""
+
+    - type: personnes
+      titre: ""
+      liste:
+        - nom: ""
+          poste: ""
+          bio: ""
+          photo: ""
+
+    - type: actus
+      elements:
+        - date: ""
+          titre: ""
+          extrait: ""
+
+    - type: temoignages
+      elements:
+        - texte: ""
+          auteur: ""
+
+    - type: contact
+      titre: ""
+      texte: ""
+      adresse: ""
+      telephone: ""
+      email: ""
+
+  pied_de_page: ""
